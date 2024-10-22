@@ -1,6 +1,6 @@
 package net.haebup.dto.board;
 
-public class BorderDTO {
+public class BoardDTO {
 	private int boardIdx;			// 게시물 아이디
 	private String boardTitle;		// 게시물 제목
 	private String boarContent;		// 게시물 내용

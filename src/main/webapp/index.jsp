@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@page import="net.haebup.utils.DBConnPool"%>
+    <%@page import="net.haebup.utils.DatabaseUtil.DbQueryUtil" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +24,17 @@ try {
 	out.println("DB 커넥션 풀 오류 <br> ");
 	out.println("에러 : "+e.getMessage()+"<br>");
 	out.println("==================================");
+}
+%>
+
+<%
+out.println("==================================<br>");
+out.println("direct connection<br>");
+out.println("==================================");
+if(DBConnPool.getDirectConnection() != null){
+	out.println("연결 성공<br>");
+}else{
+	out.println("연결 실패<br>");
 }
 %>
 </body>
