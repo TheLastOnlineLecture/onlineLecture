@@ -8,6 +8,6 @@
 <title>chunjaeHaebup</title>
 </head>
 <body>
-	<a href="<c:url value='/main.do?e=main' />" >ㅎㅇ</a>
+
 </body>
 </html>
