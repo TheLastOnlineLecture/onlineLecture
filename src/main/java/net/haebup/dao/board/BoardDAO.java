@@ -21,6 +21,8 @@ public class BoardDAO implements IFBoardDAO{
                     BoardDTO boardDTO = new BoardDTO();
                     boardDTO.setBoardIdx(rs.getInt("board_idx"));
                     boardDTO.setBoardType(rs.getString("board_type"));
+                    
+                    
                     boardDTO.setBoardTitle(rs.getString("board_title"));
                     boardDTO.setBoardWriter(rs.getString("board_writer"));
                     boardDTO.setBoardRegdate(rs.getString("board_regdate"));

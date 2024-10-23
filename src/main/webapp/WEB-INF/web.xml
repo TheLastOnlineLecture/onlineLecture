@@ -19,4 +19,14 @@
     <servlet-name>gotoController</servlet-name>
     <url-pattern>/gotoController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>PostWriteController</display-name>
+    <servlet-name>PostWriteController</servlet-name>
+    <servlet-class>net.haebup.controller.board.PostWriteController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>PostWriteController</servlet-name>
+    <url-pattern>/PostWriteControllerr</url-pattern>
+  </servlet-mapping>
 </web-app>
