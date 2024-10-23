@@ -8,22 +8,9 @@
 <title>Insert title here</title>
 </head>
 <body>
-<%
 
-try {
-	DBConnPool pool = new DBConnPool();
-	
-	out.println("==================================<br>");
-	out.println("DB 커넥션 풀 생성 <br> ");
-	out.println("DBConnPool : " + pool+"<br>");
-	out.println("==================================");
-	pool.close();
-} catch(Exception e) {
-	out.println("==================================<br>");
-	out.println("DB 커넥션 풀 오류 <br> ");
-	out.println("에러 : "+e.getMessage()+"<br>");
-	out.println("==================================");
-}
-%>
+
+
+<a href="goto.do?page_name=login&path_name=common/member">로그인이동</a>
 </body>
 </html>

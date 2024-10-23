@@ -17,8 +17,7 @@ public class gotoController extends HttpServlet {
 		String pageName= req.getParameter("page_name");
 		String pathName = req.getParameter("path_name");
 		
-		String path = "/WEB-INF/"+ pathName + pageName+".jsp";
-		
+		String path = "WEB-INF/" + pathName + "/" + pageName + ".jsp";
 		req.getRequestDispatcher(path).forward(req, res);
 	}
 
