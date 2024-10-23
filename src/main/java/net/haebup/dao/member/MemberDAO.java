@@ -67,7 +67,7 @@ public class MemberDAO{
 		}
 		return memberDto;
 	}
-	
+	//git
 	
 	// 선생님 로그인
 	public MemberDTO loginTeacher(MemberDTO memberDto) {
