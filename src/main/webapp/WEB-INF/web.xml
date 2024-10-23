@@ -19,4 +19,14 @@
     <servlet-name>gotoController</servlet-name>
     <url-pattern>/gotoController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>MainMoveController</display-name>
+    <servlet-name>MainMoveController</servlet-name>
+    <servlet-class>net.haebup.controller.common.MainMoveController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MainMoveController</servlet-name>
+    <url-pattern>/MainMoveController</url-pattern>
+  </servlet-mapping>
 </web-app>
