@@ -10,7 +10,7 @@ import net.haebup.dto.member.MemberDTO;
 import net.haebup.utils.DatabaseUtil.DBConnPool;
 import net.haebup.utils.DatabaseUtil.DbQueryUtil;
 
-public class MemberDAO {
+public class MemberDAO{
 	
 	// 전체회원목록 ( 관리자용 )
 	public List<MemberDTO> getMemberList(int limit, int offset, String userId){
@@ -38,21 +38,34 @@ public class MemberDAO {
 	}
 	
 	// 회원가입 
-	public int insertUser(String userId) {
-		String sql = "INESRT INTO tbl_member (user_id, password, user_name, nser_nuickname, "
-				+ "user_email, user_phone, user_regdate, user_type) value(?, ?, ?, ?, ?, ?, , ?)";
-		
-		
-		return 0;
+	public int insertUser(MemberDTO memberDto) {
+		String sql = "INESRT INTO tbl_member (user_id, password, user_name, user_nickname, "
+				+ "user_email, user_phone, user_regdate, user_type) value(?, ?, ?, ?, ?, ?, now(), ?)";
+		try(Connection conn = DBConnPool.getConnection();	
+			DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{memberDto.getUserId(), memberDto.getUserPwd(), memberDto.getUserName(), memberDto.getUserNickname(), memberDto.getUserEmail(), memberDto.getUserPhone(), memberDto.getUserType()})){
+				return dbUtil.executeUpdate();
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw new RuntimeException("회원가입 중 오류가 발생하였습니다."+e);
+		}
 	}
 	
 	
 	// 로그인
 	public MemberDTO loginStudent(MemberDTO memberDto) {
-		String sql = "SELECT user_id, password FROM tbl_member user_id WHERE user_type =?";
-		
-		
-		return null;
+		String sql = "SELECT user_id, password,user_type FROM tbl_member user_id WHERE user_id = ?";
+		try(Connection conn = DBConnPool.getConnection();	
+			DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{memberDto.getUserId()})){
+				ResultSet rs = dbUtil.executeQuery();
+				if(rs.next()){
+					memberDto.setUserType(rs.getString("user_type"));
+					memberDto.setUserPwd(rs.getString("password"));
+				}
+		}catch(SQLException e){
+			e.printStackTrace();
+			throw new RuntimeException("로그인 중 오류가 발생하였습니다."+e);
+		}
+		return memberDto;
 	}
 	
 	
