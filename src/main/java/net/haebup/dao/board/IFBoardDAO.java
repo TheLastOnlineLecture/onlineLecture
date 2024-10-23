@@ -1,19 +1,25 @@
 package net.haebup.dao.board;
 import java.util.List;
 import net.haebup.dto.board.BoardDTO;
+import java.sql.SQLException;
 
 public interface IFBoardDAO {
 
-    public List<BoardDTO> getBoardList(int borderIdx, int limit, int offfset , String boardType);
+    //boardType : 게시물 유형 (P: 자유게시판, N: 공지사항, D: 자료실, C: 강의 공지, R: 수강후기)
+    public List<BoardDTO> getBoardList(int limit, int offset, String boardType) throws SQLException;
 
-    public int getBoardListTotalCount(int borderIdx, String boardType);
+    public List<BoardDTO> getUserBoardList(int limit, int offset, String boardType, String userId) throws SQLException;
 
-    public BoardDTO getBoardDetail(int boardIdx);
+    public int getTotalCount(String boardType) throws SQLException;
 
-    public boolean deleteByBoardIdx(int boardIdx);
+    public int getUserTotalCount(String boardType, String userId) throws SQLException;
 
-    public boolean updateBoard(BoardDTO boardDTO);
+    public BoardDTO getBoardDetail(int boardIdx) throws SQLException;
 
-    public boolean insertBoard(BoardDTO boardDTO);
+    public int deleteByBoardIdx(int boardIdx) throws SQLException;
+
+    public int updateBoard(BoardDTO boardDTO) throws SQLException;
+
+    public int insertBoard(BoardDTO boardDTO) throws SQLException;
 
 }
