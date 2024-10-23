@@ -1,7 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@page import="net.haebup.utils.DBConnPool"%>
-    <%@page import="net.haebup.utils.DatabaseUtil.DbQueryUtil" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -9,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-ㅎㅇㅎㅇ
+<h3>  학생 성적표 등록 ( 난 선생임 ㅇ) </h3>
 </body>
 </html>

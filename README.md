@@ -1,2 +1,1 @@
 # onlineLecture
-gd
