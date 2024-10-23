@@ -12,7 +12,7 @@ public class BoardDAO implements IFBoardDAO{
     // 게시물 목록 조회
     @Override  
     public List<BoardDTO> getBoardList(int limit, int offset, String boardType) throws SQLException{
-        String sql = "SELECT * FROM board WHERE board_type = ? ORDER BY board_idx DESC LIMIT ? OFFSET ?";
+        String sql = "SELECT * FROM tbl_board WHERE board_type = ? ORDER BY board_idx DESC LIMIT ? OFFSET ?";
         List<BoardDTO> boardList = new ArrayList<>();
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardType,limit,offset})){
@@ -147,7 +147,7 @@ public class BoardDAO implements IFBoardDAO{
         String sql = "INSERT INTO tbl_board (board_type, board_title, board_content, board_writer) VALUES (?, ?, ?, ?)";
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardDTO.getBoardType(),boardDTO.getBoardTitle(),boardDTO.getBoardContent(),boardDTO.getBoardWriter()})){
-        	return dbUtil.executeUpdate();
+                return dbUtil.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
             throw new RuntimeException("게시물 등록 중 오류가 발생하였습니다."+e);
