@@ -3,7 +3,7 @@ package net.haebup.dto.member;
 public class MemberDTO {
 	
 	private String userId;
-    private String password;
+    private String userPwd;
     private String salt;
     private String userName;
     private String userNickname;
@@ -21,12 +21,12 @@ public class MemberDTO {
         this.userId = userId;
     }
 
-    public String getPassword() {
-        return password;
+    public String getUserPwd() {
+        return userPwd;
     }
 
-    public void setPassword(String password) {
-        this.password = password;
+    public void setUserPwd(String userPwd) {
+        this.userPwd = userPwd;
     }
 
     public String getSalt() {
