@@ -13,10 +13,14 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class FileIOUtil {
 
-    private static final String BOARD_UPLOAD_DIR = "uploads/board";
-    private static final String LECTURE_NOTICE_UPLOAD_DIR = "uploads/lecture/notice";
-    private static final String LECTURE_DETAIL_UPLOAD_DIR = "uploads/lecture/detail";
+    //uploads/board
+    private static final String BOARD_UPLOAD_DIR = "uploads" + File.separator + "board";
+    //uploads/lecture/notice
+    private static final String LECTURE_NOTICE_UPLOAD_DIR = "uploads"+File.separator+"lecture"+File.separator+"notice";
+    //uploads/lecture/detail
+    private static final String LECTURE_DETAIL_UPLOAD_DIR = "uploads"+File.separator+"lecture"+File.separator+"detail";
 
+    
     // 첨부파일 업로드 메서드
     public static String uploadBoardAttachment(HttpServletRequest request, String fieldName)
             throws IOException, ServletException {

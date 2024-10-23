@@ -2,18 +2,36 @@ package net.haebup.dao.board;
 import java.util.List;
 import net.haebup.dto.board.BoardDTO;
 
-public interface BoardDAO {
+public class BoardDAO implements IFBoardDAO{
 
-    public List<BoardDTO> getBoardList(int borderIdx, int limit, int offfset , String boardType);
+    @Override
+    public List<BoardDTO> getBoardList(int borderIdx, int limit, int offfset , String boardType) {
+        return null;
+    }
 
-    public int getBoardListTotalCount(int borderIdx, String boardType);
+    @Override
+    public int getBoardListTotalCount(int borderIdx, String boardType) {
+        return 0;
+    }
 
-    public BoardDTO getBoardDetail(int boardIdx);
+    @Override
+    public BoardDTO getBoardDetail(int boardIdx) {
+        return null;
+    }
 
-    public boolean deleteByBoardIdx(int boardIdx);
+    @Override
+    public boolean deleteByBoardIdx(int boardIdx) {
+        return false;
+    }
 
-    public boolean updateBoard(BoardDTO boardDTO);
+    @Override
+    public boolean updateBoard(BoardDTO boardDTO) {
+        return false;
+    }
 
-    public boolean insertBoard(BoardDTO boardDTO);
-
+    @Override
+    public boolean insertBoard(BoardDTO boardDTO) {
+        return false;
+    }
+    
 }
