@@ -8,5 +8,10 @@
 </head>
 <body>
 <h3> 로그인  </h3>
+<form action="/member/common/login.do" method="post">
+    <input type="text" name="userId" placeholder="아이디">
+    <input type="password" name="userPwd" placeholder="비밀번호">
+    <button type="submit">로그인</button>   
+</form>
 </body>
 </html>

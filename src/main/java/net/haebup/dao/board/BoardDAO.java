@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 public class BoardDAO implements IFBoardDAO{
     
-    // 게시물 목록 조회
+    // 게시물 목록 조회 : 게시물 타입에 따른 게시물 목록 조회 p = 자유게시판, n = 공지사항, d : 자료실, c:강의공지 
     @Override  
     public List<BoardDTO> getBoardList(int limit, int offset, String boardType) throws SQLException{
         String sql = "SELECT * FROM board WHERE board_type = ? ORDER BY board_idx DESC LIMIT ? OFFSET ?";
@@ -21,8 +21,6 @@ public class BoardDAO implements IFBoardDAO{
                     BoardDTO boardDTO = new BoardDTO();
                     boardDTO.setBoardIdx(rs.getInt("board_idx"));
                     boardDTO.setBoardType(rs.getString("board_type"));
-                    
-                    
                     boardDTO.setBoardTitle(rs.getString("board_title"));
                     boardDTO.setBoardWriter(rs.getString("board_writer"));
                     boardDTO.setBoardRegdate(rs.getString("board_regdate"));
