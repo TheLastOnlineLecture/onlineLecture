@@ -11,7 +11,7 @@ public class MemberDTO {
     private String userPhone;
     private String userBirth;
     private String userRegdate;
-    private char userType;
+    private String userType;
 
     public String getUserId() {
         return userId;
@@ -85,11 +85,11 @@ public class MemberDTO {
         this.userRegdate = userRegdate;
     }
 
-    public char getUserType() {
+    public String getUserType() {
         return userType;
     }
 
-    public void setUserType(char userType) {
+    public void setUserType(String userType) {
         this.userType = userType;
     }
 	
