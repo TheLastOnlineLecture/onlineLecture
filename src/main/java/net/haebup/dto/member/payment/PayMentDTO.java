@@ -1,18 +1,17 @@
 package net.haebup.dto.member.payment;
 
-public class PayMentDTO {
-	private String paymentIdx;
+public class PaymentDTO {
+	private int paymentIdx;
     private String userId;
     private String lectureCode;
     private String paymentDate;
-    private char paymentStatus;
+    private String paymentStatus;
     private String lectureStartDate;
 
-    public String getPaymentIdx() {
+    public int getPaymentIdx() {
         return paymentIdx;
     }
-
-    public void setPaymentIdx(String paymentIdx) {
+    public void setPaymentIdx(int paymentIdx) {
         this.paymentIdx = paymentIdx;
     }
 
@@ -40,11 +39,11 @@ public class PayMentDTO {
         this.paymentDate = paymentDate;
     }
 
-    public char getPaymentStatus() {
+    public String getPaymentStatus() {
         return paymentStatus;
     }
 
-    public void setPaymentStatus(char paymentStatus) {
+    public void setPaymentStatus(String paymentStatus) {
         this.paymentStatus = paymentStatus;
     }
 
