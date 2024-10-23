@@ -9,24 +9,5 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>GotoCommentList</display-name>
-    <servlet-name>GotoCommentList</servlet-name>
-    <servlet-class>net.haebup.controller.board.comment.GotoCommentList</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GotoCommentList</servlet-name>
-    <url-pattern>/GotoCommentList</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>CommentWriterController</display-name>
-    <servlet-name>CommentWriterController</servlet-name>
-    <servlet-class>net.haebup.controller.board.comment.CommentWriterController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>CommentWriterController</servlet-name>
-    <url-pattern>/CommentWriterController</url-pattern>
-  </servlet-mapping>
+  
 </web-app>
