@@ -2,7 +2,7 @@ package net.haebup.dto.board.comment;
 
 public class BoardCommentDTO {
 	private int commentIdx; 			// 댓글 아이디
-	private int boardIdx;			// 댓글 대상 게시물 아이디
+	private int postIdx;			// 댓글 대상 게시물 아이디
 	private String userId;  		// 댓글 작성자 아이디
 	private String commentContent;	// 댓글 내용
 	private String commentRegdate;		// 댓글 작성일
@@ -14,11 +14,11 @@ public class BoardCommentDTO {
 	public void setCommentIdx(int commentIdx) {
 		this.commentIdx = commentIdx;
 	}
-	public int getBoardIdx() {
-		return boardIdx;
+	public int getPostIdx() {
+		return postIdx;
 	}
-	public void setBoardIdx(int boardIdx) {
-		this.boardIdx = boardIdx;
+	public void setPostIdx(int postIdx) {
+		this.postIdx = postIdx;
 	}
 	public String getUserId() {
 		return userId;

@@ -11,7 +11,7 @@ import net.haebup.utils.DatabaseUtil.*;
 public class FileDAO{
     //해당 게시물의 파일 조회
     public List<FileDTO> selectFileByBoardIdx(int boardIdx) throws SQLException{
-        String sql = "SELECT * FROM file WHERE board_idx = ?";
+        String sql = "SELECT * FROM tbl_file WHERE board_idx = ?";
         List<FileDTO> fileList = new ArrayList<>();
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardIdx})){
@@ -32,7 +32,7 @@ public class FileDAO{
     }
     //해당 게시물의 파일 등록
     public int insertFile(FileDTO fileDTO) throws SQLException{
-        String sql = "INSERT INTO file (board_idx, file_name, file_path,file_size) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO tbl_file (board_idx, file_name, file_path,file_size) VALUES (?, ?, ?, ?)";
         int result = 0;
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{fileDTO.getBoardIdx(), fileDTO.getFileName(), fileDTO.getFilePath(), fileDTO.getFileSize()})){
@@ -45,7 +45,7 @@ public class FileDAO{
     }   
     //해당 게시물의 파일 삭제
     public int deleteFile(int fileIdx) throws SQLException{
-        String sql = "DELETE FROM file WHERE file_idx = ?";
+        String sql = "DELETE FROM tbl_file WHERE file_idx = ?";
         int result = 0;
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{fileIdx})){
