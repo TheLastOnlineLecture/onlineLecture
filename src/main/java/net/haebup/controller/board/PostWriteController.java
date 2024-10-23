@@ -25,9 +25,9 @@ public class PostWriteController extends HttpServlet {
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		BoardDTO boardDTO = new BoardDTO();
-		boardDTO.setBoardType("boardType");  
-	    boardDTO.setBoardTitle("boardTitle");
-	    boardDTO.setBoardContent("boardContent");
+		boardDTO.setBoardType(req.getParameter("boardType"));  
+	    boardDTO.setBoardTitle(req.getParameter("boardTitle"));
+	    boardDTO.setBoardContent(req.getParameter("boardContent"));
 	    boardDTO.setBoardWriter(req.getParameter("userId"));
 		    
 		BoardDAO boardDAO = new BoardDAO();
