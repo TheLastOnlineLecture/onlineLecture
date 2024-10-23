@@ -1,9 +1,14 @@
 package net.haebup.dao.member;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
 import net.haebup.dto.member.MemberDTO;
+import net.haebup.utils.DatabaseUtil.DBConnPool;
+import net.haebup.utils.DatabaseUtil.DbQueryUtil;
 
 public class MemberDAO {
 	
@@ -14,8 +19,22 @@ public class MemberDAO {
 				+ "where user_id = ? ORBER BY regdate=? DESC LIMIT = ? OFFSET = ?";
 		List<MemberDTO> memberList = new ArrayList<MemberDTO>();
 		
-		
-		return null;
+		 try(Connection conn = DBConnPool.getConnection();
+		            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{limit,offset,userId})){
+		                ResultSet rs = dbUtil.executeQuery();
+		                while(rs.next()){
+		                    MemberDTO memberDTO = new MemberDTO();
+		                    memberDTO.setUserId(rs.getString("user_id"));
+		                    memberDTO.setUserName(rs.getString("user_name"));
+		                    memberDTO.setUserNickname(rs.getString("user_nickname"));
+		                    memberDTO.setUserType(rs.getString("user_type"));
+		                    memberList.add(memberDTO);
+		                }
+		                return memberList;
+		        }catch(SQLException e){
+		            e.printStackTrace();
+		            throw new RuntimeException("오류확인."+e);
+		        }
 	}
 	
 	// 회원가입 
@@ -39,7 +58,7 @@ public class MemberDAO {
 	
 	// 선생님 로그인
 	public MemberDTO loginTeacher(MemberDTO memberDto) {
-		String sql = "SELECT user_id, password FROM tbl_member user_id WHERE user_type =?";
+		String sql = "SELECT user_id, `password` FROM tbl_member user_id WHERE user_type =?";
 		
 		
 		return null;
@@ -47,7 +66,7 @@ public class MemberDAO {
 	
 	// 관리자 로그인
 	public MemberDTO loginAdmin(MemberDTO memberDto) {
-		String sql = "SELECT user_id, password FROM tbl_member user_id WHERE user_type =?";
+		String sql = "SELECT user_id, `password` FROM tbl_member user_id WHERE user_type =?";
 		
 		
 		return null;
@@ -56,7 +75,7 @@ public class MemberDAO {
 	
 	// 회원정보수정 ( 닉네임, 이메일, 핸드폰 가능) (관리자는 타입변경 가능)
 	public MemberDTO updateUserInfo(MemberDTO memberDto){
-		String sql = "UPDATE tbl_member user_nickname, user_phone, user_email WHERE user_id = ? ";
+		String sql = "UPDATE tbl_member user_nickname =? , user_phone =?, user_email=? WHERE user_id = ? ";
 		
 		return null;
 	}
@@ -77,7 +96,13 @@ public class MemberDAO {
 	}
 	
 	
-	// 추후 추가
+	
+	
+	
+	//============= 추후 추가 =================
+	
+	
+	
 	
 	
 	// 아이디 찾기
