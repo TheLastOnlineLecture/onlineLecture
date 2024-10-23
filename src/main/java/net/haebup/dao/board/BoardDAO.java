@@ -144,10 +144,10 @@ public class BoardDAO implements IFBoardDAO{
 
     @Override
     public int insertBoard(BoardDTO boardDTO) throws SQLException{
-        String sql = "INSERT INTO board (board_type, board_title, board_content, board_writer) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO tbl_board (board_type, board_title, board_content, board_writer) VALUES (?, ?, ?, ?)";
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardDTO.getBoardType(),boardDTO.getBoardTitle(),boardDTO.getBoardContent(),boardDTO.getBoardWriter()})){
-                return dbUtil.executeUpdate();
+        	return dbUtil.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
             throw new RuntimeException("게시물 등록 중 오류가 발생하였습니다."+e);

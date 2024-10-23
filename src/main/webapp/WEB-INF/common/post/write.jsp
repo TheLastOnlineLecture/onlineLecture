@@ -9,7 +9,7 @@
 <body>
 <h3> 자유게시글 작성  </h3>
 
-<form action="/insertBoard.do"" method="post">
+<form action="/postWrite.do" method="post">
         <label for="boardType">게시판 유형:</label>
         <input type="text"  name="boardType" required><br>
 
