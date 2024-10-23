@@ -27,3 +27,4 @@ CREATE TABLE `STUDENT_LECTURE_PROGRESS` (
 학생 상세강의 수강 진행 정보 추가
 */
 
+

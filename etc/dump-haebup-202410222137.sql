@@ -406,4 +406,8 @@ CREATE TABLE `STUDENT_LECTURE_PROGRESS` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci COMMENT='학생 상세강의 수강 진행 정보';
 /*
 학생 상세강의 수강 진행 정보 추가
+  */
+  alter table `tbl_board` add constraint `fk_board_category` FOREIGN KEY (`board_category`) REFERENCES `TBL_LECTURE` (`lecture_code`);
+/*
+게시판 유형 추가
 */

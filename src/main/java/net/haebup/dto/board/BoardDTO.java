@@ -5,7 +5,7 @@ public class BoardDTO {
 	private String boardTitle;		// 게시물 제목
 	private String boardContent;		// 게시물 내용
 	private String boardRegdate;		// 게시물 등록일
-	private char boardType;		// 게시물 유형 (P: 자유게시판, N: 공지사항, D: 자료실, C: 강의 공지, R: 수강후기)
+	private String boardType;		// 게시물 유형 (P: 자유게시판, N: 공지사항, D: 자료실, C: 강의 공지, R: 수강후기)
 	private String boardWriter;		// 게시물 작성자 아이디
 	
 	
@@ -33,10 +33,10 @@ public class BoardDTO {
 	public void setBoardRegdate(String boardRegdate) {
 		this.boardRegdate = boardRegdate;
 	}
-	public char getBoardType() {
+	public String getBoardType() {
 		return boardType;
 	}
-	public void setBoardType(char boardType) {
+	public void setBoardType(String boardType) {
 		this.boardType = boardType;
 	}
 	public String getBoardWriter() {
