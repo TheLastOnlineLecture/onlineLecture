@@ -29,6 +29,7 @@ public class CommentDAO {
         }
         return commentList;
     }
+    
 
     public int insertComment(BoardCommentDTO commentDTO) throws SQLException{
         String sql = "INSERT INTO comment (board_idx, comment_content, user_id) VALUES (?, ?, ?)";
@@ -43,18 +44,18 @@ public class CommentDAO {
         return result;
     }
 
-    public int updateComment(BoardCommentDTO commentDTO) throws SQLException{
-        String sql = "UPDATE comment SET comment_content = ? WHERE comment_idx = ?";
-        int result = 0;
-        try(Connection conn = DBConnPool.getConnection();
-            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{commentDTO.getCommentContent(), commentDTO.getCommentIdx()})){
-                result = dbUtil.executeUpdate();
-        }catch(SQLException e){
-            e.printStackTrace();
-            throw new RuntimeException("댓글 수정 중 오류가 발생하였습니다."+e);
-        }
-        return result;
-    }
+    // public int updateComment(BoardCommentDTO commentDTO) throws SQLException{
+    //     String sql = "UPDATE comment SET comment_content = ? WHERE comment_idx = ?";
+    //     int result = 0;
+    //     try(Connection conn = DBConnPool.getConnection();
+    //         DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{commentDTO.getCommentContent(), commentDTO.getCommentIdx()})){
+    //             result = dbUtil.executeUpdate();
+    //     }catch(SQLException e){
+    //         e.printStackTrace();
+    //         throw new RuntimeException("댓글 수정 중 오류가 발생하였습니다."+e);
+    //     }
+    //     return result;
+    // }
 
     public int deleteComment(int commentIdx) throws SQLException{
         String sql = "DELETE FROM comment WHERE comment_idx = ?";
