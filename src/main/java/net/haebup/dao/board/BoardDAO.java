@@ -20,7 +20,7 @@ public class BoardDAO implements IFBoardDAO{
                 while(rs.next()){
                     BoardDTO boardDTO = new BoardDTO();
                     boardDTO.setBoardIdx(rs.getInt("board_idx"));
-                    boardDTO.setBoardType(rs.getString("board_type").charAt(0));
+                    boardDTO.setBoardType(rs.getString("board_type"));
                     boardDTO.setBoardTitle(rs.getString("board_title"));
                     boardDTO.setBoardWriter(rs.getString("board_writer"));
                     boardDTO.setBoardRegdate(rs.getString("board_regdate"));
@@ -44,7 +44,7 @@ public class BoardDAO implements IFBoardDAO{
                 while(rs.next()){
                     BoardDTO boardDTO = new BoardDTO();
                     boardDTO.setBoardIdx(rs.getInt("board_idx"));
-                    boardDTO.setBoardType(rs.getString("board_type").charAt(0));
+                    boardDTO.setBoardType(rs.getString("board_type"));
                     boardDTO.setBoardTitle(rs.getString("board_title"));
                     boardDTO.setBoardWriter(rs.getString("board_writer"));
                     boardDTO.setBoardRegdate(rs.getString("board_regdate"));
@@ -101,7 +101,7 @@ public class BoardDAO implements IFBoardDAO{
                 if(rs.next()){
                     BoardDTO boardDTO = new BoardDTO();
                     boardDTO.setBoardIdx(rs.getInt("board_idx"));
-                    boardDTO.setBoardType(rs.getString("board_type").charAt(0));
+                    boardDTO.setBoardType(rs.getString("board_type"));
                     boardDTO.setBoardTitle(rs.getString("board_title"));
                     boardDTO.setBoardContent(rs.getString("board_content"));
                     boardDTO.setBoardWriter(rs.getString("board_writer"));

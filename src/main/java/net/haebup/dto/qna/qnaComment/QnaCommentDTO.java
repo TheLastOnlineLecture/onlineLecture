@@ -3,7 +3,7 @@ package net.haebup.dto.qna.qnaComment;
 public class QnaCommentDTO {
 	private int qnaCommentIdx;			// QnA 댓글 아이디
 	private String qnaCommentContent;	// QnA 댓글 내용
-	private String qnaRegdate;			// QnA 댓글 등록일
+	private String qnaCommentRegdate;	// QnA 댓글 등록일
 	private int qnaIdx;					// QnA 아이디
 	private String qnaCommentWriter;	// QnA 댓글 작성자 아이디
 	
@@ -19,11 +19,11 @@ public class QnaCommentDTO {
 	public void setQnaCommentContent(String qnaCommentContent) {
 		this.qnaCommentContent = qnaCommentContent;
 	}
-	public String getQnaRegdate() {
-		return qnaRegdate;
+	public String getQnaCommentRegdate() {
+		return qnaCommentRegdate;
 	}
-	public void setQnaRegdate(String qnaRegdate) {
-		this.qnaRegdate = qnaRegdate;
+	public void setQnaCommentRegdate(String qnaCommentRegdate) {
+		this.qnaCommentRegdate = qnaCommentRegdate;
 	}
 	public int getQnaIdx() {
 		return qnaIdx;
