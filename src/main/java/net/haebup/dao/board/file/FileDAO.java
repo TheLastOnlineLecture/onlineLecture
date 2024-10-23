@@ -57,17 +57,4 @@ public class FileDAO{
         return result;
     }
 
-    public int deleteFileByBoardIdx(int boardIdx) throws SQLException{
-        String sql = "DELETE FROM file WHERE board_idx = ?";
-        int result = 0;
-        try(Connection conn = DBConnPool.getConnection();
-            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardIdx})){
-                result = dbUtil.executeUpdate();
-        }catch(SQLException e){
-            e.printStackTrace();
-            throw new RuntimeException("파일 삭제 중 오류가 발생하였습니다."+e);
-        }
-        return result;
-    }
-    
 }
