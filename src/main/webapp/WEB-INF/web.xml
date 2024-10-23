@@ -28,5 +28,12 @@
   <servlet-mapping>
     <servlet-name>PostWriteController</servlet-name>
     <url-pattern>/PostWriteControllerr</url-pattern>
+    <display-name>MainMoveController</display-name>
+    <servlet-name>MainMoveController</servlet-name>
+    <servlet-class>net.haebup.controller.common.MainMoveController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>MainMoveController</servlet-name>
+    <url-pattern>/MainMoveController</url-pattern>
   </servlet-mapping>
 </web-app>
