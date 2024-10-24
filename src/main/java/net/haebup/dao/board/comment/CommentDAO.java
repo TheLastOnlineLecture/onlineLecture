@@ -10,7 +10,7 @@ import net.haebup.utils.DatabaseUtil.*;
 public class CommentDAO {
     // 댓글 목록 조회
     public List<BoardCommentDTO> selectCommentList(int boardIdx) throws SQLException{
-        String sql = "SELECT * FROM comment WHERE board_idx = ? ORDER BY comment_idx ASC";
+        String sql = "SELECT * FROM tbl_comment WHERE post_idx = ? ORDER BY comment_idx ASC";
         List<BoardCommentDTO> commentList = new ArrayList<>();
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardIdx})){
@@ -18,9 +18,10 @@ public class CommentDAO {
                 while(rs.next()){
                     BoardCommentDTO commentDTO = new BoardCommentDTO();
                     commentDTO.setCommentIdx(rs.getInt("comment_idx"));
-                    commentDTO.setBoardIdx(rs.getInt("board_idx"));
+                    commentDTO.setPostIdx(rs.getInt("post_idx"));
                     commentDTO.setCommentContent(rs.getString("comment_content"));
                     commentDTO.setCommentRegdate(rs.getString("comment_regdate"));
+                    commentDTO.setUserId(rs.getString("user_id"));
                     commentList.add(commentDTO);
                 }
         }catch(SQLException e){
@@ -32,10 +33,10 @@ public class CommentDAO {
     
 
     public int insertComment(BoardCommentDTO commentDTO) throws SQLException{
-        String sql = "INSERT INTO comment (board_idx, comment_content, user_id) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO tbl_comment (post_idx, comment_content, user_id) VALUES (?, ?, ?)";
         int result = 0;
         try(Connection conn = DBConnPool.getConnection();
-            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{commentDTO.getBoardIdx(), commentDTO.getCommentContent(), commentDTO.getUserId()})){
+            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{commentDTO.getPostIdx(), commentDTO.getCommentContent(), commentDTO.getUserId()})){
                 result = dbUtil.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
@@ -58,7 +59,7 @@ public class CommentDAO {
     // }
 
     public int deleteComment(int commentIdx) throws SQLException{
-        String sql = "DELETE FROM comment WHERE comment_idx = ?";
+        String sql = "DELETE FROM tbl_comment WHERE comment_idx = ?";
         int result = 0;
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{commentIdx})){
