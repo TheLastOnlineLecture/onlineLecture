@@ -7,11 +7,9 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebServlet("/goto.do")
+ @WebServlet("/goto.do")
 public class gotoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-       
-	
 	
 	// 페이지 이동
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
@@ -21,7 +19,9 @@ public class gotoController extends HttpServlet {
 		
 		// String path = "WEB-INF/" + pathName + "/" + pageName + ".jsp";
 		// req.getRequestDispatcher(path).forward(req, res);
+		
 		String pageName = req.getParameter("page");
+		System.out.println("goto"+pageName);
 		switch(pageName){
 			case "login":
 				req.getRequestDispatcher("/WEB-INF/common/member/login.jsp").forward(req, res);
@@ -54,6 +54,7 @@ public class gotoController extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		doGet(req,res);
 	}
 
 }

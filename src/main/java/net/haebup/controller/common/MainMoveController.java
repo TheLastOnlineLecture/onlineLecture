@@ -11,27 +11,27 @@ import java.io.IOException;
  * Servlet implementation class MainMoveController
  */
 
-@WebServlet("/main.do")
-public class MainMoveController extends HttpServlet {
-	private static final long serialVersionUID = 1L;
+// @WebServlet("/main.do")
+// public class MainMoveController extends HttpServlet {
+// 	private static final long serialVersionUID = 1L;
 
-	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		String param = req.getParameter("e");
-		String url = "/WEB-INF/" + param + ".jsp";
-		System.out.println(param);
-		System.out.println(url);
+// 	/**
+// 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+// 	 */
+// 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+// 		String param = req.getParameter("e");
+// 		String url = "/WEB-INF/" + param + ".jsp";
+// 		System.out.println(param);
+// 		System.out.println(url);
         
-        req.getRequestDispatcher(url).forward(req, res);
-	}
+//         req.getRequestDispatcher(url).forward(req, res);
+// 	}
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		doGet(req, res);
-	}
+// 	/**
+// 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+// 	 */
+// 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+// 		doGet(req, res);
+// 	}
 
-}
+// }
