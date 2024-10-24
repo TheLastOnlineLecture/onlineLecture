@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.haebup.dao.board.comment.CommentDAO;
 import net.haebup.dto.board.comment.BoardCommentDTO;
+import net.haebup.dto.member.MemberDTO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -20,7 +21,9 @@ public class CommentWriterController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    int postIdx = Integer.parseInt(request.getParameter("boardIdx"));
 	    String commentContent = request.getParameter("commentContent");
-	    String userId = (String) request.getSession().getAttribute("userId");
+	    MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+	    String userId = user.getUserId();    
+        
 	    // 댓글 작성 확인용! 추후 삭제
 	    if (userId == null) {
 	        userId = "user1"; 
