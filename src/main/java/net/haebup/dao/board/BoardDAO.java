@@ -12,7 +12,7 @@ public class BoardDAO implements IFBoardDAO{
     // 게시물 목록 조회 : 게시물 타입에 따른 게시물 목록 조회 p = 자유게시판, n = 공지사항, d : 자료실, c:강의공지 
     @Override  
     public List<BoardDTO> getBoardList(int limit, int offset, String boardType) throws SQLException{
-        String sql = "SELECT * FROM board WHERE board_type = ? ORDER BY board_idx DESC LIMIT ? OFFSET ?";
+        String sql = "SELECT * FROM tbl_board WHERE board_type = ? ORDER BY board_regdate DESC LIMIT ? OFFSET ?";
         List<BoardDTO> boardList = new ArrayList<>();
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardType,limit,offset})){
@@ -32,11 +32,18 @@ public class BoardDAO implements IFBoardDAO{
             throw new RuntimeException("게시물 조회 중 오류가 발생하였습니다."+e);
         }
     }
+    
+    public List<BoardDTO> getBoardListByPage(int pageNo, int pageSize, String boardType) throws SQLException {
+        int limit = pageSize;                          
+        int offset = (pageNo - 1) * pageSize;          
+
+        return getBoardList(limit, offset, boardType);
+    }
 
     // 내 게시물 목록 조회
     @Override
     public List<BoardDTO> getUserBoardList(int limit, int offset, String boardType, String userId) throws SQLException{
-        String sql = "SELECT * FROM board WHERE board_type = ? AND board_writer = ? ORDER BY board_idx DESC LIMIT ? OFFSET ?";
+        String sql = "SELECT * FROM tbl_board WHERE board_type = ? AND board_writer = ? ORDER BY board_idx DESC LIMIT ? OFFSET ?";
         List<BoardDTO> boardList = new ArrayList<>();
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardType,userId,limit,offset})){
@@ -60,7 +67,7 @@ public class BoardDAO implements IFBoardDAO{
     // 게시물 개수 조회
     @Override
     public int getTotalCount(String boardType) throws SQLException{
-        String sql = "SELECT COUNT(*) FROM board WHERE board_type = ?";
+        String sql = "SELECT COUNT(*) FROM tbl_board WHERE board_type = ?";
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardType})){
                 ResultSet rs = dbUtil.executeQuery();
@@ -77,7 +84,7 @@ public class BoardDAO implements IFBoardDAO{
     // 내 게시물 개수 조회
     @Override
     public int getUserTotalCount(String boardType, String userId) throws SQLException{
-        String sql = "SELECT COUNT(*) FROM board WHERE board_type = ? AND board_writer = ?";
+        String sql = "SELECT COUNT(*) FROM tbl_board WHERE board_type = ? AND board_writer = ?";
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardType,userId})){
                 ResultSet rs = dbUtil.executeQuery();
@@ -94,7 +101,7 @@ public class BoardDAO implements IFBoardDAO{
     // 게시물 상세 조회 리턴 null 이면 존재하지 않는 게시물
     @Override
     public BoardDTO getBoardDetail(int boardIdx) throws SQLException{
-        String sql = "SELECT * FROM board WHERE board_idx = ?";
+        String sql = "SELECT * FROM tbl_board WHERE board_idx = ?";
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardIdx})){
                 ResultSet rs = dbUtil.executeQuery();
@@ -118,7 +125,7 @@ public class BoardDAO implements IFBoardDAO{
 
     @Override
     public int deleteByBoardIdx(int boardIdx) throws SQLException{
-        String sql = "DELETE FROM board WHERE board_idx = ?";
+        String sql = "DELETE FROM tbl_board WHERE board_idx = ?";
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardIdx})){
                 return dbUtil.executeUpdate();
@@ -130,7 +137,7 @@ public class BoardDAO implements IFBoardDAO{
 
     @Override
     public int updateBoard(BoardDTO boardDTO) throws SQLException{
-        String sql = "UPDATE board SET board_title = ?, board_content = ? WHERE board_idx = ?";
+        String sql = "UPDATE tbl_board SET board_title = ?, board_content = ? WHERE board_idx = ?";
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardDTO.getBoardTitle(),boardDTO.getBoardContent(),boardDTO.getBoardIdx()})){
                 return dbUtil.executeUpdate();
@@ -142,10 +149,10 @@ public class BoardDAO implements IFBoardDAO{
 
     @Override
     public int insertBoard(BoardDTO boardDTO) throws SQLException{
-        String sql = "INSERT INTO tbl_board (board_type, board_title, board_content, board_writer) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO tbl_tbl_board (board_type, board_title, board_content, board_writer) VALUES (?, ?, ?, ?)";
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardDTO.getBoardType(),boardDTO.getBoardTitle(),boardDTO.getBoardContent(),boardDTO.getBoardWriter()})){
-        	return dbUtil.executeUpdate();
+                return dbUtil.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
             throw new RuntimeException("게시물 등록 중 오류가 발생하였습니다."+e);

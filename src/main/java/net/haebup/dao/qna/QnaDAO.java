@@ -11,7 +11,7 @@ import net.haebup.dto.qna.QnaDTO;
 public class QnaDAO{
     //질문 목록 조회
     public List<QnaDTO> selectQnaListByType(int limit, int offset, String qnaType) throws SQLException{
-        String sql = "SELECT * FROM qna WHERE qna_type = ? ORDER BY qna_idx DESC LIMIT ? OFFSET ?";
+        String sql = "SELECT * FROM tbl_qna WHERE qna_type = ? ORDER BY qna_idx DESC LIMIT ? OFFSET ?";
         List<QnaDTO> qnaList = new ArrayList<>();
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaType, limit, offset})){
@@ -36,7 +36,7 @@ public class QnaDAO{
     //qna_category : 강의 코드 또는 null가능(1대1 질문일경우 질문타입 가능)
     //null 일 경우 일반 QnA (G)
     public int insertQna(QnaDTO qnaDTO) throws SQLException{
-        String sql = "INSERT INTO qna (qna_type,qna_category, qna_title, qna_content) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO tbl_qna (qna_type,qna_category, qna_title, qna_content) VALUES (?, ?, ?, ?)";
         int result = 0;
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaDTO.getQnaType(), qnaDTO.getQnaCategory(), qnaDTO.getQnaTitle(), qnaDTO.getQnaContent()})){
@@ -49,7 +49,7 @@ public class QnaDAO{
     }
 
     public int updateQna(QnaDTO qnaDTO) throws SQLException{
-        String sql = "UPDATE qna SET qna_title = ?, qna_content = ? WHERE qna_idx = ?";
+        String sql = "UPDATE qna SET tbl_qna_title = ?, qna_content = ? WHERE qna_idx = ?";
         int result = 0;
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaDTO.getQnaTitle(), qnaDTO.getQnaContent(), qnaDTO.getQnaIdx()})){
@@ -63,7 +63,7 @@ public class QnaDAO{
 
     //질문 삭제
     public int deleteQna(int qnaIdx) throws SQLException{
-        String sql = "DELETE FROM qna WHERE qna_idx = ?";
+        String sql = "DELETE FROM tbl_qna WHERE qna_idx = ?";
         int result = 0; 
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaIdx})){
@@ -77,7 +77,7 @@ public class QnaDAO{
 
     //질문 상세 조회
     public QnaDTO selectQnaDetail(int qnaIdx) throws SQLException{
-        String sql = "SELECT * FROM qna WHERE qna_idx = ?";
+        String sql = "SELECT * FROM tbl_qna WHERE qna_idx = ?";
         QnaDTO qnaDTO = null;
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaIdx})){

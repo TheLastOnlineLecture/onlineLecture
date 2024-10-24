@@ -28,23 +28,20 @@ public class PostWriteController extends HttpServlet {
 		boardDTO.setBoardType(req.getParameter("boardType"));  
 	    boardDTO.setBoardTitle(req.getParameter("boardTitle"));
 	    boardDTO.setBoardContent(req.getParameter("boardContent"));
-	    boardDTO.setBoardWriter(req.getParameter("userId"));
+	    boardDTO.setBoardWriter(req.getParameter("boardWriter"));
 		    
 		BoardDAO boardDAO = new BoardDAO();
 		
 		int row =0;
 		try {
 			row = boardDAO.insertBoard(boardDTO);
-			
-			
 			if(row>0) {
 				System.out.println("등록 성공");
 				res.sendRedirect("/gotoList.do");
 			}
 			else {
 				System.out.println("등록 실패");
-				res.getWriter().print("<script>  <script>");
-			}
+				res.getWriter().print("<script>alert('등록실패'); location.href='javascript:history.back();';</script>");			}
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
