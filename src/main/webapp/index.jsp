@@ -8,7 +8,7 @@
 <title>chunjaeHaebup</title>
 </head>
 <body>
-	<a href="<c:url value='/main.do?e=main' />" >ㅎㅇ</a>
+	<a href="<c:url value='/main.do' />" >ㅎㅇ</a>
 	
 </body>
 </html>
