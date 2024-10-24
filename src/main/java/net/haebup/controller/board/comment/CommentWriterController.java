@@ -27,9 +27,9 @@ public class CommentWriterController extends HttpServlet {
 	        
 	    }
 
-//	    System.out.println("postIdx: " + postIdx);
-//	    System.out.println("Comment Content: " + commentContent);
-//	    System.out.println("User ID: " + userId);
+	    System.out.println("postIdx: " + postIdx);
+	    System.out.println("Comment Content: " + commentContent);
+	    System.out.println("User ID: " + userId);
 
 	    BoardCommentDTO commentDTO = new BoardCommentDTO();
 	    commentDTO.setPostIdx(postIdx);
@@ -39,7 +39,7 @@ public class CommentWriterController extends HttpServlet {
 	    CommentDAO commentDAO = new CommentDAO();
 	    try {
 	        int result = commentDAO.insertComment(commentDTO); 
-//	        System.out.println("Insert Result: " + result); 
+	        System.out.println("Insert Result: " + result); 
 
 	    } catch (SQLException e) {
 	        e.printStackTrace();

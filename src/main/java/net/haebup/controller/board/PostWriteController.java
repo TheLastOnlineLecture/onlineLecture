@@ -20,12 +20,13 @@ public class PostWriteController extends HttpServlet {
     }
 
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-		res.getWriter().append("Served at: ").append(req.getContextPath());
 	}
 
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
+		String boardType = req.getParameter("type");
+//		System.out.println("타입확인 : "+boardType);
 		BoardDTO boardDTO = new BoardDTO();
-		boardDTO.setBoardType(req.getParameter("boardType"));  
+		boardDTO.setBoardType(boardType);  
 	    boardDTO.setBoardTitle(req.getParameter("boardTitle"));
 	    boardDTO.setBoardContent(req.getParameter("boardContent"));
 	    boardDTO.setBoardWriter(req.getParameter("boardWriter"));
@@ -37,14 +38,14 @@ public class PostWriteController extends HttpServlet {
 			row = boardDAO.insertBoard(boardDTO);
 			if(row>0) {
 				System.out.println("등록 성공");
-				res.sendRedirect("/gotoList.do");
+				res.sendRedirect("/gotoPostList.do");
 			}
 			else {
 				System.out.println("등록 실패");
-				res.getWriter().print("<script>alert('등록실패'); location.href='javascript:history.back();';</script>");			}
+				res.getWriter().print("<script>alert('등록실패'); location.href='javascript:history.back();';</script>");
+				}
 			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

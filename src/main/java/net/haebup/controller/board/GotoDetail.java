@@ -34,20 +34,18 @@ public class GotoDetail extends HttpServlet {
 		
 		 CommentDAO commentDAO = new CommentDAO();
 	        try {
-	            // 댓글 목록 조회
 	            List<BoardCommentDTO> commentList = commentDAO.selectCommentList(boardIdx);
 	            // 출력 값 확인
-	            for (BoardCommentDTO comment : commentList) {
-	            	System.out.println("----------"); 
-	                System.out.println("Comment Index: " + comment.getCommentIdx());
-	                System.out.println("Board Index: " + comment.getPostIdx());
-	                System.out.println("Comment Content: " + comment.getCommentContent());
-	                System.out.println("Comment Registration Date: " + comment.getCommentRegdate());
-	                System.out.println("User ID: " + comment.getUserId());
-	                System.out.println("----------"); 
-	            }
+//	            for (BoardCommentDTO comment : commentList) {
+//	            	System.out.println("-----GotoDetail-----"); 
+//	                System.out.println("Comment Index: " + comment.getCommentIdx());
+//	                System.out.println("Board Index: " + comment.getPostIdx());
+//	                System.out.println("Comment Content: " + comment.getCommentContent());
+//	                System.out.println("Comment Registration Date: " + comment.getCommentRegdate());
+//	                System.out.println("User ID: " + comment.getUserId());
+//	                System.out.println("-----GotoDetail E-----"); 
+//	            }
 	            
-	            // 댓글 리스트를 요청에 추가
 	            request.setAttribute("commentList", commentList);
 	        } catch (SQLException e) {
 	            e.printStackTrace();
