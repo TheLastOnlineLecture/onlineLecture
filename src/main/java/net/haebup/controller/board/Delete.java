@@ -19,11 +19,13 @@ public class Delete extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardIdx = Integer.parseInt(request.getParameter("idx")); 
+		String boardType = request.getParameter("type");
         BoardDAO boardDAO = new BoardDAO();
         
         try {
 			boardDAO.deleteByBoardIdx(boardIdx);
-			response.sendRedirect("gotoPostList.do");
+			request.setAttribute("boardType", boardType);
+			request.getRequestDispatcher("gotoPostList.do").forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

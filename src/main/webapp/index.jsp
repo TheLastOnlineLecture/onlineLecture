@@ -10,6 +10,5 @@
 <body>
 <%-- 	<a href="<c:url value='/main.do?e=main' />" >ㅎㅇ</a> --%>
 <%@ include file="/side.jsp" %>
-	
 </body>
 </html>

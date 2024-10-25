@@ -10,7 +10,7 @@
 <body>
 <h3> 자유게시글 작성  </h3>
 ${boardType}
-<form action="/postWrite.do" method="post">
+<form action="postWrite.do" enctype="multipart/form-data" method="post">
 <input type="hidden" name="type" value="${boardType}"/>
 <!-- 	<label for="boardType">게시판 유형:</label> -->
 <!-- 	<input type="text"  name="boardType" required><br> -->
@@ -25,13 +25,10 @@ ${boardType}
 	<input type="text" name="boardWriter" required><br>
 	
 	<input type="submit" value="등록">
-</form>
-<c:if test="${boardType != 'R'}">
-	<form id="fileFrm" enctype="multipart/form-data">
+	<c:if test="${boardType != 'R'}">
 		<input type="file" name="attachedFile">
-		<input type="submit" value="전송">
-	</form>
-</c:if>
+	</c:if>
+</form>
 
 </body>
 </html>

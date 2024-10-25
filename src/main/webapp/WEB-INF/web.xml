@@ -9,14 +9,4 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>GotoBoardWriteForm</display-name>
-    <servlet-name>GotoBoardWriteForm</servlet-name>
-    <servlet-class>net.haebup.controller.board.GotoBoardWriteForm</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>GotoBoardWriteForm</servlet-name>
-    <url-pattern>/GotoBoardWriteForm</url-pattern>
-  </servlet-mapping>
 </web-app>

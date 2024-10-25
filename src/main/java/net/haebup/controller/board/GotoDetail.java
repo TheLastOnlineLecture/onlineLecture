@@ -7,10 +7,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.haebup.dao.board.BoardDAO;
 import net.haebup.dao.board.comment.CommentDAO;
+import net.haebup.dao.board.file.FileDAO;
 import net.haebup.dto.board.BoardDTO;
 import net.haebup.dto.board.comment.BoardCommentDTO;
+import net.haebup.dto.board.file.FileDTO;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -47,6 +50,23 @@ public class GotoDetail extends HttpServlet {
 //	            }
 	            
 	            request.setAttribute("commentList", commentList);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        FileDAO fileDAO = new FileDAO();
+	        try {
+	            List<FileDTO> fileList = fileDAO.selectFileByBoardIdx(boardIdx);
+	            if (fileList != null && !fileList.isEmpty()) {
+	                for (FileDTO file : fileList) {
+	                    String encodedFilePath = URLEncoder.encode(file.getFilePath(), "UTF-8");
+	                    String encodedFileName = URLEncoder.encode(file.getFileName(), "UTF-8");
+	                    
+	                    file.setFilePath(encodedFilePath);
+	                    file.setFileName(encodedFileName);
+	                }
+	                request.setAttribute("fileList", fileList);  
+	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
