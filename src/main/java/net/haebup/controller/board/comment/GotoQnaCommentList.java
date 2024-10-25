@@ -13,8 +13,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/gotoCommentList.do")
-public class GotoCommentList extends HttpServlet {
+@WebServlet("/gotoQnaCommentList.do")
+public class GotoQnaCommentList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
