@@ -1,1 +1,7 @@
 /build/
+.classpath
+.vscode
+.project
+.idea
+.settings
+.gitignore
