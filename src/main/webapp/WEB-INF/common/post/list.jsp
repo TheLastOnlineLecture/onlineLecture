@@ -36,7 +36,7 @@
 		<td colspan=3>
 			<div class="pagination">
                 <c:if test="${pagination.hasFirstPage()}">
-                    <a href="?pageNo=1"><<</a>
+                    <a href="?pageNo=1"></a>
                 </c:if>
                 <c:if test="${pagination.hasPreviousBlock()}">
                     <a href="?pageNo=${pagination.blockStartPage - 1}"><</a>

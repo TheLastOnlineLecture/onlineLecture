@@ -7,6 +7,10 @@ body {
   color: #333;
 }
 
+.textCenter {
+  text-align: center;
+}
+
 .upBarGroup {
   display: flex;
   width: 100%;
@@ -338,6 +342,16 @@ a {
   font-weight: 900;
   font-size: 30px;
   margin: 0;
+}
+
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainContent {
+  width: 1500px;
 }
 
 .mainContainer1 {

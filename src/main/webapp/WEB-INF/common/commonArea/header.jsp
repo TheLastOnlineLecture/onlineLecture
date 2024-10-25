@@ -36,7 +36,7 @@
 				<nav class="navbarContainer">
 					<div class="navbarMain">
 						<div>
-							<img src="public/logo.png" alt="logo" class="logoImg" />
+							<img src="/public/logo.png" alt="logo" class="logoImg" />
 						</div>
 						<div style="width: 200px"></div>
 						<ul class="navbarGroup">
@@ -79,9 +79,7 @@
 								<button class="loginPopupButton">Login</button>
 								<!-- 로그인하면 여기 유저 이름 들어올 예정 -->
 								<span id="changeLogin"></span>
-								<button onclick="// 나의 학습방 가는 컨트롤러 이건 jsp에 옮기고 jstl로 넣자">
-									나의 학습방</button>
-								<a href="#">마이페이지</a> <a href="#">성적관리</a> <a href="#">결제내역</a>
+								<a href="/goto.do?page=mypage">나의 학습방</a> <a href="/goto.do?page=modify">회원정보 수정</a> <a href="#">결제내역</a>
 								<a href="#">장바구니 목록</a>
 							</div>
 						</div>

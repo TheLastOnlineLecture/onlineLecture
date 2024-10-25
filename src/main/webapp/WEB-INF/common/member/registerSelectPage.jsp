@@ -15,7 +15,7 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
-<link rel="stylesheet" href="/styleGroup/member/registerStyle.css" />
+<link rel="stylesheet" href="/stylegroup/member/registerStyle.css" />
 <!-- link 태그 // -->
 </head>
 <body>
@@ -64,7 +64,7 @@
 		<!-- // 푸터 영역 -->
 		<jsp:include page="../commonArea/footer.jsp" />
 		<!-- 푸터 영역 // -->
-		<script src="/jsGroup/member/registerScript.js"></script>
+		<script src="/jsgroup/member/registerScript.js"></script>
 	</div>
 </body>
 </html>

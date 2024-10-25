@@ -21,6 +21,7 @@ public class gotoController extends HttpServlet {
 		// req.getRequestDispatcher(path).forward(req, res);
 		
 		String pageName = req.getParameter("page");
+		String boardType = req.getParameter("type");  
 		System.out.println("goto"+pageName);
 		switch(pageName){
 			case "login":
@@ -29,16 +30,21 @@ public class gotoController extends HttpServlet {
 			case "register":
 				req.getRequestDispatcher("/WEB-INF/common/member/register.jsp").forward(req, res);
 				break;
+			case "registerSelect":
+				req.getRequestDispatcher("/WEB-INF/common/member/registerSelectPage.jsp").forward(req, res);
+				break;
 			case "modify":
 				req.getRequestDispatcher("/WEB-INF/common/member/modify.jsp").forward(req, res);
 				break;
 			case "mypage":
-				req.getRequestDispatcher("/WEB-INF/common/mypage/mypage.jsp").forward(req, res);
+				req.getRequestDispatcher("/WEB-INF/common/myPage/myPage.jsp").forward(req, res);
 				break;
 			case "user/qna/write":
+				req.setAttribute("boardType", boardType);
 				req.getRequestDispatcher("/WEB-INF/common/qna/write.jsp").forward(req, res);
 				break;
 			case "post/write":
+				req.setAttribute("boardType", boardType);
 				req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
 				break;
 			case "admin/notice/write":

@@ -14,7 +14,7 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
-<link rel="stylesheet" href="/styleGroup/member/modifyMember.css" />
+<link rel="stylesheet" href="/stylegroup/member/modifyMember.css" />
 <!-- link 태그 // -->
 </head>
 <body>
@@ -190,7 +190,7 @@
 		<!-- // 푸터 영역 -->
 		<jsp:include page="../commonArea/footer.jsp" />
 		<!-- 푸터 영역 // -->
-		<script src="/jsGroup/member/modifyMember.js"></script>
+		<script src="/jsgroup/member/modifyMember.js"></script>
 	</div>
 </body>
 </html>
