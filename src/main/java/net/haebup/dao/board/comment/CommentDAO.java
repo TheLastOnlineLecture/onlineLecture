@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import net.haebup.utils.DatabaseUtil.*;
 
 public class CommentDAO {
+
     // 댓글 목록 조회
     public List<BoardCommentDTO> selectCommentList(int boardIdx) throws SQLException{
         String sql = "SELECT * FROM tbl_comment WHERE post_idx = ? ORDER BY comment_idx ASC";
