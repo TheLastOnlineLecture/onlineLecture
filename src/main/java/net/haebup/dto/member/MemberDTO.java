@@ -12,6 +12,15 @@ public class MemberDTO {
     private String userBirth;
     private String userRegdate;
     private String userType;
+    private int mileage;
+
+    public int getMileage() {
+        return mileage;
+    }
+
+    public void setMileage(int mileage) {
+        this.mileage = mileage;
+    }   
 
     public String getUserId() {
         return userId;

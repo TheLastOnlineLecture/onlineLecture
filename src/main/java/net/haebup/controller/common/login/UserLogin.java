@@ -31,8 +31,8 @@ public class UserLogin extends HttpServlet {
 				res.sendRedirect(req.getContextPath()+"/main.do");
 			} else {
 				System.out.println("로그인 실패");
-				req.setAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
-				req.getRequestDispatcher("/goto.do?page=login").forward(req, res);
+				req.setAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
+				res.sendRedirect(req.getContextPath() + "/goto.do?page=login");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

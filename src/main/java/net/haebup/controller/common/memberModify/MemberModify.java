@@ -13,12 +13,14 @@ import net.haebup.dao.member.MemberDAO;
 @WebServlet("/member/common/modify.do")
 public class MemberModify extends HttpServlet {
     protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
-
-        MemberDTO memberDto = (MemberDTO) req.getSession().getAttribute("user");
-        System.out.println(memberDto);
-        String userNickname = req.getParameter("userNickname");
-        String userPhone = req.getParameter("userPhone");
-        String userEmail = req.getParameter("userEmail");
+        MemberDTO memberDto = null;
+        MemberDTO loginUser = (MemberDTO) req.getSession().getAttribute("user");
+        try {
+            memberDto = new MemberDAO().getUserInfo(loginUser.getUserId());
+        } catch (SQLException e) {
+            e.printStackTrace();
+            req.setAttribute("msg", "회원정보조회 중 오류가 발생하였습니다.");
+        }
     //     	// 회원정보수정 ( 닉네임, 이메일, 핸드폰 가능, 멤버타입 변경 가능 ) (관리자는 타입변경 가능)
 	// public int updateUserInfo(MemberDTO memberDto) throws SQLException {
 	// 	String sql = "UPDATE tbl_member SET user_nickname =? , user_phone =? , user_email=? , user_type=? WHERE user_id = ? ";
@@ -31,9 +33,7 @@ public class MemberModify extends HttpServlet {
 	// 		throw new SQLException("회원정보수정 중 오류가 발생하였습니다." + e);
 	// 	}
 	// }
-        memberDto.setUserNickname(userNickname);
-        memberDto.setUserPhone(userPhone);
-        memberDto.setUserEmail(userEmail);
+
         try{
             int result = new MemberDAO().updateUserInfo(memberDto);
             if (result > 0) {

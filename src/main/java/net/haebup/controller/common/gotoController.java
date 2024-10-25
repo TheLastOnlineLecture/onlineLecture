@@ -6,6 +6,8 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.haebup.dto.member.MemberDTO;
+import net.haebup.dao.member.MemberDAO;
+import java.sql.SQLException;
 
 import java.io.IOException;
 // import java.io.PrintWriter;
@@ -13,7 +15,10 @@ import java.io.IOException;
 @WebServlet("/goto.do")
 public class GotoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	
+	// @Override
+	// public void init() throws ServletException {
+	// 	MemberDTO memberDto = new MemberDTO();
+	// }
 	// 페이지 이동
 	protected void doGet(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		
@@ -40,6 +45,12 @@ public class GotoController extends HttpServlet {
 					req.getRequestDispatcher("/goto.do?page=login").forward(req, res);
 					return;
 				}else{
+					try {
+						memberDto = new MemberDAO().getUserInfo(memberDto.getUserId());
+						req.setAttribute("modifyUser", memberDto);
+					} catch (SQLException e) {
+						e.printStackTrace();
+					}
 					req.getRequestDispatcher("/WEB-INF/common/member/modify.jsp").forward(req, res);
 				}
 				break;

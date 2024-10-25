@@ -52,6 +52,44 @@ public class MemberDAO {
 			throw new RuntimeException("회원가입 중 오류가 발생하였습니다." + e);
 		}
 	}
+	// 회원정보 조회
+	public MemberDTO getUserInfo(String userId) throws SQLException {
+		MemberDTO memberDto = new MemberDTO();
+		String sql = "SELECT user_id, user_type,user_name,user_nickname,user_email,user_phone FROM tbl_member WHERE user_id = ?";
+		try (Connection conn = DBConnPool.getConnection();
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new String[] { userId })) {
+			ResultSet rs = dbUtil.executeQuery();
+			if (rs.next()) {
+				memberDto.setUserType(rs.getString("user_type"));
+				memberDto.setUserId(rs.getString("user_id"));
+				memberDto.setUserName(rs.getString("user_name"));
+				memberDto.setUserNickname(rs.getString("user_nickname"));
+				memberDto.setUserEmail(rs.getString("user_email"));
+				memberDto.setUserPhone(rs.getString("user_phone"));
+				return memberDto;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SQLException("회원정보 조회 중 오류가 발생하였습니다." + e);
+		}
+		return null;
+	}
+
+	//마일리지 조회
+	public int getMileage(String userId) throws SQLException {
+		String sql = "SELECT mileage FROM tbl_member WHERE user_id = ?";
+		try (Connection conn = DBConnPool.getConnection();
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new String[] { userId })) {
+			ResultSet rs = dbUtil.executeQuery();
+			if (rs.next()) {
+				return rs.getInt("mileage");
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new SQLException("마일리지 조회 중 오류가 발생하였습니다." + e);
+		}
+		return 0;
+	}
 
 	// 학생 로그인
 	public MemberDTO loginStudent(String userId) throws SQLException {
@@ -180,6 +218,15 @@ public class MemberDAO {
                 return dbUtil.executeUpdate();
         }
 	}
+	
+	public int updateMileage(String userId, int newMileage) throws SQLException {
+		String sql = "UPDATE tbl_member SET mileage = ? WHERE user_id = ?";
+		try (Connection conn = DBConnPool.getConnection();
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { newMileage, userId })) {
+			return dbUtil.executeUpdate();
+		}
+	}
+
 
 	
 

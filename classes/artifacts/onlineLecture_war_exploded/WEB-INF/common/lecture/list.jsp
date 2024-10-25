@@ -6,6 +6,9 @@
     <meta charset="UTF-8">
     <title>강의 목록</title>
     <script>
+    <c:if test="${message != null}">
+        alert('${message}');
+    </c:if>
     function addToCart(lectureCode) {
         fetch('${pageContext.request.contextPath}/lecture/user/insertCart.do', {
             method: 'POST',
