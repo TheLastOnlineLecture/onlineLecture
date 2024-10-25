@@ -41,7 +41,8 @@ public class gotoQnaList extends HttpServlet {
             request.setAttribute("pagination", pagination);       
             
             
-            // P 자유게시판 D 자료실 N 공지사항 C 강의공지 R 수강후기
+            // G 관리자 1:1 , T 선생님 Qna
+            // T 선생님일때 강의코드 받기?
             switch(qnaType) {
             	case "G" :  
             		request.getRequestDispatcher("WEB-INF/common/post/list.jsp").forward(request, response);

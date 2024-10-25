@@ -33,6 +33,7 @@ public class QnaDAO{
         return qnaList;
     }
     
+    //페이징
     public List<QnaDTO> getQnaListByPage(int pageNo, int pageSize, String boardType) throws SQLException {
         int limit = pageSize;                          
         int offset = (pageNo - 1) * pageSize;          
@@ -40,6 +41,7 @@ public class QnaDAO{
         return getQnaListByPage(limit, offset, boardType);
     }
     
+    // 전체Qna 수
     public int getTotalCount(String qnaType) throws SQLException{
         String sql = "SELECT COUNT(*) FROM tbl_qna WHERE qna_type = ?";
         try(Connection conn = DBConnPool.getConnection();
