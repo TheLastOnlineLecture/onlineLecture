@@ -17,9 +17,11 @@ public class UserLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String userId = req.getParameter("userId");
 		String userPwd = req.getParameter("userPwd");
+		// String userType = req.getParameter("userType");
 		MemberDTO user = null;
 		System.out.println(userId);
 		System.out.println(userPwd);
+		// System.out.println(userType);
 		try {
 			user = new MemberDAO().loginStudent(userId);
 			if (user != null && user.getUserPwd().equals(userPwd)) {

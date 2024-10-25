@@ -40,7 +40,7 @@ public class MemberDAO {
 	// 회원가입
 	public int insertUser(MemberDTO memberDto) throws SQLException {
 		String sql = "INSERT INTO `TBL_MEMBER` (user_id, user_pwd, user_name, user_nickname, "
-				+ "user_email, user_phone, user_birthday ,user_type) value(?, ?, ?, ?, ?, ?, ?, 'S01')";
+				+ "user_email, user_phone, user_birth ,user_type) value(?, ?, ?, ?, ?, ?, ?, 'S01')";
 		try (Connection conn = DBConnPool.getConnection();
 				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql,
 						new Object[] { memberDto.getUserId(), memberDto.getUserPwd(), memberDto.getUserName(),
@@ -53,17 +53,70 @@ public class MemberDAO {
 		}
 	}
 
-	// 로그인
+	// 학생 로그인
 	public MemberDTO loginStudent(String userId) throws SQLException {
-		String sql = "SELECT user_id, user_pwd,user_type FROM tbl_member WHERE user_id = ? AND user_type != 'N'";
+		String sql = "SELECT user_id, user_pwd, user_type,user_name,user_nickname,user_email,user_phone FROM tbl_member WHERE user_id = ? AND user_type LIKE 'S%' AND user_type != 'N'";
 		try (Connection conn = DBConnPool.getConnection();
 				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new String[] { userId })) {
 			ResultSet rs = dbUtil.executeQuery();
 			MemberDTO memberDto = new MemberDTO();
 			if (rs.next()) {
 				memberDto.setUserType(rs.getString("user_type"));
+				// memberDto.setUserType("S");
 				memberDto.setUserPwd(rs.getString("user_pwd"));
 				memberDto.setUserId(rs.getString("user_id"));
+				memberDto.setUserName(rs.getString("user_name"));
+				memberDto.setUserNickname(rs.getString("user_nickname"));
+				memberDto.setUserEmail(rs.getString("user_email"));
+				memberDto.setUserPhone(rs.getString("user_phone"));
+				return memberDto;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("로그인 중 오류가 발생하였습니다." + e);
+		}
+		return null;
+	}
+	// 선생님 로그인
+	public MemberDTO loginTeacher(String userId) throws SQLException {
+		String sql = "SELECT user_id, user_pwd, user_type,user_name,user_nickname,user_email,user_phone FROM tbl_member WHERE user_id = ? AND user_type LIKE 'T%' AND user_type != 'N'";
+		try (Connection conn = DBConnPool.getConnection();
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new String[] { userId })) {
+			ResultSet rs = dbUtil.executeQuery();
+			MemberDTO memberDto = new MemberDTO();
+			if (rs.next()) {
+				// memberDto.setUserType(rs.getString("user_type"));
+				memberDto.setUserType("T");
+				memberDto.setUserPwd(rs.getString("user_pwd"));
+				memberDto.setUserId(rs.getString("user_id"));
+				memberDto.setUserName(rs.getString("user_name"));
+				memberDto.setUserNickname(rs.getString("user_nickname"));
+				memberDto.setUserEmail(rs.getString("user_email"));
+				memberDto.setUserPhone(rs.getString("user_phone"));
+				return memberDto;
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new RuntimeException("로그인 중 오류가 발생하였습니다." + e);
+		}
+		return null;
+	}
+	//어드민 로그인
+	public MemberDTO loginAdmin(String userId) throws SQLException {
+		String sql = "SELECT user_id, user_pwd, user_type,user_name,user_nickname,user_email,user_phone FROM tbl_member WHERE user_id = ? AND user_type LIKE 'A%' AND user_type != 'N'";
+		try (Connection conn = DBConnPool.getConnection();
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new String[] { userId })) {
+			ResultSet rs = dbUtil.executeQuery();
+			MemberDTO memberDto = new MemberDTO();
+			if (rs.next()) {
+				// memberDto.setUserType(rs.getString("user_type"));
+				memberDto.setUserType("A");
+				memberDto.setUserPwd(rs.getString("user_pwd"));
+				memberDto.setUserId(rs.getString("user_id"));
+				memberDto.setUserName(rs.getString("user_name"));
+				memberDto.setUserNickname(rs.getString("user_nickname"));
+				memberDto.setUserEmail(rs.getString("user_email"));
+				memberDto.setUserPhone(rs.getString("user_phone"));
 				return memberDto;
 			}
 		} catch (SQLException e) {
@@ -73,9 +126,9 @@ public class MemberDAO {
 		return null;
 	}
 
-	// 회원정보수정 ( 닉네임, 이메일, 핸드폰 가능, 멤버타입 변경 가능 ) (관리자는 타입변경 가능)
+	// 회원정보수정 ( 닉네임, 이메일, 핸드폰 가능) (관리자는 타입변경 가능)
 	public int updateUserInfo(MemberDTO memberDto) throws SQLException {
-		String sql = "UPDATE tbl_member SET user_nickname =? , user_phone =? , user_email=? , user_type=? WHERE user_id = ? ";
+		String sql = "UPDATE tbl_member SET user_nickname =? , user_phone =? , user_email=? WHERE user_id = ? ";
 		try (Connection conn = DBConnPool.getConnection();
 				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { memberDto.getUserNickname(),
 						memberDto.getUserPhone(), memberDto.getUserEmail(), memberDto.getUserId() })) {

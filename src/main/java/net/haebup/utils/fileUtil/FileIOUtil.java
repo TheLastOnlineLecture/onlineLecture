@@ -13,12 +13,13 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class FileIOUtil {
 
-    //uploads/board
-    private static final String BOARD_UPLOAD_DIR = "uploads" + File.separator + "board";
-    //uploads/lecture/notice
-    private static final String LECTURE_NOTICE_UPLOAD_DIR = "uploads"+File.separator+"lecture"+File.separator+"notice";
-    //uploads/lecture/detail
-    private static final String LECTURE_DETAIL_UPLOAD_DIR = "uploads"+File.separator+"lecture"+File.separator+"detail";
+    // 운영체제에 상관없이 경로 구분자 사용
+    // private static final String BOARD_UPLOAD_DIR = "uploads" + File.separator + "board";
+    // private static final String LECTURE_NOTICE_UPLOAD_DIR = "uploads" + File.separator + "lecture" + File.separator + "notice";
+    // private static final String LECTURE_DETAIL_UPLOAD_DIR = "uploads" + File.separator + "lecture" + File.separator + "detail";
+    private static final String BOARD_UPLOAD_DIR = "D:\\java7\\project\\onlineLecture\\src\\main\\webapp\\uploads\\board";
+    private static final String LECTURE_NOTICE_UPLOAD_DIR = "D:\\java7\\project\\onlineLecture\\src\\main\\webapp\\uploads\\lecture\\notice";
+    private static final String LECTURE_DETAIL_UPLOAD_DIR = "D:\\java7\\project\\onlineLecture\\src\\main\\webapp\\uploads\\lecture\\detail";
 
     
     // 첨부파일 업로드 메서드
@@ -39,7 +40,7 @@ public class FileIOUtil {
 
     private static String uploadFile(HttpServletRequest request, String fieldName, String subDir)
             throws IOException, ServletException {
-        String uploadPath = request.getServletContext().getRealPath("/" + subDir);
+        String uploadPath = request.getServletContext().getRealPath(File.separator + subDir);
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
             uploadDir.mkdirs();
@@ -58,7 +59,7 @@ public class FileIOUtil {
             String filePath = uploadPath + File.separator + uniqueFileName;
 
             filePart.write(filePath);
-            return subDir + "/" + uniqueFileName; // 웹 경로 반환
+            return subDir + File.separator + uniqueFileName; // 웹 경로 반환
         }
         return null;
     }

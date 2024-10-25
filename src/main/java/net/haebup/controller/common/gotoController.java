@@ -5,10 +5,13 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
+import net.haebup.dto.member.MemberDTO;
 
- @WebServlet("/goto.do")
-public class gotoController extends HttpServlet {
+import java.io.IOException;
+// import java.io.PrintWriter;
+
+@WebServlet("/goto.do")
+public class GotoController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 	
 	// 페이지 이동
@@ -19,9 +22,10 @@ public class gotoController extends HttpServlet {
 		
 		// String path = "WEB-INF/" + pathName + "/" + pageName + ".jsp";
 		// req.getRequestDispatcher(path).forward(req, res);
-		
+
 		String pageName = req.getParameter("page");
 		System.out.println("goto"+pageName);
+		
 		switch(pageName){
 			case "login":
 				req.getRequestDispatcher("/WEB-INF/common/member/login.jsp").forward(req, res);
@@ -30,7 +34,14 @@ public class gotoController extends HttpServlet {
 				req.getRequestDispatcher("/WEB-INF/common/member/register.jsp").forward(req, res);
 				break;
 			case "modify":
-				req.getRequestDispatcher("/WEB-INF/common/member/modify.jsp").forward(req, res);
+				MemberDTO memberDto = (MemberDTO) req.getSession().getAttribute("user");
+				if (memberDto == null) {
+					req.setAttribute("error", "로그인 후 이용해주세요.");
+					req.getRequestDispatcher("/goto.do?page=login").forward(req, res);
+					return;
+				}else{
+					req.getRequestDispatcher("/WEB-INF/common/member/modify.jsp").forward(req, res);
+				}
 				break;
 			case "mypage":
 				req.getRequestDispatcher("/WEB-INF/common/mypage/mypage.jsp").forward(req, res);
@@ -48,7 +59,7 @@ public class gotoController extends HttpServlet {
 				req.getRequestDispatcher("/WEB-INF/admin/filePost/write.jsp").forward(req, res);
 				break;
 			default:
-				req.getRequestDispatcher("/WEB-INF/common/index.jsp").forward(req, res);
+				req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, res);
 				break;
 		}
 	}

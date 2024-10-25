@@ -3,11 +3,18 @@ package net.haebup.dto.lecture;
 public class LectureDTO {
 	private String lectureCode;			// 강의 코드
 	private String lectureName;			// 강의 이름
-	private String lecturePrice;		// 강의 가격
-	private String lectureRegdete;		// 강의 등록일
-	private String lectureLimitDete;	// 강의 제한일
-	private String teacherID;			// 강의 선생님 아이디
-	
+	private int lecturePrice;			// 강의 가격
+	private String lectureRegdate;		// 강의 등록일
+	private String lectureLimitDate;		// 강의 제한일
+	private String teacherId;			// 강의 선생님 아이디
+	private String teacherName;			// 강의 선생님 이름
+
+	public String getTeacherName() {
+		return teacherName;
+	}
+	public void setTeacherName(String teacherName) {
+		this.teacherName = teacherName;
+	}	
 	public String getLectureCode() {
 		return lectureCode;
 	}
@@ -20,29 +27,29 @@ public class LectureDTO {
 	public void setLectureName(String lectureName) {
 		this.lectureName = lectureName;
 	}
-	public String getLecturePrice() {
+	public int getLecturePrice() {
 		return lecturePrice;
 	}
-	public void setLecturePrice(String lecturePrice) {
+	public void setLecturePrice(int lecturePrice) {
 		this.lecturePrice = lecturePrice;
 	}
-	public String getLectureRegdete() {
-		return lectureRegdete;
+	public String getLectureRegdate() {
+		return lectureRegdate;
 	}
-	public void setLectureRegdete(String lectureRegdete) {
-		this.lectureRegdete = lectureRegdete;
+	public void setLectureRegdate(String lectureRegdate) {
+		this.lectureRegdate = lectureRegdate;
 	}
-	public String getLectureLimitDete() {
-		return lectureLimitDete;
+	public String getLectureLimitDate() {
+		return lectureLimitDate;
 	}
-	public void setLectureLimitDete(String lectureLimitDete) {
-		this.lectureLimitDete = lectureLimitDete;
+	public void setLectureLimitDate(String lectureLimitDate) {
+		this.lectureLimitDate = lectureLimitDate;
 	}
-	public String getTeacherID() {
-		return teacherID;
+	public String getTeacherId() {
+		return teacherId;
 	}
-	public void setTeacherID(String teacherID) {
-		this.teacherID = teacherID;
+	public void setTeacherId(String teacherId) {
+		this.teacherId = teacherId;
 	}
 
 }
