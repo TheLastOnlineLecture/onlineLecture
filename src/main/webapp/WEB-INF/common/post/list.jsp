@@ -39,26 +39,23 @@
                     <a href="?pageNo=1"></a>
                 </c:if>
                 <c:if test="${pagination.hasPreviousBlock()}">
-                    <a href="?pageNo=${pagination.blockStartPage - 1}"><</a>
+                    <a href="?pageNo=${pagination.blockStartPage - 1}&type=${boardType}"><</a>
                 </c:if>
                 
                 <c:forEach var="i" begin="${pagination.blockStartPage}" end="${pagination.blockEndPage}">
-                    <a href="?pageNo=${i}">${i}</a>
+                    <a href="?pageNo=${i}&type=${boardType}">${i}</a>
                 </c:forEach>
 
                 <c:if test="${pagination.hasNextBlock()}">
-                    <a href="?pageNo=${pagination.blockEndPage + 1}">></a>
+                    <a href="?pageNo=${pagination.blockEndPage + 1}&type=${boardType}">></a>
                 </c:if>
                 <c:if test="${pagination.hasLastPage()}">
-                    <a href="?pageNo=${pagination.totalPages}">>></a>
+                    <a href="?pageNo=${pagination.totalPages}&type=${boardType}">>></a>
                 </c:if>
             </div>
 		</td>
 	</tr>
 </table>
-
-
-
-
+<a href="/goto.do?page=post/write&type=${boardType}">작성</a>
 </body>
 </html>

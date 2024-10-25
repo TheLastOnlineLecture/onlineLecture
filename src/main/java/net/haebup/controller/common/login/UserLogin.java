@@ -17,9 +17,11 @@ public class UserLogin extends HttpServlet {
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws ServletException, IOException {
 		String userId = req.getParameter("userId");
 		String userPwd = req.getParameter("userPwd");
+		// String userType = req.getParameter("userType");
 		MemberDTO user = null;
 		System.out.println(userId);
 		System.out.println(userPwd);
+		// System.out.println(userType);
 		try {
 			user = new MemberDAO().loginStudent(userId);
 			if (user != null && user.getUserPwd().equals(userPwd)) {
@@ -29,8 +31,8 @@ public class UserLogin extends HttpServlet {
 				res.sendRedirect(req.getContextPath()+"/main.do");
 			} else {
 				System.out.println("로그인 실패");
-				req.setAttribute("msg", "아이디 또는 비밀번호가 일치하지 않습니다.");
-				req.getRequestDispatcher("/goto.do?page=login").forward(req, res);
+				req.setAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
+				res.sendRedirect(req.getContextPath() + "/goto.do?page=login");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

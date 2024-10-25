@@ -3,7 +3,9 @@ import java.util.List;
 import net.haebup.dto.board.BoardDTO;
 import net.haebup.utils.DatabaseUtil.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
@@ -147,16 +149,46 @@ public class BoardDAO implements IFBoardDAO{
         }
     }
 
-    @Override
-    public int insertBoard(BoardDTO boardDTO) throws SQLException{
-        String sql = "INSERT INTO tbl_tbl_board (board_type, board_title, board_content, board_writer) VALUES (?, ?, ?, ?)";
-        try(Connection conn = DBConnPool.getConnection();
-            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardDTO.getBoardType(),boardDTO.getBoardTitle(),boardDTO.getBoardContent(),boardDTO.getBoardWriter()})){
-                return dbUtil.executeUpdate();
-        }catch(SQLException e){
+//    @Override
+//    public int insertBoard(BoardDTO boardDTO) throws SQLException{
+//        String sql = "INSERT INTO tbl_board (board_type, board_title, board_content, board_writer) VALUES (?, ?, ?, ?)";
+//        try(Connection conn = DBConnPool.getConnection();
+//            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardDTO.getBoardType(),boardDTO.getBoardTitle(),boardDTO.getBoardContent(),boardDTO.getBoardWriter()})){
+//                return dbUtil.executeUpdate();
+//                
+//                
+//        }catch(SQLException e){
+//            e.printStackTrace();
+//            throw new RuntimeException("게시물 등록 중 오류가 발생하였습니다."+e);
+//        }
+//    }
+    
+    public int insertBoard(BoardDTO boardDTO) throws SQLException {
+        String sql = "INSERT INTO tbl_board (board_type, board_title, board_content, board_writer) VALUES (?, ?, ?, ?)";
+        int boardIdx = 0;  // 새로 생성된 게시글의 ID를 저장할 변수
+        
+        try (Connection conn = DBConnPool.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+            
+            pstmt.setString(1, boardDTO.getBoardType());
+            pstmt.setString(2, boardDTO.getBoardTitle());
+            pstmt.setString(3, boardDTO.getBoardContent());
+            pstmt.setString(4, boardDTO.getBoardWriter());
+            
+            int affectedRows = pstmt.executeUpdate();
+            
+            if (affectedRows > 0) {
+                ResultSet rs = pstmt.getGeneratedKeys();
+                if (rs.next()) {
+                	boardIdx = rs.getInt(1);  
+                }
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("게시물 등록 중 오류가 발생하였습니다."+e);
+            throw new RuntimeException("게시물 등록 중 오류가 발생하였습니다." + e);
         }
+        
+        return boardIdx;  
     }
 
 }

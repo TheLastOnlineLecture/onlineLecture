@@ -7,10 +7,13 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.haebup.dao.board.BoardDAO;
 import net.haebup.dao.board.comment.CommentDAO;
+import net.haebup.dao.board.file.FileDAO;
 import net.haebup.dto.board.BoardDTO;
 import net.haebup.dto.board.comment.BoardCommentDTO;
+import net.haebup.dto.board.file.FileDTO;
 
 import java.io.IOException;
+import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.List;
 
@@ -34,21 +37,36 @@ public class GotoDetail extends HttpServlet {
 		
 		 CommentDAO commentDAO = new CommentDAO();
 	        try {
-	            // 댓글 목록 조회
 	            List<BoardCommentDTO> commentList = commentDAO.selectCommentList(boardIdx);
 	            // 출력 값 확인
-	            for (BoardCommentDTO comment : commentList) {
-	            	System.out.println("----------"); 
-	                System.out.println("Comment Index: " + comment.getCommentIdx());
-	                System.out.println("Board Index: " + comment.getPostIdx());
-	                System.out.println("Comment Content: " + comment.getCommentContent());
-	                System.out.println("Comment Registration Date: " + comment.getCommentRegdate());
-	                System.out.println("User ID: " + comment.getUserId());
-	                System.out.println("----------"); 
-	            }
+//	            for (BoardCommentDTO comment : commentList) {
+//	            	System.out.println("-----GotoDetail-----"); 
+//	                System.out.println("Comment Index: " + comment.getCommentIdx());
+//	                System.out.println("Board Index: " + comment.getPostIdx());
+//	                System.out.println("Comment Content: " + comment.getCommentContent());
+//	                System.out.println("Comment Registration Date: " + comment.getCommentRegdate());
+//	                System.out.println("User ID: " + comment.getUserId());
+//	                System.out.println("-----GotoDetail E-----"); 
+//	            }
 	            
-	            // 댓글 리스트를 요청에 추가
 	            request.setAttribute("commentList", commentList);
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        FileDAO fileDAO = new FileDAO();
+	        try {
+	            List<FileDTO> fileList = fileDAO.selectFileByBoardIdx(boardIdx);
+	            if (fileList != null && !fileList.isEmpty()) {
+	                for (FileDTO file : fileList) {
+	                    String encodedFilePath = URLEncoder.encode(file.getFilePath(), "UTF-8");
+	                    String encodedFileName = URLEncoder.encode(file.getFileName(), "UTF-8");
+	                    
+	                    file.setFilePath(encodedFilePath);
+	                    file.setFileName(encodedFileName);
+	                }
+	                request.setAttribute("fileList", fileList);  
+	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
