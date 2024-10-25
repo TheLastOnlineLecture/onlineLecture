@@ -4,9 +4,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="stylegroup/main/styles.css" />
+<link rel="stylesheet" href="/stylegroup/main/styles.css" />
 <meta charset="UTF-8">
-<title>chunjaeHaebup</title>
+<title>upImageBar</title>
 </head>
 <body>
 	<!-- // 맨 위 사진 영역 -->

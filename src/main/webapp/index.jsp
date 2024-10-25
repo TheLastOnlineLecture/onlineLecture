@@ -8,6 +8,8 @@
 <title>chunjaeHaebup</title>
 </head>
 <body>
+	<a href="<c:url value='/main.do' />" >ㅎㅇ</a>
+	
 <%-- 	<a href="<c:url value='/main.do?e=main' />" >ㅎㅇ</a> --%>
 <%@ include file="/side.jsp" %>
 </body>

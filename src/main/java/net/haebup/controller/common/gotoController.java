@@ -39,6 +39,9 @@ public class GotoController extends HttpServlet {
 			case "register":
 				req.getRequestDispatcher("/WEB-INF/common/member/register.jsp").forward(req, res);
 				break;
+			case "registerSelect":
+				req.getRequestDispatcher("/WEB-INF/common/member/registerSelectPage.jsp").forward(req, res);
+				break;
 			case "modify":
 				MemberDTO memberDto = (MemberDTO) req.getSession().getAttribute("user");
 				if (memberDto == null) {
@@ -56,7 +59,7 @@ public class GotoController extends HttpServlet {
 				}
 				break;
 			case "mypage":
-				req.getRequestDispatcher("/WEB-INF/common/mypage/mypage.jsp").forward(req, res);
+				req.getRequestDispatcher("/WEB-INF/common/myPage/myPage.jsp").forward(req, res);
 				break;
 			case "user/qna/write":
 				req.setAttribute("boardType", boardType);
