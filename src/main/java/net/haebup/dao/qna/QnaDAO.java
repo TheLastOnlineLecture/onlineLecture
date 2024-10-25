@@ -5,6 +5,8 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+
+import net.haebup.dto.board.BoardDTO;
 import net.haebup.dto.qna.QnaDTO;
 
 //QnA 유형 G : 일반 QnA, T : 선생님 QnA
@@ -29,6 +31,28 @@ public class QnaDAO{
             throw new RuntimeException("질문 목록 조회 중 오류가 발생하였습니다."+e);
         }
         return qnaList;
+    }
+    
+    public List<QnaDTO> getQnaListByPage(int pageNo, int pageSize, String boardType) throws SQLException {
+        int limit = pageSize;                          
+        int offset = (pageNo - 1) * pageSize;          
+
+        return getQnaListByPage(limit, offset, boardType);
+    }
+    
+    public int getTotalCount(String qnaType) throws SQLException{
+        String sql = "SELECT COUNT(*) FROM tbl_qna WHERE qna_type = ?";
+        try(Connection conn = DBConnPool.getConnection();
+            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaType})){
+                ResultSet rs = dbUtil.executeQuery();
+                if(rs.next()){
+                    return rs.getInt(1);
+                }
+                return 0;
+        }catch(SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException("qna 개수 조회 중 오류가 발생하였습니다."+e);
+        }
     }
 
     //질문 등록

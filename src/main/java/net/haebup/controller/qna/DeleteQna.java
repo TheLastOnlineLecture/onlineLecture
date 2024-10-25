@@ -1,4 +1,4 @@
-package net.haebup.controller.board;
+package net.haebup.controller.qna;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -10,8 +10,8 @@ import net.haebup.dao.board.BoardDAO;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/deletePost.do")
-public class Delete extends HttpServlet {
+@WebServlet("/deleteQna.do")
+public class DeleteQna extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

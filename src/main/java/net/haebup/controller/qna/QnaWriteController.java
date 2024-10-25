@@ -1,4 +1,4 @@
-package net.haebup.controller.board;
+package net.haebup.controller.qna;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.MultipartConfig;
@@ -17,16 +17,13 @@ import net.haebup.utils.fileUtil.FileIOUtil;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/postWrite.do")
+@WebServlet("/qnaWrite.do")
 @MultipartConfig(
 	    maxFileSize = 1024 * 1024 * 1,  // 1MB
 	    maxRequestSize = 1024 * 1024 * 10) // 10MB
-public class PostWriteController extends HttpServlet {
+public class QnaWriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
-    public PostWriteController() {
-        super();
-    }
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}

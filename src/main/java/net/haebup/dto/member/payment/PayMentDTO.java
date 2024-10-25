@@ -1,6 +1,6 @@
 package net.haebup.dto.member.payment;
 
-public class PayMentDTO {
+public class PaymentDTO {
 	private int paymentIdx;
     private String userId;
     private String lectureCode;
