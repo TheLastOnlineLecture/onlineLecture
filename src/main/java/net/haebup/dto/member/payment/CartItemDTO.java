@@ -5,7 +5,9 @@ public class CartItemDTO {
     private String lectureName;
     private int lecturePrice;
     private int paymentIdx;
+    private String teacherName;
 
+    
     // Getters and Setters
     public String getLectureCode() {
         return lectureCode;
@@ -13,6 +15,10 @@ public class CartItemDTO {
 
     public void setLectureCode(String lectureCode) {
         this.lectureCode = lectureCode;
+    }
+
+    public void setTeacherName(String teacherName) {
+        this.teacherName = teacherName;
     }
 
     public String getLectureName() {
@@ -37,5 +43,9 @@ public class CartItemDTO {
 
     public void setPaymentIdx(int paymentIdx) {
         this.paymentIdx = paymentIdx;
+    }
+
+    public String getTeacherName() {
+        return teacherName;
     }
 }

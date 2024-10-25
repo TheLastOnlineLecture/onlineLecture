@@ -65,9 +65,10 @@ public class PaymentDAO {
 
     // 장바구니 조회
     public List<CartItemDTO> getCartListWithDetails(String userId) throws SQLException {
-        String sql = "SELECT p.payment_idx, p.lecture_code, l.lecture_name, l.lecture_price " +
+        String sql = "SELECT p.payment_idx, p.lecture_code, l.lecture_name, l.lecture_price, m.user_name as teacher_name " +
                 "FROM tbl_payment p " +
                 "INNER JOIN tbl_lecture l ON p.lecture_code = l.lecture_code " +
+                "INNER JOIN tbl_member m ON l.teacher_id = m.user_id " +
                 "WHERE p.user_id = ? AND p.payment_status = 'I'";
 
         List<CartItemDTO> cartList = new ArrayList<>();
@@ -81,6 +82,7 @@ public class PaymentDAO {
                 cartItem.setLectureCode(rs.getString("lecture_code"));
                 cartItem.setLectureName(rs.getString("lecture_name"));
                 cartItem.setLecturePrice(rs.getInt("lecture_price"));
+                cartItem.setTeacherName(rs.getString("teacher_name"));
                 cartList.add(cartItem);
             }
         }

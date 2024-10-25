@@ -17,6 +17,7 @@
             <thead>
                 <tr>
                     <th>선택</th>
+                    <th>강사명</th>
                     <th>강의 코드</th>
                     <th>강의명</th>
                     <th>가격</th>
@@ -29,6 +30,7 @@
                             <input type="checkbox" name="selectedLectures" value="${item.lectureCode}" 
                                    data-price="${item.lecturePrice}" onchange="updateTotal()" checked>
                         </td>
+                        <td>${item.teacherName}</td>
                         <td>${item.lectureCode}</td>
                         <td>${item.lectureName}</td>
                         <td><fmt:formatNumber value="${item.lecturePrice}" type="currency" currencySymbol="₩" /></td>
@@ -38,11 +40,21 @@
         </table>
         <div class="total">
             총 결제 금액: <span id="totalAmount">₩0</span>
+            현재 잔액: <span id="mileage">₩${mileage}</span>
+            결제 후 잔액: <span id="afterMileage">₩0</span>
         </div>
         <button type="submit" id="payButton" disabled>결제하기</button>
     </form>
 
     <script>
+        // 결제 후 잔액 계산
+        function calculateAfterMileage() {
+            const totalAmount = document.getElementById('totalAmount').textContent.replace('₩', '');
+            const afterMileage = document.getElementById('mileage').textContent.replace('₩', '') - totalAmount;
+            document.getElementById('afterMileage').textContent = '₩' + afterMileage.toLocaleString();
+        }
+        document.querySelector('input[name="selectedLectures"]').addEventListener('change', calculateAfterMileage);
+
         window.onload = function() {
             updateTotal();
         }

@@ -22,7 +22,7 @@ public class GotoPayment extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         MemberDTO user = (MemberDTO) session.getAttribute("user");
-        
+
         if (user == null) {
             request.setAttribute("error", "로그인 후 이용해주세요.");
             request.getRequestDispatcher("/goto.do?page=login").forward(request, response);
