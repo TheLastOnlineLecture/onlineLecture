@@ -1,4 +1,4 @@
-package net.haebup.controller.board;
+package net.haebup.controller.qna;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -17,8 +17,8 @@ import java.net.URLEncoder;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/gotoPostDetail.do")
-public class GotoDetail extends HttpServlet {
+@WebServlet("/gotoQnaDetail.do")
+public class GotoQnaDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

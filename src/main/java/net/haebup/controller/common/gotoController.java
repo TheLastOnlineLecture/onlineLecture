@@ -29,6 +29,7 @@ public class GotoController extends HttpServlet {
 		// req.getRequestDispatcher(path).forward(req, res);
 
 		String pageName = req.getParameter("page");
+		String boardType = req.getParameter("type");  
 		System.out.println("goto"+pageName);
 		
 		switch(pageName){
@@ -58,9 +59,11 @@ public class GotoController extends HttpServlet {
 				req.getRequestDispatcher("/WEB-INF/common/mypage/mypage.jsp").forward(req, res);
 				break;
 			case "user/qna/write":
+				req.setAttribute("boardType", boardType);
 				req.getRequestDispatcher("/WEB-INF/common/qna/write.jsp").forward(req, res);
 				break;
 			case "post/write":
+				req.setAttribute("boardType", boardType);
 				req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
 				break;
 			case "admin/notice/write":

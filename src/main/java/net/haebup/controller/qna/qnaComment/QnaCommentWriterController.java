@@ -1,4 +1,4 @@
-package net.haebup.controller.board.comment;
+package net.haebup.controller.qna.qnaComment;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -14,8 +14,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/postCommentWrite.do")
-public class CommentWriterController extends HttpServlet {
+@WebServlet("/qnaCommentWrite.do")
+public class QnaCommentWriterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

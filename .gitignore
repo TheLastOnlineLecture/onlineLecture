@@ -1,8 +1,9 @@
 /build/
-.classpath
-.vscode
-.project
+.git
 .idea
-.settings
-.gitignore
 .metadata
+.settings
+.vscode
+.classpath
+.DS_store
+.project

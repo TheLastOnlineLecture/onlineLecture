@@ -1,4 +1,4 @@
-package net.haebup.controller.board;
+package net.haebup.controller.qna;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,7 +11,7 @@ import net.haebup.dto.board.BoardDTO;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/modifyPost.do")
+@WebServlet("/modifyQna.do")
 public class Modify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 

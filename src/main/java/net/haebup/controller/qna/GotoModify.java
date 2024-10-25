@@ -1,4 +1,4 @@
-package net.haebup.controller.board;
+package net.haebup.controller.qna;
 
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
@@ -11,30 +11,26 @@ import net.haebup.dto.board.BoardDTO;
 import java.io.IOException;
 import java.sql.SQLException;
 
-@WebServlet("/modifyPost.do")
-public class Modify extends HttpServlet {
+@WebServlet("/gotoQnaModify.do")
+public class GotoModify extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		 
-		int boardIdx = Integer.parseInt(request.getParameter("idx"));
-        String title = request.getParameter("title");
-        String content = request.getParameter("content");
-
-        BoardDTO boardDTO = new BoardDTO();
-        boardDTO.setBoardIdx(boardIdx);
-        boardDTO.setBoardTitle(title);
-        boardDTO.setBoardContent(content);
-
+		int boardIdx = Integer.parseInt(request.getParameter("idx")); 
         BoardDAO boardDAO = new BoardDAO();
-
-	        try {
-	            boardDAO.updateBoard(boardDTO); 
-	            response.sendRedirect("gotoDetail.do?idx=" + boardIdx); 
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	    }
-	}
+        
+        try {
+            BoardDTO boardDTO = boardDAO.getBoardDetail(boardIdx); 
+            
+            if (boardDTO != null) {
+                request.setAttribute("boardDTO", boardDTO); 
+                request.getRequestDispatcher("WEB-INF/common/post/modify.jsp").forward(request, response); 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+		
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
