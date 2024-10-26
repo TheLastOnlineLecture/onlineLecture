@@ -1,0 +1,129 @@
+.boardContainer {
+  width: 1000px;
+  margin: 20px auto;
+}
+
+.boardFilter {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.boardFilter select,
+.boardFilter input,
+.boardFilter button {
+  padding: 5px;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+}
+
+.boardTable {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.boardTable th,
+.boardTable td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: center;
+}
+
+.boardTable th {
+  background-color: #f5f5f5;
+}
+
+.boardTable .label {
+  padding: 3px 8px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.label.notice {
+  background-color: #ff5b5b;
+  color: white;
+}
+
+.label.free {
+  background-color: #5b9aff;
+  color: white;
+}
+
+.label.qna {
+  background-color: #2ca0a8;
+  color: white;
+}
+
+.label.kor {
+  background-color: #f5a623;
+  color: white;
+}
+
+.label.mat {
+  background-color: #4a90e2;
+  color: white;
+}
+
+.label.eng {
+  background-color: #50e3c2;
+  color: white;
+}
+
+.label.soc {
+  background-color: #7b8e9c;
+  color: white;
+}
+
+.label.sci {
+  background-color: #bd10e0;
+  color: white;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+  margin-top: 20px;
+}
+
+.pagination button {
+  font-size: 16px;
+  border: none;
+  cursor: pointer;
+  background-color: white;
+  padding: 5px 10px;
+}
+
+.pagination button.current-page {
+  color: #008cd6;
+}
+
+.boardFilter button {
+  cursor: pointer;
+}
+
+.areaDeployment {
+  border-top: 1px solid #ddd;
+}
+
+.boardBoxMain {
+  width: 1500px;
+  display: flex;
+  justify-content: space-around;
+}
+
+.boardMenuGroup {
+  border-left: 1px solid #ddd;
+  border-right: 1px solid #ddd;
+}
+
+.boardMenu {
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.boardTopBar {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}

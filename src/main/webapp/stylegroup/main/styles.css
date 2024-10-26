@@ -11,6 +11,11 @@ body {
   text-align: center;
 }
 
+.hoverAction:hover {
+  color: #666;
+  cursor: pointer;
+}
+
 .upBarGroup {
   display: flex;
   width: 100%;

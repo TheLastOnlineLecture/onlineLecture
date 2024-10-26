@@ -27,15 +27,14 @@ public class UserLogin extends HttpServlet {
 			if (user != null && user.getUserPwd().equals(userPwd)) {
 				System.out.println("로그인 성공");
 				req.getSession().setAttribute("user", user);
-				// req.getRequestDispatcher("main.do").forward(req, res);
-				res.sendRedirect(req.getContextPath()+"/main.do");
+				req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, res);
 			} else {
 				System.out.println("로그인 실패");
-				req.setAttribute("error", "아이디 또는 비밀번호가 일치하지 않습니다.");
-				res.sendRedirect(req.getContextPath() + "/goto.do?page=login");
+				req.setAttribute("loginErrorMsg", "아이디 또는 비밀번호가 일치하지 않습니다.");
+				req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, res);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-}
+}	

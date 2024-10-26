@@ -13,6 +13,8 @@ import java.io.IOException;
 import java.sql.SQLException;
 import net.haebup.dao.lecture.LectureDAO;
 import java.util.List;
+import net.haebup.dao.member.payment.PaymentDAO;
+import net.haebup.dto.member.payment.PaymentDTO;
 
 
 @WebServlet("/mypage/common/gotoMypage.do")
@@ -35,12 +37,18 @@ public class Mypage extends HttpServlet {
         LectureDAO lectureDAO = new LectureDAO();
         List<LectureDTO> lectureList = null;
         int lectureTotalCount = 0;
+        List<PaymentDTO> paymentList = null;
         try {
             lectureList = lectureDAO.getLectureListByUserId(memberDTO.getUserId(), true);
             System.out.println("가져온 강의 목록 크기: " + (lectureList != null ? lectureList.size() : "null"));
             
-            lectureTotalCount = lectureDAO.getLectureTotalCountByUserId(memberDTO.getUserId());
+            PaymentDAO paymentDAO = new PaymentDAO();
+            paymentList = paymentDAO.getPaymentListAll(memberDTO.getUserId());
+            // lectureTotalCount = lectureDAO.getLectureTotalCountByUserId(memberDTO.getUserId());
+
             System.out.println("총 강의 수: " + lectureTotalCount);
+
+
         } catch (SQLException e) {
             System.out.println("SQL 예외 발생: " + e.getMessage());
             request.setAttribute("message", "강의 목록 조회 중 오류가 발생하였습니다.");
@@ -50,6 +58,7 @@ public class Mypage extends HttpServlet {
 
         request.setAttribute("lectureList", lectureList);
         request.setAttribute("lectureTotalCount", lectureTotalCount);
+        request.setAttribute("paymentList", paymentList);
         System.out.println("myPage.jsp로 포워딩");
         request.getRequestDispatcher("/WEB-INF/common/myPage/myPage.jsp").forward(request, response);
     }
