@@ -183,5 +183,21 @@ public class PaymentDAO {
         }
         return 0;
     }
-
+    //구매여부 조회
+    public boolean isPaid(String userId, String lectureCode) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM tbl_payment WHERE user_id = ? AND lecture_code = ? AND payment_status = 'P'";
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId, lectureCode })) {
+            ResultSet rs = dbUtil.executeQuery();
+            return rs.getInt(1) > 0;
+        }
+    }
+    //강의 시작일 업데이트
+    public int updateLectureStartDate(String userId, String lectureCode) throws SQLException {
+        String sql = "UPDATE tbl_payment SET lecture_start_date = NOW() WHERE user_id = ? AND lecture_code = ?";
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId, lectureCode })) {
+            return dbUtil.executeUpdate();
+        }
+    }
 }

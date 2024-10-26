@@ -65,7 +65,7 @@
                   <div class="myPageContent">
                     <div class="gang">
                       <p>현재 수강중인<br />강의 갯수</p>
-                      <span>0</span>
+                      <span>${lectureTotalCount}</span>
                     </div>
                   </div>
                 </div>
@@ -87,35 +87,23 @@
           <div class="myStudyVideo">
             <h3>현재 수강중인 강좌</h3>
             <div class="myStudyArea">
-              <!-- 아무것도 없으면 -->
-              <!-- <div>현재 수강중인 강의가 없습니다.</div> -->
-              <div class="myStudyVideoList">
-                <div class="studyCard">
-                  <div class="cardImage">강의 제목 1</div>
-                  <h4>강의 코드 1</h4>
-                  <p>강의 설명</p>
-                </div>
-                <div class="studyCard">
-                  <div class="cardImage">강의 제목 2</div>
-                  <h4>강의 코드 2</h4>
-                  <p>강의 설명</p>
-                </div>
-                <div class="studyCard">
-                  <div class="cardImage">강의 제목 3</div>
-                  <h4>강의 코드 3</h4>
-                  <p>강의 설명</p>
-                </div>
-                <div class="studyCard">
-                  <div class="cardImage">강의 제목 4</div>
-                  <h4>강의 코드 4</h4>
-                  <p>강의 설명</p>
-                </div>
-                <div class="studyCard">
-                  <div class="cardImage">강의 제목 5</div>
-                  <h4>강의 코드 5</h4>
-                  <p>강의 설명</p>
-                </div>
-              </div>
+              <c:choose>
+                <c:when test="${empty lectureList}">
+                  <div>현재 수강중인 강의가 없습니다.</div>
+                </c:when>
+                <c:otherwise>
+                  <div class="myStudyVideoList">
+                    <c:forEach var="lecture" items="${lectureList}">
+                      <div class="studyCard">
+                        <div class="cardImage">${lecture.lectureName}</div>
+                        <h4>${lecture.lectureCode}</h4>
+                        <p>강사: ${lecture.teacherName}</p>
+                        <p>시작일: ${lecture.lectureStartDate}</p>
+                      </div>
+                    </c:forEach>
+                  </div>
+                </c:otherwise>
+              </c:choose>
             </div>
           </div>
         </div>

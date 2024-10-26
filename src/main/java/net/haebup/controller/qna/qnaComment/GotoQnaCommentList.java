@@ -15,7 +15,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/gotoQnaCommentList.do")
+@WebServlet("/member/gotoQnaCommentList.do")
 public class GotoQnaCommentList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -27,11 +27,11 @@ public class GotoQnaCommentList extends HttpServlet {
             // 댓글 목록 조회
             List<QnaCommentDTO> commenQnatList = qnacommentDAO.selectQnaCommentList(qnaIdx);
             System.out.println("Fetched Comment List: " + commenQnatList); 
-            
+
 //            // 조회된 댓글이 있을 경우
 //            if (commentList != null && !commentList.isEmpty()) {
 //                for (BoardCommentDTO comment : commentList) {
-//                    System.out.println("--------------GotocommentListk-------시작"+ 
+//                    System.out.println("--------------GotocommentListk-------시작"+
 //                    				 "+Comment ID: " + comment.getCommentIdx() +
 //                                       ", Content: " + comment.getCommentContent() +
 //                                       ", Registered Date: " + comment.getCommentRegdate() +
@@ -45,9 +45,9 @@ public class GotoQnaCommentList extends HttpServlet {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-		
+
 	}
-    
+
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}

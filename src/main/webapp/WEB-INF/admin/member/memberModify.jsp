@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3> 회원수정  </h3>
+<h3> 회원수정 및 강사 허용 </h3>
 </body>
 </html>
