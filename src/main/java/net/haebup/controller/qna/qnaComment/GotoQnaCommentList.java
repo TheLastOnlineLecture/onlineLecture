@@ -6,7 +6,9 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.haebup.dao.board.comment.CommentDAO;
+import net.haebup.dao.qna.qnaComment.QnaCommentDAO;
 import net.haebup.dto.board.comment.BoardCommentDTO;
+import net.haebup.dto.qna.qnaComment.QnaCommentDTO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,13 +20,13 @@ public class GotoQnaCommentList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int postIdx = Integer.parseInt(request.getParameter("boardIdx"));
-        CommentDAO commentDAO = new CommentDAO();
+		int qnaIdx = Integer.parseInt(request.getParameter("qnaIdx"));
+        QnaCommentDAO qnacommentDAO = new QnaCommentDAO();
         
         try {
             // 댓글 목록 조회
-            List<BoardCommentDTO> commentList = commentDAO.selectCommentList(postIdx);
-            System.out.println("Fetched Comment List: " + commentList); 
+            List<QnaCommentDTO> commenQnatList = qnacommentDAO.selectQnaCommentList(qnaIdx);
+            System.out.println("Fetched Comment List: " + commenQnatList); 
             
 //            // 조회된 댓글이 있을 경우
 //            if (commentList != null && !commentList.isEmpty()) {
@@ -38,8 +40,8 @@ public class GotoQnaCommentList extends HttpServlet {
 //            } else {
 //                System.out.println("No comments board index: " + postIdx);
 //            }
-            request.setAttribute("commentList", commentList); 
-            request.getRequestDispatcher("/gotoPostDetail.do?idx=" + postIdx).forward(request, response); 
+            request.setAttribute("commenQnatList", commenQnatList); 
+            request.getRequestDispatcher("/gotoPostDetail.do?idx=" + qnaIdx).forward(request, response); 
         } catch (SQLException e) {
             e.printStackTrace();
         }
