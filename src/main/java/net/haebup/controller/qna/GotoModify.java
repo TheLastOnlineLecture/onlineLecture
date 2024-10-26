@@ -27,7 +27,7 @@ public class GotoModify extends HttpServlet {
             
             if (qnaDTO != null) {
                 request.setAttribute("qnaDTO", qnaDTO); 
-                request.getRequestDispatcher("WEB-INF/common/post/modify.jsp").forward(request, response); 
+                request.getRequestDispatcher("WEB-INF/common/inquiy/modify.jsp").forward(request, response); 
             }
         } catch (SQLException e) {
             e.printStackTrace();

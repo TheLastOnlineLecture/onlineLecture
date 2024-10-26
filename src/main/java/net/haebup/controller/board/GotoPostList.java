@@ -30,7 +30,16 @@ public class GotoPostList extends HttpServlet {
         try {
             int totalCount = boardDAO.getTotalCount(boardType);
             List<BoardDTO> boardList = boardDAO.getBoardListByPage(pageNo, pageSize, boardType);
-            
+            System.out.println("========게시판 리스트 확인==========");
+            for(BoardDTO boardDTO : boardList) {
+            	System.out.println("idx : "+boardDTO.getBoardIdx());
+            	System.out.println("title  : "+boardDTO.getBoardTitle());
+            	System.out.println("writer : "+boardDTO.getBoardWriter());
+            	System.out.println("reqdate : "+boardDTO.getBoardRegdate());
+            	System.out.println("type : "+boardDTO.getBoardType());
+            }
+            System.out.println("====================");
+
             // 10 -> blockSize 
             Pagination pagination = new Pagination(pageNo, pageSize, totalCount, 10);
 
@@ -42,22 +51,21 @@ public class GotoPostList extends HttpServlet {
             // P 자유게시판 D 자료실 N 공지사항 C 강의공지 R 수강후기
             switch(boardType) {
             	case "P" :  
-            		request.getRequestDispatcher("WEB-INF/common/post/list.jsp").forward(request, response);
+            		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/post/list.jsp").forward(request, response);
             		break;
             	case "D" :  
-            		request.getRequestDispatcher("WEB-INF/common/filePost/list.jsp").forward(request, response);
+            		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/filePost/list.jsp").forward(request, response);
             		break;
             	case "N" :  
-            		request.getRequestDispatcher("WEB-INF/common/noticePost/noticeList.jsp").forward(request, response);
+            		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/noticePost/noticeList.jsp").forward(request, response);
             		break;
-            		
-            		
             	// 강의 코드 필요함
-            	case "C" :  
-            		request.getRequestDispatcher("WEB-INF/common/post/list.jsp").forward(request, response);
+            	case 
+            	"C" :  
+            		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/lectureNoticeList.jsp").forward(request, response);
             		break;
             	case "R" :  
-            		request.getRequestDispatcher("WEB-INF/common/post/list.jsp").forward(request, response);
+            		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/lectureReview.jsp").forward(request, response);
             		break;
             }
 //            System.out.println("Pagination Object: " + pagination);

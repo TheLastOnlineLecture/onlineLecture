@@ -59,7 +59,7 @@ public class QnaWriteController extends HttpServlet {
             if (result > 0) { 
             	System.out.println("게시물 등록 성공!");
             	request.setAttribute("type", qnaType);
-            	request.getRequestDispatcher("/gotoPostList.do").forward(request, response);
+            	request.getRequestDispatcher("/gotoQnaList.do").forward(request, response);
                 }else {
                 response.getWriter().print("<script>alert('게시글 등록 실패'); location.href='javascript:history.back();';</script>");
             }

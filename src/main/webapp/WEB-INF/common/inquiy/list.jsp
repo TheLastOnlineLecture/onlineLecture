@@ -55,6 +55,6 @@
 		</td>
 	</tr>
 </table>
-<a href="/goto.do?page=post/write&type=${qnaType}&qnaCategory=${qnaCategory}">작성</a>
+<a href="/goto.do?page=user/qna/write&type=${qnaType}&qnaCategory=${qnaCategory}">작성</a>
 </body>
 </html>

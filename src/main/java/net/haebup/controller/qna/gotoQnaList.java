@@ -42,7 +42,6 @@ public class gotoQnaList extends HttpServlet {
                 System.out.println("Content: " + qna.getQnaContent());
                 System.out.println("Writer: " + qna.getQnaWriter());
                 System.out.println("Regdate: " + qna.getQnaRegdate());
-                System.out.println("----------------------");
             }
             System.out.println("====================");
             
@@ -66,6 +65,7 @@ public class gotoQnaList extends HttpServlet {
                     request.getRequestDispatcher("WEB-INF/common/lecture/qnaList.jsp").forward(request, response);
                 }
             }
+            System.out.println("Pagination: " + pagination);
 
         } catch (SQLException e) {
             e.printStackTrace();

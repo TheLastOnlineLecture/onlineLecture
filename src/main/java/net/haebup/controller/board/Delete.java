@@ -24,7 +24,8 @@ public class Delete extends HttpServlet {
         
         try {
 			boardDAO.deleteByBoardIdx(boardIdx);
-			request.setAttribute("boardType", boardType);
+			request.setAttribute("type", boardType);
+			
 			request.getRequestDispatcher("gotoPostList.do").forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
