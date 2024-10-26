@@ -15,12 +15,12 @@
 		<th>작성일</th>
 	</tr>
 	<c:choose>
-		<c:when test="${not empty inquiyList}">
-			<c:forEach var="board" items="${boardList}">
+		<c:when test="${not empty qnaList}">
+			<c:forEach var="qna" items="${qnaList}">
 				<tr>
-					<td><a href="gotoPostDetail.do?idx=${board.boardIdx}">${board.boardTitle}</a></td>
-					<td>${board.boardWriter}</td>
-					<td>${board.boardRegdate}</td>
+					<td><a href="gotoPostDetail.do?idx=${qna.qnaIdx}">${qna.qnaTitle}</a></td>
+					<td>${qna.qnaWriter}</td>
+					<td>${qna.qnaRegdate}</td>
 				</tr>
 			</c:forEach>
 		</c:when>
@@ -34,26 +34,25 @@
 		<td colspan=3>
 			<div class="pagination">
                 <c:if test="${pagination.hasFirstPage()}">
-                    <a href="?pageNo=1&type=${boardType}"><<</a>
+                    <a href="?pageNo=1&type=${qnaType}"><<</a>
                 </c:if>
                 <c:if test="${pagination.hasPreviousBlock()}">
-                    <a href="?pageNo=${pagination.blockStartPage - 1}&type=${boardType}"><</a>
+                    <a href="?pageNo=${pagination.blockStartPage - 1}&type=${qnaType}"><</a>
                 </c:if>
                 
                 <c:forEach var="i" begin="${pagination.blockStartPage}" end="${pagination.blockEndPage}">
-                    <a href="?pageNo=${i}&type=${boardType}">${i}</a>
+                    <a href="?pageNo=${i}&type=${qnaType}">${i}</a>
                 </c:forEach>
 
                 <c:if test="${pagination.hasNextBlock()}">
-                    <a href="?pageNo=${pagination.blockEndPage + 1}&type=${boardType}">></a>
+                    <a href="?pageNo=${pagination.blockEndPage + 1}&type=${qnaType}">></a>
                 </c:if>
                 <c:if test="${pagination.hasLastPage()}">
-                    <a href="?pageNo=${pagination.totalPages}&type=${boardType}">>></a>
+                    <a href="?pageNo=${pagination.totalPages}&type=${qnaType}">>></a>
                 </c:if>
             </div>
 		</td>
 	</tr>
 </table>
-<a href="/goto.do?page=post/write&type=${boardType}">작성</a>
 </body>
 </html>

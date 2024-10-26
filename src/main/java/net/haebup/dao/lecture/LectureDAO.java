@@ -224,10 +224,12 @@ public class LectureDAO {
     }
 
     // 선생님 아이디로 강의 목록 조회
+
     public List<LectureDTO> getLectureListByTeacherId(String teacherId) throws SQLException {
         String sql = "SELECT lecture_code, lecture_name FROM TBL_LECTURE WHERE teacher_id = ?";
         List<LectureDTO> lectureList = new ArrayList<>();
         try (Connection conn = DBConnPool.getConnection();
+
                 DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { teacherId })) {
             ResultSet rs = dbUtil.executeQuery();
             while (rs.next()) {
