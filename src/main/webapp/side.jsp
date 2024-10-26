@@ -18,6 +18,8 @@
 <li><a href="gotoQnaList.do?type=G">1:1QNA</a> </li>
 <li><a href="gotoQnaList.do?type=T">선생님의 QNA</a> </li>
 <li><a href="gotoQnaList.do?type=T">강의실의 QNA</a></li>
+<li><a href="gotoQnaList.do?type=T">내가 쓴글 </a></li>
+<li><a href="gotoQnaList.do?type=T">내 댓글</a></li>
 </ul>
 
 </div>
