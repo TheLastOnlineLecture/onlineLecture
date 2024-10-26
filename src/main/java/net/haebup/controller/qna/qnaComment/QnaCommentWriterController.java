@@ -6,8 +6,10 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.haebup.dao.board.comment.CommentDAO;
+import net.haebup.dao.qna.qnaComment.QnaCommentDAO;
 import net.haebup.dto.board.comment.BoardCommentDTO;
 import net.haebup.dto.member.MemberDTO;
+import net.haebup.dto.qna.qnaComment.QnaCommentDTO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -19,8 +21,8 @@ public class QnaCommentWriterController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-	    int postIdx = Integer.parseInt(request.getParameter("boardIdx"));
-	    String commentContent = request.getParameter("commentContent");
+	    int qnaIdx = Integer.parseInt(request.getParameter("qnaIdx"));
+	    String commentQnaContent = request.getParameter("commentQnaContent");
 	    MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 	    String userId = user.getUserId();    
         
@@ -30,18 +32,17 @@ public class QnaCommentWriterController extends HttpServlet {
 	        
 	    }
 
-	    System.out.println("postIdx: " + postIdx);
-	    System.out.println("Comment Content: " + commentContent);
-	    System.out.println("User ID: " + userId);
+	    System.out.println("qnaIdx: " + qnaIdx);
+	    System.out.println("commentQnaContent: " + commentQnaContent);
 
-	    BoardCommentDTO commentDTO = new BoardCommentDTO();
-	    commentDTO.setPostIdx(postIdx);
-	    commentDTO.setCommentContent(commentContent);
-	    commentDTO.setUserId(userId);
+	    QnaCommentDTO qnacommentDTO = new QnaCommentDTO();
+	    qnacommentDTO.setQnaIdx(qnaIdx);
+	    qnacommentDTO.setQnaCommentContent(commentQnaContent);
+	    qnacommentDTO.setQnaCommentWriter(userId);
 
-	    CommentDAO commentDAO = new CommentDAO();
+	    QnaCommentDAO qnacommentDAO = new QnaCommentDAO();
 	    try {
-	        int result = commentDAO.insertComment(commentDTO); 
+	        int result = qnacommentDAO.insertQnaComment(qnacommentDTO); 
 	        System.out.println("Insert Result: " + result); 
 
 	    } catch (SQLException e) {
@@ -49,7 +50,8 @@ public class QnaCommentWriterController extends HttpServlet {
 	        request.setAttribute("errorMessage", "댓글 등록 중 오류가 발생하였습니다.");
 	    }
 
-	    request.getRequestDispatcher("/gotoPostDetail.do?idx=" + postIdx).forward(request, response); 
+	    request.getRequestDispatcher("/gotoQna"
+	    		+ "Detail.do?idx=" + qnaIdx).forward(request, response); 
 	
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

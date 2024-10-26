@@ -13,7 +13,7 @@ import net.haebup.dto.qna.QnaDTO;
 public class QnaDAO{
     //질문 목록 조회
     public List<QnaDTO> selectQnaListByType(int limit, int offset, String qnaType) throws SQLException{
-        String sql = "SELECT * FROM tbl_qna WHERE qna_type = ? ORDER BY qna_idx DESC LIMIT ? OFFSET ?";
+        String sql = "SELECT * FROM tbl_qna WHERE qna_type = ? ORDER BY qna_regdate DESC LIMIT ? OFFSET ?";
         List<QnaDTO> qnaList = new ArrayList<>();
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaType, limit, offset})){
@@ -24,6 +24,9 @@ public class QnaDAO{
                     qnaDTO.setQnaType(rs.getString("qna_type"));
                     qnaDTO.setQnaTitle(rs.getString("qna_title"));
                     qnaDTO.setQnaContent(rs.getString("qna_content"));
+                    qnaDTO.setQnaRegdate(rs.getString("qna_regdate"));
+                    qnaDTO.setQnaWriter(rs.getString("qna_writer"));
+                    qnaDTO.setQnaCategory(rs.getString("qna_category"));
                     qnaList.add(qnaDTO);
                 }
         }catch(SQLException e){
@@ -34,11 +37,11 @@ public class QnaDAO{
     }
     
     //페이징
-    public List<QnaDTO> getQnaListByPage(int pageNo, int pageSize, String boardType) throws SQLException {
+    public List<QnaDTO> getQnaListByPage(int pageNo, int pageSize, String qnaType) throws SQLException {
         int limit = pageSize;                          
         int offset = (pageNo - 1) * pageSize;          
 
-        return getQnaListByPage(limit, offset, boardType);
+        return selectQnaListByType(limit, offset, qnaType);
     }
     
     // 전체Qna 수
@@ -62,10 +65,10 @@ public class QnaDAO{
     //qna_category : 강의 코드 또는 null가능(1대1 질문일경우 질문타입 가능)
     //null 일 경우 일반 QnA (G)
     public int insertQna(QnaDTO qnaDTO) throws SQLException{
-        String sql = "INSERT INTO tbl_qna (qna_type,qna_category, qna_title, qna_content) VALUES (?, ?, ?, ?)";
+        String sql = "INSERT INTO tbl_qna (qna_type,qna_category, qna_title, qna_content, qna_writer) VALUES (?, ?, ?, ?, ?)";
         int result = 0;
         try(Connection conn = DBConnPool.getConnection();
-            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaDTO.getQnaType(), qnaDTO.getQnaCategory(), qnaDTO.getQnaTitle(), qnaDTO.getQnaContent()})){
+            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaDTO.getQnaType(), qnaDTO.getQnaCategory(), qnaDTO.getQnaTitle(), qnaDTO.getQnaContent(), qnaDTO.getQnaWriter()})){
                 result = dbUtil.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
@@ -115,6 +118,9 @@ public class QnaDAO{
                     qnaDTO.setQnaCategory(rs.getString("qna_category"));
                     qnaDTO.setQnaTitle(rs.getString("qna_title"));
                     qnaDTO.setQnaContent(rs.getString("qna_content"));
+                    qnaDTO.setQnaRegdate(rs.getString("qna_regdate"));
+                    qnaDTO.setQnaWriter(rs.getString("qna_writer"));
+                    qnaDTO.setQnaCategory(rs.getString("qna_category"));
                 }
             }
         return qnaDTO;

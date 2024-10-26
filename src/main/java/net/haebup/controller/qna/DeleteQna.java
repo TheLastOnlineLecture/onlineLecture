@@ -6,6 +6,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.haebup.dao.board.BoardDAO;
+import net.haebup.dao.qna.QnaDAO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -18,14 +19,13 @@ public class DeleteQna extends HttpServlet {
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int boardIdx = Integer.parseInt(request.getParameter("idx")); 
-		String boardType = request.getParameter("type");
-        BoardDAO boardDAO = new BoardDAO();
+		int qnaIdx = Integer.parseInt(request.getParameter("idx")); 
+		QnaDAO qnaDAO = new QnaDAO();
         
         try {
-			boardDAO.deleteByBoardIdx(boardIdx);
-			request.setAttribute("boardType", boardType);
-			request.getRequestDispatcher("gotoPostList.do").forward(request, response);
+        	qnaDAO.deleteQna(qnaIdx);
+			request.setAttribute("qnaIdx", qnaIdx);
+			request.getRequestDispatcher("gotoQnaList.do").forward(request, response);
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

@@ -8,9 +8,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import net.haebup.dao.board.BoardDAO;
 import net.haebup.dao.board.comment.CommentDAO;
 import net.haebup.dao.board.file.FileDAO;
+import net.haebup.dao.qna.QnaDAO;
+import net.haebup.dao.qna.qnaComment.QnaCommentDAO;
 import net.haebup.dto.board.BoardDTO;
 import net.haebup.dto.board.comment.BoardCommentDTO;
 import net.haebup.dto.board.file.FileDTO;
+import net.haebup.dto.qna.QnaDTO;
+import net.haebup.dto.qna.qnaComment.QnaCommentDTO;
 
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -22,22 +26,22 @@ public class GotoQnaDetail extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		int boardIdx = Integer.parseInt(request.getParameter("idx"));
-		BoardDAO boardDAO = new BoardDAO();
-		BoardDTO boardDTO = null;
+		int qnaIdx = Integer.parseInt(request.getParameter("idx"));
+		QnaDAO qnaDAO = new QnaDAO();
+		QnaDTO qnaDTO = null;
 
 		try {
-		    boardDTO = boardDAO.getBoardDetail(boardIdx);
-		    if (boardDTO != null) {
-		        request.setAttribute("boardDTO", boardDTO);
+		    qnaDTO = qnaDAO.selectQnaDetail(qnaIdx);
+		    if (qnaDTO != null) {
+		        request.setAttribute("qnaDTO", qnaDTO);
 		    }
 		} catch (SQLException e) {
 		    e.printStackTrace();
 		}
 		
-		 CommentDAO commentDAO = new CommentDAO();
+		 QnaCommentDAO qnacommentDAO = new QnaCommentDAO();
 	        try {
-	            List<BoardCommentDTO> commentList = commentDAO.selectCommentList(boardIdx);
+	            List<QnaCommentDTO> commentQnaList = qnacommentDAO.selectQnaCommentList(qnaIdx);
 	            // 출력 값 확인
 //	            for (BoardCommentDTO comment : commentList) {
 //	            	System.out.println("-----GotoDetail-----"); 
@@ -49,28 +53,11 @@ public class GotoQnaDetail extends HttpServlet {
 //	                System.out.println("-----GotoDetail E-----"); 
 //	            }
 	            
-	            request.setAttribute("commentList", commentList);
+	            request.setAttribute("commentQnaList", commentQnaList);
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
 	        
-	        FileDAO fileDAO = new FileDAO();
-	        try {
-	            List<FileDTO> fileList = fileDAO.selectFileByBoardIdx(boardIdx);
-	            if (fileList != null && !fileList.isEmpty()) {
-	                for (FileDTO file : fileList) {
-	                    String encodedFilePath = URLEncoder.encode(file.getFilePath(), "UTF-8");
-	                    String encodedFileName = URLEncoder.encode(file.getFileName(), "UTF-8");
-	                    
-	                    file.setFilePath(encodedFilePath);
-	                    file.setFileName(encodedFileName);
-	                }
-	                request.setAttribute("fileList", fileList);  
-	            }
-	        } catch (SQLException e) {
-	            e.printStackTrace();
-	        }
-		
 		request.getRequestDispatcher("WEB-INF/common/post/detail.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
