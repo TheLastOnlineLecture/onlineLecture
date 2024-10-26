@@ -244,13 +244,13 @@ public class LectureDAO {
 
     // 유저 아이디로 결제한 강의 목록 조회
     public List<LectureDTO> getLectureListByUserId(String userId, boolean limit) throws SQLException {
-        StringBuilder sql = new StringBuilder("SELECT p.lecture_start_date, p.lecture_code, l.lecture_name, m.user_name as teacher_name ");
-        sql.append("FROM tbl_payment p ");
-        sql.append("INNER JOIN tbl_lecture l ON p.lecture_code = l.lecture_code ");
-        sql.append("INNER JOIN tbl_member m ON l.teacher_id = m.user_id ");
+        StringBuilder sql = new StringBuilder("SELECT p.lecture_start_date, p.lecture_code, l.lecture_name, m.user_name AS teacher_name ");
+        sql.append("FROM TBL_PAYMENT p ");
+        sql.append("INNER JOIN TBL_LECTURE l ON p.lecture_code = l.lecture_code ");
+        sql.append("INNER JOIN TBL_MEMBER m ON l.teacher_id = m.user_id ");
         sql.append("WHERE p.user_id = ? AND p.payment_status = 'P'");
         if (limit) {
-            sql.append(" LIMIT 5");
+            sql.append(" LIMIT 4");
         }
 
         List<LectureDTO> lectureList = new ArrayList<>();
