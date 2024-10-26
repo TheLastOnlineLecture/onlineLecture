@@ -244,13 +244,13 @@ public class LectureDAO {
 
     // 유저 아이디로 결제한 강의 목록 조회
     public List<LectureDTO> getLectureListByUserId(String userId, boolean limit) throws SQLException {
-        StringBuilder sql = new StringBuilder("SELECT p.lecture_start_date, p.lecture_code, l.lecture_name, m.user_name as teacher_name ");
-        sql.append("FROM tbl_payment p ");
-        sql.append("INNER JOIN tbl_lecture l ON p.lecture_code = l.lecture_code ");
-        sql.append("INNER JOIN tbl_member m ON l.teacher_id = m.user_id ");
+        StringBuilder sql = new StringBuilder("SELECT p.lecture_start_date, p.lecture_code, l.lecture_name, m.user_name AS teacher_name ");
+        sql.append("FROM TBL_PAYMENT p ");
+        sql.append("INNER JOIN TBL_LECTURE l ON p.lecture_code = l.lecture_code ");
+        sql.append("INNER JOIN TBL_MEMBER m ON l.teacher_id = m.user_id ");
         sql.append("WHERE p.user_id = ? AND p.payment_status = 'P'");
         if (limit) {
-            sql.append(" LIMIT 5");
+            sql.append(" LIMIT 4");
         }
 
         List<LectureDTO> lectureList = new ArrayList<>();
@@ -260,9 +260,11 @@ public class LectureDAO {
             ResultSet rs = dbUtil.executeQuery();
             while (rs.next()) {
                 LectureDTO lectureDTO = new LectureDTO();
-                lectureDTO.setLectureStartDate(rs.getString("lecture_start_date")); //null 허용
+                String lectureStartDate = rs.getString("lecture_start_date");
+                lectureDTO.setLectureStartDate(lectureStartDate != null ? lectureStartDate : "시작 전");
                 lectureDTO.setLectureCode(rs.getString("lecture_code"));
                 lectureDTO.setLectureName(rs.getString("lecture_name"));
+                lectureDTO.setTeacherName(rs.getString("teacher_name"));
                 lectureList.add(lectureDTO);
             }
         }
@@ -270,11 +272,14 @@ public class LectureDAO {
     }
     //유저아이디로 결제한 강의 총 개수 조회
     public int getLectureTotalCountByUserId(String userId) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM tbl_payment WHERE user_id = ? AND payment_status = 'P'";
+        String sql = "SELECT COUNT(*) AS total FROM TBL_PAYMENT WHERE user_id = ? AND payment_status = 'P'";
         try (Connection conn = DBConnPool.getConnection();
                 DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId })) {
             ResultSet rs = dbUtil.executeQuery();
-            return rs.getInt(1);
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+            return 0; // 결과가 없을 경우 0 반환
         }
     }
 }

@@ -34,6 +34,25 @@ public class PaymentDAO {
             return paymentList;
         }
     }
+    //결제내역 전부 조회
+    public List<PaymentDTO> getPaymentListAll(String userId) throws SQLException {
+        String sql = "SELECT * FROM tbl_payment WHERE user_id = ?";
+        List<PaymentDTO> paymentList = new ArrayList<PaymentDTO>();
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId })) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                PaymentDTO paymentDTO = new PaymentDTO();
+                paymentDTO.setPaymentIdx(rs.getInt("payment_idx"));
+                paymentDTO.setUserId(rs.getString("user_id"));
+                paymentDTO.setLectureCode(rs.getString("lecture_code"));
+                paymentDTO.setPaymentDate(rs.getString("payment_date"));
+                paymentDTO.setPaymentStatus(rs.getString("payment_status"));
+                paymentList.add(paymentDTO);
+            }
+        }
+        return paymentList;
+    }
 
     // 결제내역 총 개수 조회
     public int getPaymentCount(String userId) throws SQLException {
@@ -155,7 +174,7 @@ public class PaymentDAO {
             }
         }
     }
-
+    //총 결제 금액 계산 //안써도 됨
     public int calculateTotalAmount(String userId, List<String> lectureCodes) throws SQLException {
         StringBuilder sql = new StringBuilder(
             "SELECT SUM(l.lecture_price) FROM tbl_payment p " +
