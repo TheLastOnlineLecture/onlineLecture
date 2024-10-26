@@ -78,7 +78,7 @@ public class QnaDAO{
     }
 
     public int updateQna(QnaDTO qnaDTO) throws SQLException{
-        String sql = "UPDATE qna SET tbl_qna_title = ?, qna_content = ? WHERE qna_idx = ?";
+        String sql = "UPDATE tbl_qna SET qna_title = ?, qna_content = ? WHERE qna_idx = ?";
         int result = 0;
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaDTO.getQnaTitle(), qnaDTO.getQnaContent(), qnaDTO.getQnaIdx()})){

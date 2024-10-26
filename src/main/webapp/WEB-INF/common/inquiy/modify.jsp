@@ -8,14 +8,14 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3> 자유게시글 수정 내가 쓴것만 </h3>
+<h3>1:1수정 </h3>
 
 <form method="post" action="modifyQna.do">
-    <input type="hidden" name="idx" value="${qnaDTO.qnaIdx}"/> <!-- 게시글 ID를 hidden 필드로 전송 -->
+    <input type="hidden" name="qnaIdx" value="${qnaDTO.qnaIdx}"/> <!-- 게시글 ID를 hidden 필드로 전송 -->
     <p><strong>제목:</strong></p>
-    <input type="text" name="title" value="${qnaDTO.qnaTitle}" required/>
+    <input type="text" name="qnaTitle" value="${qnaDTO.qnaTitle}" required/>
     <p><strong>내용:</strong></p>
-    <textarea name="content" rows="10" cols="30" required>${qnaDTO.qnaContent}</textarea>
+    <textarea name="qnaContent" rows="10" cols="30" required>${qnaDTO.qnaContent}</textarea>
     <br/>
     <button type="submit">수정 하기</button>
 </form>
