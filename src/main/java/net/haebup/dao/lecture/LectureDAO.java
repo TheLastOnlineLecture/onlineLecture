@@ -260,21 +260,27 @@ public class LectureDAO {
             ResultSet rs = dbUtil.executeQuery();
             while (rs.next()) {
                 LectureDTO lectureDTO = new LectureDTO();
-                lectureDTO.setLectureStartDate(rs.getString("lecture_start_date")); //null 허용
+                String lectureStartDate = rs.getString("lecture_start_date");
+                lectureDTO.setLectureStartDate(lectureStartDate != null ? lectureStartDate : "시작 전");
                 lectureDTO.setLectureCode(rs.getString("lecture_code"));
                 lectureDTO.setLectureName(rs.getString("lecture_name"));
+                lectureDTO.setTeacherName(rs.getString("teacher_name"));
                 lectureList.add(lectureDTO);
             }
         }
         return lectureList;
     }
+    
     //유저아이디로 결제한 강의 총 개수 조회
     public int getLectureTotalCountByUserId(String userId) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM tbl_payment WHERE user_id = ? AND payment_status = 'P'";
+        String sql = "SELECT COUNT(*) AS total FROM TBL_PAYMENT WHERE user_id = ? AND payment_status = 'P'";
         try (Connection conn = DBConnPool.getConnection();
                 DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId })) {
             ResultSet rs = dbUtil.executeQuery();
-            return rs.getInt(1);
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+            return 0; // 결과가 없을 경우 0 반환
         }
     }
 }

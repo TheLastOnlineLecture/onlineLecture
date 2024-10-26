@@ -14,8 +14,8 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
-<link rel="stylesheet" href="/stylegroup/member/myPage.css" />
-<link rel="stylesheet" href="/stylegroup/post/list.css" />
+<link rel="stylesheet" href="/stylegroup/myPage/myPage.css" />
+<link rel="stylesheet" href="/stylegroup/list/list.css" />
 
 <!-- link 태그 // -->
 </head>

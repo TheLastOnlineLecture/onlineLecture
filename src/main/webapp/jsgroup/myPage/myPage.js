@@ -1,7 +1,7 @@
 document.addEventListener("DOMContentLoaded", () => {
   const myLectureButton = document.getElementById("myLectureButton");
 
-  myLectureButton.addEventListener("click", () => {
+myLectureButton.addEventListener("click", () => {
     window.location.href = "/lecture/common/gotoMylecture.do";
   });
 });
