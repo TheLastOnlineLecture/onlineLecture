@@ -22,4 +22,7 @@ public interface IFBoardDAO {
 
     public int insertBoard(BoardDTO boardDTO) throws SQLException;
 
+    public int getTotalCount(String boardType, String searchType, String searchKeyword) throws SQLException;
+
+
 }

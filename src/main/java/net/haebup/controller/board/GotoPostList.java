@@ -24,21 +24,35 @@ public class GotoPostList extends HttpServlet {
 
         int pageNo = pageNoParam != null ? Integer.parseInt(pageNoParam) : 1;      
         int pageSize = pageSizeParam != null ? Integer.parseInt(pageSizeParam) : 10; 
+        
+     // 검색 유형 (title, writer, title+content)
+        String searchType = request.getParameter("searchType");   
+        String searchKeyword = request.getParameter("searchKeyword"); 
 
         BoardDAO boardDAO = new BoardDAO();
 
         try {
-            int totalCount = boardDAO.getTotalCount(boardType);
-            List<BoardDTO> boardList = boardDAO.getBoardListByPage(pageNo, pageSize, boardType);
-            System.out.println("========게시판 리스트 확인==========");
-            for(BoardDTO boardDTO : boardList) {
-            	System.out.println("idx : "+boardDTO.getBoardIdx());
-            	System.out.println("title  : "+boardDTO.getBoardTitle());
-            	System.out.println("writer : "+boardDTO.getBoardWriter());
-            	System.out.println("reqdate : "+boardDTO.getBoardRegdate());
-            	System.out.println("type : "+boardDTO.getBoardType());
-            }
-            System.out.println("====================");
+        	 int totalCount;
+             List<BoardDTO> boardList;
+
+             if (searchKeyword != null && !searchKeyword.isEmpty()) {
+                 totalCount = boardDAO.getTotalCount(boardType, searchType, searchKeyword);
+                 boardList = boardDAO.getSearchBoardList(pageSize, (pageNo - 1) * pageSize, boardType, searchType, searchKeyword);
+             } else {
+                 totalCount = boardDAO.getTotalCount(boardType);
+                 boardList = boardDAO.getBoardListByPage(pageNo, pageSize, boardType);
+             }
+             
+
+             System.out.println("========게시판 리스트 확인==========");
+             for (BoardDTO boardDTO : boardList) {
+                 System.out.println("idx : " + boardDTO.getBoardIdx());
+                 System.out.println("title  : " + boardDTO.getBoardTitle());
+                 System.out.println("writer : " + boardDTO.getBoardWriter());
+                 System.out.println("reqdate : " + boardDTO.getBoardRegdate());
+                 System.out.println("type : " + boardDTO.getBoardType());
+             }
+             System.out.println("====================");
 
             // 10 -> blockSize 
             Pagination pagination = new Pagination(pageNo, pageSize, totalCount, 10);

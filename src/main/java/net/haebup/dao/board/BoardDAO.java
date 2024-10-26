@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.util.ArrayList;
+import java.text.SimpleDateFormat;
 
 public class BoardDAO implements IFBoardDAO{
     
@@ -25,13 +26,63 @@ public class BoardDAO implements IFBoardDAO{
                     boardDTO.setBoardType(rs.getString("board_type"));
                     boardDTO.setBoardTitle(rs.getString("board_title"));
                     boardDTO.setBoardWriter(rs.getString("board_writer"));
-                    boardDTO.setBoardRegdate(rs.getString("board_regdate"));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = dateFormat.format(rs.getTimestamp("board_regdate")); // 날짜 포맷 변환
+                    boardDTO.setBoardRegdate(formattedDate);
                     boardList.add(boardDTO);
                 }
                 return boardList;
         }catch(SQLException e){
             e.printStackTrace();
             throw new RuntimeException("게시물 조회 중 오류가 발생하였습니다."+e);
+        }
+    }
+	
+	public List<BoardDTO> getSearchBoardList(int limit, int offset, String boardType, String searchType, String searchKeyword) throws SQLException {
+        String sql = "SELECT * FROM tbl_board WHERE board_type = ? AND ";
+        
+        if ("title".equals(searchType)) {
+            sql += "board_title LIKE ?";
+        } else if ("writer".equals(searchType)) {
+            sql += "board_writer LIKE ?";
+        } else if ("title_content".equals(searchType)) {
+            sql += "(board_title LIKE ? OR board_content LIKE ?)";
+        } else {
+            throw new IllegalArgumentException("전체게시글리스트 부분 확인");
+        }
+
+        sql += " ORDER BY board_regdate DESC LIMIT ? OFFSET ?";
+
+        List<BoardDTO> boardList = new ArrayList<>();
+        try (Connection conn = DBConnPool.getConnection();
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+            pstmt.setString(1, boardType);
+            if ("title".equals(searchType) || "writer".equals(searchType)) {
+                pstmt.setString(2, "%" + searchKeyword + "%");
+                pstmt.setInt(3, limit);
+                pstmt.setInt(4, offset);
+            } else if ("title_content".equals(searchType)) {
+                pstmt.setString(2, "%" + searchKeyword + "%");
+                pstmt.setString(3, "%" + searchKeyword + "%");
+                pstmt.setInt(4, limit);
+                pstmt.setInt(5, offset);
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+            while (rs.next()) {
+                BoardDTO boardDTO = new BoardDTO();
+                boardDTO.setBoardIdx(rs.getInt("board_idx"));
+                boardDTO.setBoardType(rs.getString("board_type"));
+                boardDTO.setBoardTitle(rs.getString("board_title"));
+                boardDTO.setBoardWriter(rs.getString("board_writer"));
+                boardDTO.setBoardRegdate(rs.getString("board_regdate"));
+                boardList.add(boardDTO);
+            }
+            return boardList;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("게시물 조회 중 오류가 발생하였습니다." + e);
         }
     }
     
@@ -65,7 +116,7 @@ public class BoardDAO implements IFBoardDAO{
             throw new RuntimeException("게시물 조회 중 오류가 발생하였습니다."+e);
         }
     }
-
+    
     // 게시물 개수 조회
     @Override
     public int getTotalCount(String boardType) throws SQLException{
@@ -81,6 +132,43 @@ public class BoardDAO implements IFBoardDAO{
             e.printStackTrace();
             throw new RuntimeException("게시물 개수 조회 중 오류가 발생하였습니다."+e);
         }
+    }
+    
+ // 게시물 개수 조회 (검색 조건 포함)
+    public int getTotalCount(String boardType, String searchType, String searchKeyword) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM tbl_board WHERE board_type = ?";
+        StringBuilder queryBuilder = new StringBuilder(sql);
+
+        if ("title".equals(searchType)) {
+            queryBuilder.append(" AND board_title LIKE ?");
+        } else if ("writer".equals(searchType)) {
+            queryBuilder.append(" AND board_writer LIKE ?");
+        } else if ("title_content".equals(searchType)) {
+            queryBuilder.append(" AND (board_title LIKE ? OR board_content LIKE ?)");
+        }
+
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, queryBuilder.toString(), buildQueryParams(boardType, searchType, searchKeyword))) {
+            
+            ResultSet rs = dbUtil.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("게시물 개수 조회 중 오류가 발생하였습니다." + e);
+        }
+    }
+    
+    // 쿼리 파라미터를 생성하는 메서드
+    private Object[] buildQueryParams(String boardType, String searchType, String searchKeyword) {
+        if (searchType.equals("title") || searchType.equals("writer")) {
+            return new Object[]{boardType, "%" + searchKeyword + "%"};
+        } else if (searchType.equals("title_content")) {
+            return new Object[]{boardType, "%" + searchKeyword + "%", "%" + searchKeyword + "%"};
+        }
+        return new Object[]{boardType}; 
     }
 
     // 내 게시물 개수 조회
@@ -190,9 +278,8 @@ public class BoardDAO implements IFBoardDAO{
         
         return boardIdx;  
     }
+
+	
     
-    //내가 쓴글 조회
-    public List<BoardPost> getPostsByWriter(String writer) {
-        List<BoardPost> posts = new ArrayList<>();
 
 }
