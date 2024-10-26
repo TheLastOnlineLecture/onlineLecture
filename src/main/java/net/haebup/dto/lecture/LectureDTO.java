@@ -8,7 +8,14 @@ public class LectureDTO {
 	private String lectureLimitDate;		// 강의 제한일
 	private String teacherId;			// 강의 선생님 아이디
 	private String teacherName;			// 강의 선생님 이름
+	private String lectureStartDate;	// 강의 시작일
 
+	public String getLectureStartDate() {
+		return lectureStartDate;
+	}
+	public void setLectureStartDate(String lectureStartDate) {
+		this.lectureStartDate = lectureStartDate;
+	}
 	public String getTeacherName() {
 		return teacherName;
 	}

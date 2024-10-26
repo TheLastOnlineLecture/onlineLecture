@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.util.List;
 import java.sql.Connection;
 import net.haebup.dto.lecture.LectureDTO;
+import net.haebup.dto.member.payment.CartItemDTO;
 import net.haebup.utils.DatabaseUtil.DBConnPool;
 import net.haebup.utils.DatabaseUtil.DbQueryUtil;
 import java.util.ArrayList;
@@ -11,9 +12,10 @@ import java.sql.ResultSet;
 
 // LectureDAO: 강의 관련 데이터베이스 작업을 처리하는 클래스
 public class LectureDAO {
-    
+
     // 강의 목록을 조회하는 메소드 (정렬 및 페이징 적용)
-    public List<LectureDTO> getLectureList(String sortBy, String filterBy, String filterValue, int limit, int offset) throws SQLException {
+    public List<LectureDTO> getLectureList(String sortBy, String filterBy, String filterValue, int limit, int offset)
+            throws SQLException {
         StringBuilder sql = new StringBuilder();
         sql.append("SELECT l.lecture_code, l.lecture_name, l.lecture_price, l.lecture_regdate, ");
         sql.append("l.lecture_limit_date, l.teacher_id, m.user_name AS teacher_name ");
@@ -71,7 +73,7 @@ public class LectureDAO {
         List<LectureDTO> lectureList = new ArrayList<>();
 
         try (Connection conn = DBConnPool.getConnection();
-             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql.toString(), params.toArray())) {
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql.toString(), params.toArray())) {
             ResultSet rs = dbUtil.executeQuery();
             while (rs.next()) {
                 LectureDTO lectureDTO = new LectureDTO();
@@ -92,10 +94,10 @@ public class LectureDAO {
     // 강의 코드로 상세 정보를 조회하는 메소드
     public LectureDTO getLectureDetailByCode(String lectureCode) throws SQLException {
         String sql = "SELECT l.*, m.user_name AS teacher_name FROM TBL_LECTURE l " +
-                     "JOIN TBL_MEMBER m ON l.teacher_id = m.user_id " +
-                     "WHERE l.lecture_code = ?";
+                "JOIN TBL_MEMBER m ON l.teacher_id = m.user_id " +
+                "WHERE l.lecture_code = ?";
         try (Connection conn = DBConnPool.getConnection();
-             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{lectureCode})) {
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode })) {
             ResultSet rs = dbUtil.executeQuery();
             if (rs.next()) {
                 return null; // 이 부분은 실제로 LectureDTO 객체를 생성하여 반환해야 함
@@ -128,7 +130,7 @@ public class LectureDAO {
 
         // 데이터베이스 연결 및 쿼리 실행
         try (Connection conn = DBConnPool.getConnection();
-             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql.toString(), params.toArray())) {
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql.toString(), params.toArray())) {
             ResultSet rs = dbUtil.executeQuery();
             if (rs.next()) {
                 return rs.getInt(1);
@@ -143,11 +145,11 @@ public class LectureDAO {
     // 강의 상세 정보를 조회하는 메소드
     public LectureDTO getLectureDetail(String lectureCode) throws SQLException {
         String sql = "SELECT l.*, m.user_name AS teacher_name FROM TBL_LECTURE l " +
-                     "JOIN TBL_MEMBER m ON l.teacher_id = m.user_id " +
-                     "WHERE l.lecture_code = ?";
-        
+                "JOIN TBL_MEMBER m ON l.teacher_id = m.user_id " +
+                "WHERE l.lecture_code = ?";
+
         try (Connection conn = DBConnPool.getConnection();
-             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{lectureCode})) {
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode })) {
             ResultSet rs = dbUtil.executeQuery();
             if (rs.next()) {
                 // 결과셋에서 데이터를 추출하여 LectureDTO 객체 생성
@@ -170,17 +172,18 @@ public class LectureDAO {
 
     // 새로운 강의를 등록하는 메소드
     public int insertLecture(LectureDTO lectureDTO) throws SQLException {
-        String sql = "INSERT INTO TBL_LECTURE (lecture_code, lecture_name, lecture_price, lecture_limit_date, teacher_id) " +
-                     "VALUES (?, ?, ?, ?, ?)";
-        
+        String sql = "INSERT INTO TBL_LECTURE (lecture_code, lecture_name, lecture_price, lecture_limit_date, teacher_id) "
+                +
+                "VALUES (?, ?, ?, ?, ?)";
+
         try (Connection conn = DBConnPool.getConnection();
-             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{
-                 lectureDTO.getLectureCode(),
-                 lectureDTO.getLectureName(),
-                 lectureDTO.getLecturePrice(),
-                 lectureDTO.getLectureLimitDate(),
-                 lectureDTO.getTeacherId()
-             })) {
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] {
+                        lectureDTO.getLectureCode(),
+                        lectureDTO.getLectureName(),
+                        lectureDTO.getLecturePrice(),
+                        lectureDTO.getLectureLimitDate(),
+                        lectureDTO.getTeacherId()
+                })) {
             return dbUtil.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -191,15 +194,15 @@ public class LectureDAO {
     // 강의 정보를 수정하는 메소드
     public int updateLecture(LectureDTO lectureDTO) throws SQLException {
         String sql = "UPDATE TBL_LECTURE SET lecture_name = ?, lecture_price = ?, lecture_limit_date = ? " +
-                     "WHERE lecture_code = ?";
-        
+                "WHERE lecture_code = ?";
+
         try (Connection conn = DBConnPool.getConnection();
-             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{
-                 lectureDTO.getLectureName(),
-                 lectureDTO.getLecturePrice(),
-                 lectureDTO.getLectureLimitDate(),
-                 lectureDTO.getLectureCode()
-             })) {
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] {
+                        lectureDTO.getLectureName(),
+                        lectureDTO.getLecturePrice(),
+                        lectureDTO.getLectureLimitDate(),
+                        lectureDTO.getLectureCode()
+                })) {
             return dbUtil.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -210,14 +213,66 @@ public class LectureDAO {
     // 강의를 삭제하는 메소드
     public int deleteLecture(String lectureCode) throws SQLException {
         String sql = "DELETE FROM TBL_LECTURE WHERE lecture_code = ?";
-        
+
         try (Connection conn = DBConnPool.getConnection();
-             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{lectureCode})) {
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode })) {
             return dbUtil.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             throw new SQLException("강의 삭제 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
-    
+
+    // 선생님 아이디로 강의 목록 조회
+    public List<LectureDTO> getLectureListByTeacherId(String teacherId) throws SQLException {
+        String sql = "SELECT lecture_code, lecture_name FROM TBL_LECTURE WHERE teacher_id = ?";
+        List<LectureDTO> lectureList = new ArrayList<>();
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { teacherId })) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                LectureDTO lectureDTO = new LectureDTO();
+                lectureDTO.setLectureCode(rs.getString("lecture_code"));
+                lectureDTO.setLectureName(rs.getString("lecture_name"));
+                lectureList.add(lectureDTO);
+            }
+        }
+        return lectureList;
+    }
+
+    // 유저 아이디로 결제한 강의 목록 조회
+    public List<LectureDTO> getLectureListByUserId(String userId, boolean limit) throws SQLException {
+        StringBuilder sql = new StringBuilder("SELECT p.lecture_start_date, p.lecture_code, l.lecture_name, m.user_name as teacher_name ");
+        sql.append("FROM tbl_payment p ");
+        sql.append("INNER JOIN tbl_lecture l ON p.lecture_code = l.lecture_code ");
+        sql.append("INNER JOIN tbl_member m ON l.teacher_id = m.user_id ");
+        sql.append("WHERE p.user_id = ? AND p.payment_status = 'P'");
+        if (limit) {
+            sql.append(" LIMIT 5");
+        }
+
+        List<LectureDTO> lectureList = new ArrayList<>();
+
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql.toString(), new Object[] { userId })) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                LectureDTO lectureDTO = new LectureDTO();
+                lectureDTO.setLectureStartDate(rs.getString("lecture_start_date")); //null 허용
+                lectureDTO.setLectureCode(rs.getString("lecture_code"));
+                lectureDTO.setLectureName(rs.getString("lecture_name"));
+                lectureList.add(lectureDTO);
+            }
+        }
+        return lectureList;
+    }
+    //유저아이디로 결제한 강의 총 개수 조회
+    public int getLectureTotalCountByUserId(String userId) throws SQLException {
+        String sql = "SELECT COUNT(*) FROM tbl_payment WHERE user_id = ? AND payment_status = 'P'";
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId })) {
+            ResultSet rs = dbUtil.executeQuery();
+            return rs.getInt(1);
+        }
+    }
 }

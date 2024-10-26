@@ -24,8 +24,8 @@ public class GotoPayment extends HttpServlet {
         MemberDTO user = (MemberDTO) session.getAttribute("user");
 
         if (user == null) {
-            request.setAttribute("error", "로그인 후 이용해주세요.");
-            request.getRequestDispatcher("/goto.do?page=login").forward(request, response);
+            request.setAttribute("message", "로그인 후 이용해주세요.");
+            request.getRequestDispatcher("/WEB-INF/user/login/login.jsp").forward(request, response);
             return;
         }
 

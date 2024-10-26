@@ -13,23 +13,23 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-@WebServlet("/gotoQnaCommentList.do")
+@WebServlet("/member/gotoQnaCommentList.do")
 public class GotoQnaCommentList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int postIdx = Integer.parseInt(request.getParameter("boardIdx"));
         CommentDAO commentDAO = new CommentDAO();
-        
+
         try {
             // 댓글 목록 조회
             List<BoardCommentDTO> commentList = commentDAO.selectCommentList(postIdx);
-            System.out.println("Fetched Comment List: " + commentList); 
-            
+            System.out.println("Fetched Comment List: " + commentList);
+
 //            // 조회된 댓글이 있을 경우
 //            if (commentList != null && !commentList.isEmpty()) {
 //                for (BoardCommentDTO comment : commentList) {
-//                    System.out.println("--------------GotocommentListk-------시작"+ 
+//                    System.out.println("--------------GotocommentListk-------시작"+
 //                    				 "+Comment ID: " + comment.getCommentIdx() +
 //                                       ", Content: " + comment.getCommentContent() +
 //                                       ", Registered Date: " + comment.getCommentRegdate() +
@@ -38,14 +38,14 @@ public class GotoQnaCommentList extends HttpServlet {
 //            } else {
 //                System.out.println("No comments board index: " + postIdx);
 //            }
-            request.setAttribute("commentList", commentList); 
-            request.getRequestDispatcher("/gotoPostDetail.do?idx=" + postIdx).forward(request, response); 
+            request.setAttribute("commentList", commentList);
+            request.getRequestDispatcher("/gotoPostDetail.do?idx=" + postIdx).forward(request, response);
         } catch (SQLException e) {
             e.printStackTrace();
         }
-		
+
 	}
-    
+
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}

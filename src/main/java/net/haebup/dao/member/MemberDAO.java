@@ -176,12 +176,11 @@ public class MemberDAO {
 			throw new SQLException("회원정보수정 중 오류가 발생하였습니다." + e);
 		}
 	}
-
 	// 회원탈퇴
-	public int deleteUser(MemberDTO memberDto) throws SQLException {
+	public int deleteMember(String userId) throws SQLException {
 		String sql = "UPDATE tbl_member SET user_pwd = NULL , user_type = 'N', user_name = NULL, user_nickname = NULL , user_email = NULL , user_phone = NULL ,user_birth = NULL, user_regdate = NULL WHERE user_id = ? ";
 		try (Connection conn = DBConnPool.getConnection();
-				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { memberDto.getUserId() })) {
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId })) {
 			return dbUtil.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
