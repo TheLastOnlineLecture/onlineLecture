@@ -24,7 +24,14 @@ public class GotoModify extends HttpServlet {
             
             if (boardDTO != null) {
                 request.setAttribute("boardDTO", boardDTO); 
-                request.getRequestDispatcher("WEB-INF/common/post/modify.jsp").forward(request, response); 
+                request.setAttribute("msg", "게시글 수정이 완료되었습니다.");
+                request.setAttribute("url", "/gotoPostDetail.do?idx=" + boardIdx);
+                request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
+                
+            }else {
+            	 request.setAttribute("msg", "게시글 수정이 실패되었습니다.");
+                 request.setAttribute("url", "javascript:history.back()");
+                 request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
             }
         } catch (SQLException e) {
             e.printStackTrace();
