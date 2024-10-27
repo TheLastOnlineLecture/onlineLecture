@@ -33,6 +33,7 @@ public class GotoMyLecture extends HttpServlet {
             e.printStackTrace();
         }
         request.setAttribute("lectureList", lectureList);
+        //<a href="?category=${lectureList.lectureCode}"/>
         request.getRequestDispatcher("/WEB-INF/common/myPage/myLecture.jsp").forward(request, response);
     }
 }
