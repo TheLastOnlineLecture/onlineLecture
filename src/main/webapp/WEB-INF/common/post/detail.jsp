@@ -26,6 +26,7 @@
 		<jsp:include page="../commonArea/header.jsp" />
 		<!-- navbar 영역 // -->
 
+
 		<!-- // 메인 콘텐츠 영역 -->
       <main>
         <div class="mainArea">
