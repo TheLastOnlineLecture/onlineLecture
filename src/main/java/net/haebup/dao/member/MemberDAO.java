@@ -9,18 +9,35 @@ import java.lang.StringBuilder;
 import net.haebup.dto.member.MemberDTO;
 import net.haebup.utils.DatabaseUtil.DBConnPool;
 import net.haebup.utils.DatabaseUtil.DbQueryUtil;
-
+import net.haebup.dto.member.MemberTypeDTO;
 public class MemberDAO {
 
 	// 전체회원목록 ( 관리자용 )
-	public List<MemberDTO> getMemberList(int limit, int offset) throws SQLException {
-		String sql = "SELECT user_id, user_name, "
-				+ "user_nickname, user_type FROM tbl_member "
-				+ "ORDER BY regdate DESC LIMIT = ? OFFSET = ?";
-		List<MemberDTO> memberList = new ArrayList<MemberDTO>();
+	public List<MemberDTO> getMemberList(int limit, int offset, String searchType, String searchKeyword) throws SQLException {
+		StringBuilder sql = new StringBuilder("SELECT user_id, user_name, user_nickname, user_type, mileage, user_phone FROM tbl_member WHERE 1=1");
+		List<Object> params = new ArrayList<>();
+
+		if (searchType != null && !searchKeyword.isEmpty()) {
+			switch (searchType) {
+				case "name":
+					sql.append(" AND user_name LIKE ?");
+					params.add("%" + searchKeyword + "%");
+					break;
+				case "id":
+					sql.append(" AND user_id LIKE ?");
+					params.add("%" + searchKeyword + "%");
+					break;
+			}
+		}
+
+		sql.append(" ORDER BY user_regdate DESC LIMIT ? OFFSET ?");
+		params.add(limit);
+		params.add(offset);
+
+		List<MemberDTO> memberList = new ArrayList<>();
 
 		try (Connection conn = DBConnPool.getConnection();
-				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { limit, offset })) {
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql.toString(), params.toArray())) {
 			ResultSet rs = dbUtil.executeQuery();
 			while (rs.next()) {
 				MemberDTO memberDTO = new MemberDTO();
@@ -28,13 +45,12 @@ public class MemberDAO {
 				memberDTO.setUserName(rs.getString("user_name"));
 				memberDTO.setUserNickname(rs.getString("user_nickname"));
 				memberDTO.setUserType(rs.getString("user_type"));
+				memberDTO.setMileage(rs.getInt("mileage"));
+				memberDTO.setUserPhone(rs.getString("user_phone"));
 				memberList.add(memberDTO);
 			}
-			return memberList;
-		} catch (SQLException e) {
-			e.printStackTrace();
-			throw new SQLException("오류확인." + e);
 		}
+		return memberList;
 	}
 
 	// 회원가입
@@ -176,9 +192,58 @@ public class MemberDAO {
 			throw new SQLException("회원정보수정 중 오류가 발생하였습니다." + e);
 		}
 	}
+	//관리자용 회원정보수정
+	public int updateUserInfoAdmin(MemberDTO memberDto) throws SQLException {
+		String sql = "UPDATE tbl_member SET user_type = ?, user_nickname = ?, user_phone = ?, user_email = ?, mileage = ? WHERE user_id = ?";
+		try (Connection conn = DBConnPool.getConnection();
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { 
+					memberDto.getUserType(), 
+					memberDto.getUserNickname(), 
+					memberDto.getUserPhone(), 
+					memberDto.getUserEmail(), 
+					memberDto.getMileage(), 
+					memberDto.getUserId() 
+				})) {
+			return dbUtil.executeUpdate();
+		}
+	}
+	//관리자용 마일리지 수정
+	public int updateMileageAdmin(String userId, int mileage) throws SQLException {
+		String sql = "UPDATE tbl_member SET mileage = ? WHERE user_id = ?";
+		try (Connection conn = DBConnPool.getConnection();
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { mileage, userId })) {
+			return dbUtil.executeUpdate();
+		}
+	}
+	//관리자용 마일리지 추가
+	public int addMileageAdmin(String userId, int mileage) throws SQLException {
+		String sql = "UPDATE tbl_member SET mileage = mileage + ? WHERE user_id = ?";
+		try (Connection conn = DBConnPool.getConnection();
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { mileage, userId })) {
+			return dbUtil.executeUpdate();
+		}
+	}
+	
+	//관리자용 등급조회
+	public List<MemberTypeDTO> getUserType() throws SQLException {
+		String sql = "SELECT user_type, user_type_name FROM tbl_member_type";
+		List<MemberTypeDTO> memberTypeList = new ArrayList<MemberTypeDTO>();
+		try (Connection conn = DBConnPool.getConnection();
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql)) {
+			ResultSet rs = dbUtil.executeQuery();
+			while (rs.next()) {
+				MemberTypeDTO memberTypeDto = new MemberTypeDTO();
+				memberTypeDto.setUserType(rs.getString("user_type"));
+				memberTypeDto.setUserTypeName(rs.getString("user_type_name"));
+				memberTypeList.add(memberTypeDto);
+			}
+			return memberTypeList;
+		}
+	}
+
 	// 회원탈퇴
 	public int deleteMember(String userId) throws SQLException {
-		String sql = "UPDATE tbl_member SET user_pwd = NULL , user_type = 'N', user_name = NULL, user_nickname = NULL , user_email = NULL , user_phone = NULL ,user_birth = NULL, user_regdate = NULL WHERE user_id = ? ";
+		String sql = "UPDATE tbl_member SET user_pwd = NULL, user_type = 'N00', user_name = NULL, user_nickname = NULL, user_email = NULL, user_phone = NULL, user_birth = NULL, user_regdate = NULL WHERE user_id = ?";
 		try (Connection conn = DBConnPool.getConnection();
 				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId })) {
 			return dbUtil.executeUpdate();
@@ -226,8 +291,32 @@ public class MemberDAO {
 		}
 	}
 
+	public int getTotalMemberCount(String searchType, String searchKeyword) throws SQLException {
+		StringBuilder sql = new StringBuilder("SELECT COUNT(*) FROM tbl_member WHERE 1=1");
+		List<Object> params = new ArrayList<>();
 
-	
+		if (searchType != null && !searchKeyword.isEmpty()) {
+			switch (searchType) {
+				case "name":
+					sql.append(" AND user_name LIKE ?");
+					params.add("%" + searchKeyword + "%");
+					break;
+				case "id":
+					sql.append(" AND user_id LIKE ?");
+					params.add("%" + searchKeyword + "%");
+					break;
+			}
+		}
+
+		try (Connection conn = DBConnPool.getConnection();
+				DbQueryUtil dbUtil = new DbQueryUtil(conn, sql.toString(), params.toArray())) {
+			ResultSet rs = dbUtil.executeQuery();
+			if (rs.next()) {
+				return rs.getInt(1);
+			}
+		}
+		return 0;
+	}
 
 	// ============= 추후 추가 =================
 

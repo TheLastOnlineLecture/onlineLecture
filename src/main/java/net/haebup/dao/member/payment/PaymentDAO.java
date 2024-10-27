@@ -219,4 +219,12 @@ public class PaymentDAO {
             return dbUtil.executeUpdate();
         }
     }
+    //강의 환불(시작일 없을떄)
+    public int repaymentLecture(String userId, String lectureCode) throws SQLException {
+        String sql = "UPDATE tbl_payment SET payment_status = 'R' WHERE user_id = ? AND lecture_code = ? AND lecture_start_date IS NULL";
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId, lectureCode })) {
+            return dbUtil.executeUpdate();
+        }
+    }
 }
