@@ -2,31 +2,31 @@ package net.haebup.dto.member;
 
 public class MemberTypeDTO {
 	
-	private char memberType;
-    private String memberTypeName;
-    private String memberTypeDescription;
+	private String userType;
+    private String userTypeName;
+    // private String memberTypeDescription;
 
-    public char getMemberType() {
-        return memberType;
+    public String getUserType() {
+        return userType;
     }
 
-    public void setMemberType(char memberType) {
-        this.memberType = memberType;
+    public void setUserType(String userType) {
+        this.userType = userType;
     }
 
-    public String getMemberTypeName() {
-        return memberTypeName;
+    public String getUserTypeName() {
+        return userTypeName;
     }
 
-    public void setMemberTypeName(String memberTypeName) {
-        this.memberTypeName = memberTypeName;
+    public void setUserTypeName(String userTypeName) {
+        this.userTypeName = userTypeName;
     }
 
-    public String getMemberTypeDescription() {
-        return memberTypeDescription;
-    }
+    // public String getMemberTypeDescription() {
+    //     return memberTypeDescription;
+    // }
 
-    public void setMemberTypeDescription(String memberTypeDescription) {
-        this.memberTypeDescription = memberTypeDescription;
-    }
+    // public void setMemberTypeDescription(String memberTypeDescription) {
+    //     this.memberTypeDescription = memberTypeDescription;
+    // }
 }

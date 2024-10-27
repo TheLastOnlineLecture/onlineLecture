@@ -58,7 +58,7 @@ public class GotoQnaDetail extends HttpServlet {
 	            e.printStackTrace();
 	        }
 	        
-		request.getRequestDispatcher("WEB-INF/common/post/detail.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/common/inquiy/detail.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);

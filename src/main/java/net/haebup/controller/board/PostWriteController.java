@@ -88,13 +88,17 @@ public class PostWriteController extends HttpServlet {
 	}
 	
 	private boolean checkUser(String userType, String boardType) {
-        // 관리자A 선생님T : N 공지사항, D 자료실, C 강의공지, P 자유게시판
-        if ("A".equals(userType) || "T".equals(userType)) {
-            return "N".equals(boardType) || "D".equals(boardType) || "C".equals(boardType) || "P".equals(boardType);
-        }
-        // 일반 학생 P자유게시판 R수강후기
-        else {
-            return "P".equals(boardType) || "R".equals(boardType);
-        }
-    }
+	    // 관리자 A: N 공지사항, D 자료실, C 강의공지, P 자유게시판
+	    if ("A".equals(userType)) {
+	        return "N".equals(boardType) || "D".equals(boardType) || "C".equals(boardType) || "P".equals(boardType);
+	    } 
+	    // 선생님 T: D 자료실, C 강의공지, P 자유게시판
+	    else if ("T".equals(userType)) {
+	        return "D".equals(boardType) || "C".equals(boardType) || "P".equals(boardType);
+	    }
+	    // 일반 학생: P 자유게시판, R 수강후기
+	    else {
+	        return "P".equals(boardType) || "R".equals(boardType);
+	    }
+	}
 }

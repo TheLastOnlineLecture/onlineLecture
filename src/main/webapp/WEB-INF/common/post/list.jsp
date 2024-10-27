@@ -138,6 +138,55 @@
 			</div>
 		</main>
 		<!-- 메인 콘텐츠 영역 // -->
+=======
+<h3>자유게시판 목록</h3>
+${boardType}
+<form action="gotoPostList.do" method="get">
+    <input type="hidden" name="type" value="${boardType}"/>
+    <label for="searchType">검색 유형:</label>
+    <select name="searchType" id="searchType">
+        <option value="title">제목</option>
+        <option value="writer">작성자</option>
+        <option value="title_content">제목 + 내용</option>
+    </select>
+    <input type="text" name="searchKeyword" placeholder="검색어 입력" />
+    <input type="submit" value="검색" />
+</form>
+<table border="1">
+	<tr>
+		<th>제목</th>
+		<th>작성자</th>
+		<th>작성일</th>
+	</tr>
+	<c:choose>
+		<c:when test="${not empty boardList}">
+			<c:forEach var="board" items="${boardList}">
+				<tr>
+					<td><a href="gotoPostDetail.do?idx=${board.boardIdx}">${board.boardTitle}</a></td>
+					<td>${board.boardWriter}</td>
+					<td>${board.boardRegdate}</td>
+				</tr>
+			</c:forEach>
+		</c:when>
+		<c:otherwise>
+			<tr>
+				<td colspan=3>등록된 게시글 x</td>
+			</tr>
+		</c:otherwise>
+	</c:choose>
+	<tr>
+		<td colspan=3>
+			<div class="pagination">
+                <c:if test="${pagination.hasFirstPage()}">
+                    <a href="?pageNo=1"></a>
+                </c:if>
+                <c:if test="${pagination.hasPreviousBlock()}">
+                    <a href="?pageNo=${pagination.blockStartPage - 1}&type=${boardType}"><</a>
+                </c:if>
+                
+                <c:forEach var="i" begin="${pagination.blockStartPage}" end="${pagination.blockEndPage}">
+                    <a href="?pageNo=${i}&type=${boardType}">${i}</a>
+                </c:forEach>
 
 		<!-- // 푸터 영역 -->
 		<jsp:include page="../commonArea/footer.jsp" />

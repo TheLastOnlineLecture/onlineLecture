@@ -13,8 +13,8 @@
 	<input type="hidden" name="idx" value="${qnaDTO.qnaIdx}"/>
 	<input type="hidden" name="type" value="${qnaDTO.qnaType}"/>
 	<h2>${qnaDTO.qnaTitle}</h2>
-	<p><strong>작성자:</strong> ${qnaDTO.qndWriter}</p>
-	<p><strong>등록일:</strong> ${qnaDTO.qndRegdate}</p>
+	<p><strong>작성자:</strong> ${qnaDTO.qnaWriter}</p>
+	<p><strong>등록일:</strong> ${qnaDTO.qnaRegdate}</p>
 	<p><strong>내용:</strong></p>
 	<div>${qnaDTO.qnaContent}</div>
 	<button type="button" onclick="gotoModify()">수정</button>

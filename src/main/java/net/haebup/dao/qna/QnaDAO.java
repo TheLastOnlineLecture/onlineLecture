@@ -3,60 +3,126 @@ import java.util.List;
 import net.haebup.utils.DatabaseUtil.*;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 
-import net.haebup.dto.board.BoardDTO;
 import net.haebup.dto.qna.QnaDTO;
 
 //QnA 유형 G : 일반 QnA, T : 선생님 QnA
 public class QnaDAO{
-    //질문 목록 조회
-    public List<QnaDTO> selectQnaListByType(int limit, int offset, String qnaType) throws SQLException{
-        String sql = "SELECT * FROM tbl_qna WHERE qna_type = ? ORDER BY qna_regdate DESC LIMIT ? OFFSET ?";
+	
+	  // 검색 조건이 포함된 질문 목록 조회 메서드
+    public List<QnaDTO> selectQnaListByType(int limit, int offset, String qnaType, String qnaCategory, String searchType, String searchKeyword) throws SQLException {
+        String sql = "SELECT * FROM tbl_qna WHERE qna_type = ?";
+        
+        if (qnaCategory != null) {
+            sql += " AND qna_category = ?";
+        }
+
+        if ("title".equals(searchType)) {
+            sql += " AND qna_title LIKE ?";
+        } else if ("writer".equals(searchType)) {
+            sql += " AND qna_writer LIKE ?";
+        } else if ("title_content".equals(searchType)) {
+            sql += " AND (qna_title LIKE ? OR qna_content LIKE ?)";
+        }
+
+        sql += " ORDER BY qna_regdate DESC LIMIT ? OFFSET ?";
+
         List<QnaDTO> qnaList = new ArrayList<>();
-        try(Connection conn = DBConnPool.getConnection();
-            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaType, limit, offset})){
-                ResultSet rs = dbUtil.executeQuery();
-                while(rs.next()){
-                    QnaDTO qnaDTO = new QnaDTO();
-                    qnaDTO.setQnaIdx(rs.getInt("qna_idx"));
-                    qnaDTO.setQnaType(rs.getString("qna_type"));
-                    qnaDTO.setQnaTitle(rs.getString("qna_title"));
-                    qnaDTO.setQnaContent(rs.getString("qna_content"));
-                    qnaDTO.setQnaRegdate(rs.getString("qna_regdate"));
-                    qnaDTO.setQnaWriter(rs.getString("qna_writer"));
-                    qnaDTO.setQnaCategory(rs.getString("qna_category"));
-                    qnaList.add(qnaDTO);
-                }
-        }catch(SQLException e){
+        List<Object> params = new ArrayList<>();
+        params.add(qnaType);
+
+        if (qnaCategory != null) {
+            params.add(qnaCategory);
+        }
+
+        String searchParam = "%" + searchKeyword + "%";
+        if ("title".equals(searchType) || "writer".equals(searchType)) {
+            params.add(searchParam);
+        } else if ("title_content".equals(searchType)) {
+            params.add(searchParam);
+            params.add(searchParam);
+        }
+
+        params.add(limit);
+        params.add(offset);
+
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, params.toArray())) {
+
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                QnaDTO qnaDTO = new QnaDTO();
+                qnaDTO.setQnaIdx(rs.getInt("qna_idx"));
+                qnaDTO.setQnaType(rs.getString("qna_type"));
+                qnaDTO.setQnaCategory(rs.getString("qna_category"));
+                qnaDTO.setQnaTitle(rs.getString("qna_title"));
+                qnaDTO.setQnaContent(rs.getString("qna_content"));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = dateFormat.format(rs.getTimestamp("qna_regdate"));
+                qnaDTO.setQnaRegdate(formattedDate);
+                qnaDTO.setQnaWriter(rs.getString("qna_writer"));
+                qnaList.add(qnaDTO);
+            }
+        } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("질문 목록 조회 중 오류가 발생하였습니다."+e);
+            throw new RuntimeException("질문 목록 조회 중 오류가 발생하였습니다." + e);
         }
         return qnaList;
     }
-    
-    //페이징
-    public List<QnaDTO> getQnaListByPage(int pageNo, int pageSize, String qnaType) throws SQLException {
-        int limit = pageSize;                          
-        int offset = (pageNo - 1) * pageSize;          
 
-        return selectQnaListByType(limit, offset, qnaType);
+    // 페이징을 위한 메서드
+    public List<QnaDTO> getQnaListByPage(int pageNo, int pageSize, String qnaType, String qnaCategory, String searchType, String searchKeyword) throws SQLException {
+        int limit = pageSize;
+        int offset = (pageNo - 1) * pageSize;
+        
+        return selectQnaListByType(limit, offset, qnaType, qnaCategory, searchType, searchKeyword);
     }
-    
-    // 전체Qna 수
-    public int getTotalCount(String qnaType) throws SQLException{
+
+    // 검색 조건이 포함된 전체 QnA 수 조회
+    public int getTotalCount(String qnaType, String qnaCategory, String searchType, String searchKeyword) throws SQLException {
         String sql = "SELECT COUNT(*) FROM tbl_qna WHERE qna_type = ?";
-        try(Connection conn = DBConnPool.getConnection();
-            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaType})){
-                ResultSet rs = dbUtil.executeQuery();
-                if(rs.next()){
-                    return rs.getInt(1);
-                }
-                return 0;
-        }catch(SQLException e){
+        
+        if (qnaCategory != null) {
+            sql += " AND qna_category = ?";
+        }
+
+        if ("title".equals(searchType)) {
+            sql += " AND qna_title LIKE ?";
+        } else if ("writer".equals(searchType)) {
+            sql += " AND qna_writer LIKE ?";
+        } else if ("title_content".equals(searchType)) {
+            sql += " AND (qna_title LIKE ? OR qna_content LIKE ?)";
+        }
+
+        List<Object> params = new ArrayList<>();
+        params.add(qnaType);
+
+        if (qnaCategory != null) {
+            params.add(qnaCategory);
+        }
+
+        String searchParam = "%" + searchKeyword + "%";
+        if ("title".equals(searchType) || "writer".equals(searchType)) {
+            params.add(searchParam);
+        } else if ("title_content".equals(searchType)) {
+            params.add(searchParam);
+            params.add(searchParam);
+        }
+
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, params.toArray())) {
+
+            ResultSet rs = dbUtil.executeQuery();
+            if (rs.next()) {
+                return rs.getInt(1);
+            }
+            return 0;
+        } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("qna 개수 조회 중 오류가 발생하였습니다."+e);
+            throw new RuntimeException("qna 개수 조회 중 오류가 발생하였습니다." + e);
         }
     }
 
@@ -78,7 +144,7 @@ public class QnaDAO{
     }
 
     public int updateQna(QnaDTO qnaDTO) throws SQLException{
-        String sql = "UPDATE qna SET tbl_qna_title = ?, qna_content = ? WHERE qna_idx = ?";
+        String sql = "UPDATE tbl_qna SET qna_title = ?, qna_content = ? WHERE qna_idx = ?";
         int result = 0;
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaDTO.getQnaTitle(), qnaDTO.getQnaContent(), qnaDTO.getQnaIdx()})){
