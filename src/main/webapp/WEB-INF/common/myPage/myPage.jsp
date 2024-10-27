@@ -146,10 +146,6 @@
         <div class="ccenter">
           <div class="myStudyVideo" style="margin: 50px 0 50px 0">
             <div class="myStudyVideo marginTop100">
-              <h3>강좌 프로모션</h3>
-              <img src="/public/mainSlider.png" alt="" />
-            </div>
-            <div class="myStudyVideo marginTop100">
               <h3>내가 작성한 글</h3>
               <div>
                 <table class="boardTable">
@@ -341,6 +337,10 @@
                   <button>[3]</button>
                 </div>
               </div>
+            </div>
+            <div class="myStudyVideo marginTop100">
+              <h3>강좌 프로모션</h3>
+              <img src="/public/mainSlider.png" alt="" />
             </div>
           </div>
         </div>
