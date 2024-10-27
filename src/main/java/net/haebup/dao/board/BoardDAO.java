@@ -191,8 +191,8 @@ public class BoardDAO implements IFBoardDAO{
         return boardIdx;  
     }
     
-    //내가 쓴글 조회
-    public List<BoardPost> getPostsByWriter(String writer) {
-        List<BoardPost> posts = new ArrayList<>();
-
+//    //내가 쓴글 조회
+//    public List<BoardPost> getPostsByWriter(String writer) {
+//        List<BoardPost> posts = new ArrayList<>();
+//
 }
