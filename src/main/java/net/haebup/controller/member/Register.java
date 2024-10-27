@@ -39,16 +39,16 @@ public class Register extends HttpServlet {
         member.setUserNickname(userNickname);
         //벨리데이션 체크
         if (userId == null || userPwd == null || userName == null || userEmail == null || userPhone == null || userBirth == null || userNickname == null) {
-            req.setAttribute("msg", "빈칸을 채워주세요.");
+            req.setAttribute("registerErrorMsg", "빈칸을 채워주세요.");
             req.getRequestDispatcher("/WEB-INF/common/member/register.jsp").forward(req, res);
             return;
         }
         try {
             new MemberDAO().insertUser(member);
-            req.setAttribute("msg", "회원가입이 완료되었습니다.");
-            req.getRequestDispatcher("/WEB-INF/common/member/login.jsp").forward(req, res);
+            req.setAttribute("registerSuccessMsg", "회원가입이 완료되었습니다.");
+            req.getRequestDispatcher("/main.do").forward(req, res);
         } catch (SQLException e) {
-            req.setAttribute("msg", "회원가입에 실패하였습니다.");
+            req.setAttribute("registerErrorMsg", "회원가입에 실패하였습니다.");
             req.getRequestDispatcher("/WEB-INF/common/member/register.jsp").forward(req, res);
             e.printStackTrace();
         }

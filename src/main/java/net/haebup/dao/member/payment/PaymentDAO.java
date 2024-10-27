@@ -34,6 +34,25 @@ public class PaymentDAO {
             return paymentList;
         }
     }
+    //결제내역 전부 조회
+    public List<PaymentDTO> getPaymentListAll(String userId) throws SQLException {
+        String sql = "SELECT * FROM tbl_payment WHERE user_id = ?";
+        List<PaymentDTO> paymentList = new ArrayList<PaymentDTO>();
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId })) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                PaymentDTO paymentDTO = new PaymentDTO();
+                paymentDTO.setPaymentIdx(rs.getInt("payment_idx"));
+                paymentDTO.setUserId(rs.getString("user_id"));
+                paymentDTO.setLectureCode(rs.getString("lecture_code"));
+                paymentDTO.setPaymentDate(rs.getString("payment_date"));
+                paymentDTO.setPaymentStatus(rs.getString("payment_status"));
+                paymentList.add(paymentDTO);
+            }
+        }
+        return paymentList;
+    }
 
     // 결제내역 총 개수 조회
     public int getPaymentCount(String userId) throws SQLException {
@@ -155,7 +174,7 @@ public class PaymentDAO {
             }
         }
     }
-
+    //총 결제 금액 계산 //안써도 됨
     public int calculateTotalAmount(String userId, List<String> lectureCodes) throws SQLException {
         StringBuilder sql = new StringBuilder(
             "SELECT SUM(l.lecture_price) FROM tbl_payment p " +
@@ -195,6 +214,14 @@ public class PaymentDAO {
     //강의 시작일 업데이트
     public int updateLectureStartDate(String userId, String lectureCode) throws SQLException {
         String sql = "UPDATE tbl_payment SET lecture_start_date = NOW() WHERE user_id = ? AND lecture_code = ?";
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId, lectureCode })) {
+            return dbUtil.executeUpdate();
+        }
+    }
+    //강의 환불(시작일 없을떄)
+    public int repaymentLecture(String userId, String lectureCode) throws SQLException {
+        String sql = "UPDATE tbl_payment SET payment_status = 'R' WHERE user_id = ? AND lecture_code = ? AND lecture_start_date IS NULL";
         try (Connection conn = DBConnPool.getConnection();
                 DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId, lectureCode })) {
             return dbUtil.executeUpdate();
