@@ -46,7 +46,7 @@
 <c:if test="${empty fileList}">
     <p>첨부된 파일이 없습니다.</p>
 </c:if>
-<c:if test="${boardDTO.boardType != 'R'}">
+<c:if test="${boardDTO.boardType != 'R' && boardDTO.boardType != 'N' && boardDTO.boardType != 'D' && boardDTO.boardType != 'C'}">
 	<c:if test="${not empty commentList}">
 		<h3>댓글 목록</h3>
 		<ul>
