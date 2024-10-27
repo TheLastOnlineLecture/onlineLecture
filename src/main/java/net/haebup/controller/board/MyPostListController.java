@@ -22,10 +22,8 @@ public class MyPostListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
  protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-//	 MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-//	 String writer = user.getUserId();
-	// 임의 지정한 값, 추후 수정
-	 String writer = "student013"; 
+	 MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+	 String writer = user.getUserId();
 
      // 게시글 관련 파라미터
      String postPageNoParam = request.getParameter("postPageNo");
