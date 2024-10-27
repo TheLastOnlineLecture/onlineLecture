@@ -21,14 +21,11 @@ public class CommentWriterController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    int postIdx = Integer.parseInt(request.getParameter("boardIdx"));
 	    String commentContent = request.getParameter("commentContent");
-	    MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-	    String userId = user.getUserId();    
+//	    MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+//	    String userId = user.getUserId();    
         
 	    // 댓글 작성 확인용! 추후 삭제
-	    if (userId == null) {
-	        userId = "user1"; 
-	        
-	    }
+	    String userId="student013";
 
 	    System.out.println("postIdx: " + postIdx);
 	    System.out.println("Comment Content: " + commentContent);

@@ -33,7 +33,7 @@ public class CommentDAO {
     }
     
     public int getCount(int boardIdx) throws SQLException{
-        String sql = "SELECT COUNT(*) FROM tbl_comment WHERE board_idx = ?";
+        String sql = "SELECT COUNT(*) FROM tbl_comment WHERE post_idx = ?";
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardIdx})){
                 ResultSet rs = dbUtil.executeQuery();

@@ -72,12 +72,12 @@ public class GotoDetail extends HttpServlet {
 	                    file.setFileName(encodedFileName);
 	                }
 	                request.setAttribute("fileList", fileList);  
-	                request.setAttribute("boardType", boardType);  
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
 		
+        request.setAttribute("boardType", boardType);  
 		request.getRequestDispatcher("WEB-INF/common/post/detail.jsp").forward(request, response);
 	}
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

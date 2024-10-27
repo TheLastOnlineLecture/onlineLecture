@@ -45,7 +45,6 @@ public class BoardDAO implements IFBoardDAO{
                 boardDTO.setBoardCategory(rs.getString("board_category"));
                 boardDTO.setBoardTitle(rs.getString("board_title"));
                 boardDTO.setBoardWriter(rs.getString("board_writer"));
-
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
                 String formattedDate = dateFormat.format(rs.getTimestamp("board_regdate"));
                 boardDTO.setBoardRegdate(formattedDate);

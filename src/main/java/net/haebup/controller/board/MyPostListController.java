@@ -9,7 +9,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import net.haebup.dao.board.MyPostDAO;
 import net.haebup.dao.board.comment.MyCommentDAO;
 import net.haebup.dto.board.MyPostDTO;
-import net.haebup.dto.board.comment.MyCommentDTO;
+import net.haebup.dto.board.comment.JoinCommentDTO;
 import net.haebup.dto.member.MemberDTO;
 import net.haebup.utils.PaginationUtil.Pagination;
 
@@ -25,7 +25,7 @@ public class MyPostListController extends HttpServlet {
 //	 MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 //	 String writer = user.getUserId();
 	// 임의 지정한 값, 추후 수정
-	 String writer = "student1"; 
+	 String writer = "student013"; 
 
      // 게시글 관련 파라미터
      String postPageNoParam = request.getParameter("postPageNo");
@@ -43,17 +43,17 @@ public class MyPostListController extends HttpServlet {
          MyPostDAO postDAO = new MyPostDAO();
          MyCommentDAO commentDAO = new MyCommentDAO();
 
-         // 게시글 페이징
+         // 게시글 페이징 처리
          int totalPostCount = postDAO.getTotalPost(writer, writer);
          List<MyPostDTO> postList = postDAO.getPostsByWriter(postPageSize, (postPageNo - 1) * postPageSize, writer, writer);
          Pagination postPagination = new Pagination(postPageNo, postPageSize, totalPostCount, 10);
 
-         // 댓글 페이징
+         // 댓글 페이징 처리 
          int totalCommentCount = commentDAO.getTotalCommentsCount(writer);
-         List<MyCommentDTO> commentList = commentDAO.getTotalComment(writer, commentPageNo, commentPageSize);
+         List<JoinCommentDTO> commentList = commentDAO.getCommentList(writer, commentPageSize, (commentPageNo - 1) * commentPageSize);
          Pagination commentPagination = new Pagination(commentPageNo, commentPageSize, totalCommentCount, 10);
 
-         // 속성 설정
+         // 요청 속성 설정
          request.setAttribute("postList", postList);
          request.setAttribute("postPagination", postPagination);
          request.setAttribute("commentList", commentList);
@@ -64,7 +64,6 @@ public class MyPostListController extends HttpServlet {
 
      } catch (Exception e) {
          e.printStackTrace();
-         response.getWriter().print("<script>alert('내가 쓴글 확인 실패'); location.href='javascript:history.back();';</script>");
      }
  }
 

@@ -10,6 +10,8 @@
 </head>
 <body>
 <h3> 자유 게시글 상세보기 내가 쓴글 체크해서 지우는 버튼 </h3>
+<p>dto${boardDTO.boardType}</p>
+<p>타입${boardType}</p>
 <p>댓글 개수: ${commentCount}</p>
 <form id="postFrm" action="deletePost.do" method="POST">
 	<input type="hidden" name="idx" value="${boardDTO.boardIdx}"/>
