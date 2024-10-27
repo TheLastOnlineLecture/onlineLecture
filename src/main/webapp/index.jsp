@@ -11,6 +11,8 @@
 	<a href="<c:url value='/main.do' />" >ㅎㅇ</a>
 	<a href="<c:url value='/lecture/common/lectureList.do' />" >장바구니</a>
 	<a href="<c:url value='/payments/user/gotoPayments.do' />" >결제창</a>
+	<a href="<c:url value='/lecture/common/lectureList.do' />" >선생님 리스트</a>
+	<a href="<c:url value='/payments/user/gotoPayments.do' />" >선생님 상세</a>
 	
 <%-- 	<a href="<c:url value='/main.do?e=main' />" >ㅎㅇ</a> --%>
 <%@ include file="/side.jsp" %>
