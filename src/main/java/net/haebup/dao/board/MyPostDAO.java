@@ -3,6 +3,7 @@ package net.haebup.dao.board;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +42,9 @@ public class MyPostDAO {
 	            postDTO.setPostTitle(rs.getString("post_title"));
 	            postDTO.setPostContent(rs.getString("post_content"));
 	            postDTO.setPostWriter(rs.getString("post_writer"));
-	            postDTO.setPostRegdate(rs.getString("post_regdate"));
+	            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = dateFormat.format(rs.getTimestamp("post_regdate"));
+                postDTO.setPostRegdate(formattedDate);
 	            postDTO.setPostCategory(rs.getString("post_category"));
 	            postList.add(postDTO);
 	        }

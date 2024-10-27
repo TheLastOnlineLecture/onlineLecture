@@ -21,10 +21,8 @@ public class CommentWriterController extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	    int postIdx = Integer.parseInt(request.getParameter("boardIdx"));
 	    String commentContent = request.getParameter("commentContent");
-	    MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-	    String userId = user.getUserId();    
-        
-	    // 댓글 작성 확인용! 추후 삭제
+//	    MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+//	    String userId = user.getUserId();    
 
 	    System.out.println("postIdx: " + postIdx);
 	    System.out.println("Comment Content: " + commentContent);

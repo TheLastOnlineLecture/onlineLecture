@@ -61,13 +61,37 @@
 <!-- 댓글 목록 -->
 <table border="1">
     <tr>
-        <th>댓글 내용</th>
+        <th>댓글 유형</th>
+        <th>원문글</th>
+        <th>내용</th>
         <th>작성일</th>
     </tr>
-    <c:forEach var="comment" items="${commentList}">
+   <c:forEach var="comment" items="${commentList}">
         <tr>
-            <td>${comment.myCommentContent}</td>
-            <td>${comment.myCommentRegdate}</td>
+            <td>
+                <c:choose>
+                    <c:when test="${comment.boardComment != null}">${comment.board.boardType}</c:when>
+                    <c:when test="${comment.qnaComment != null}">${comment.qna.qnaType}</c:when>
+                </c:choose>
+            </td>
+             <td>
+                <c:choose>
+                    <c:when test="${comment.boardComment != null}"><a href="/gotoPostDetail.do?idx=${comment.board.boardIdx}">${comment.board.boardTitle}</a></c:when>
+                    <c:when test="${comment.qnaComment != null}"><a href="/gotoQnaDetail.do?idx=${comment.qna.qnaIdx}">${comment.qna.qnaTitle}</a></c:when>
+                </c:choose>
+            </td>
+            <td>
+                <c:choose>
+                    <c:when test="${comment.boardComment != null}">${comment.boardComment.commentContent}</c:when>
+                    <c:when test="${comment.qnaComment != null}">${comment.qnaComment.qnaCommentContent}</c:when>
+                </c:choose>
+            </td>
+            <td>
+                <c:choose>
+                    <c:when test="${comment.boardComment != null}">${comment.boardComment.commentRegdate}</c:when>
+                    <c:when test="${comment.qnaComment != null}">${comment.qnaComment.commentRegdate}</c:when>
+                </c:choose>
+            </td>
         </tr>
     </c:forEach>
 </table>
