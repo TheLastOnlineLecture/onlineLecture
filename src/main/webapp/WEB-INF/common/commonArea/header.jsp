@@ -51,25 +51,23 @@
 						</ul>
 						<div class="submenu">
 							<ul>
-								<li class="submenuContentGroup1"><a href="#">브랜드 소개</a><a
-									href="#">오시는 길</a></li>
+								<li class="submenuContentGroup1"><a href="https://www.smarthb-math.co.kr/about/about.php">브랜드 소개</a><a
+									href="https://www.smarthb-math.co.kr/about/about.php">오시는 길</a></li>
 								<li class="submenuContentGroup2"><a href="#">국어</a> <a
 									href="#">수학</a> <a href="#">영어</a> <a href="#">한국사</a> <a
 									href="#">사회</a> <a href="#">과학</a> <a href="#">제2외국어</a></li>
-								<li class="submenuContentGroup3"><a href="#">출석체크 이벤트</a> <a
-									href="#">수능 관련 이벤트</a> <a href="#">강의 맛보기 이벤트</a></li>
+								<li class="submenuContentGroup3"><a href="https://high.milkt.co.kr/DalJa/Attend/frm_Attend_Event.aspx?menucode=110900">출석체크 이벤트</a> <a
+									href="https://high.milkt.co.kr/DalJa/Tchallenge/frm_Tchallenge_Default.aspx?MenuCode=112000">스마트 천재 챌린지</a> <a href="https://high.milkt.co.kr/DalJa/TPlay/frm_TPlay.aspx?MenuCode=110211">T-Play 이벤트</a></li>
 								<li class="submenuContentGroup4"><a
-									href="/inquiy/user/gotoInquiy.do
-                          ">1대1
+									href="/gotoQnaList.do?type=G">1대1
 										QnA 게시판</a> <a
-									href="/post/user/gotoPostList.do
-                          ">자유게시판</a>
+									href="/gotoPostList.do?type=P">자유게시판</a>
 								</li>
 								<li class="submenuContentGroup5"><a href="#">국어</a> <a
 									href="#">수학</a> <a href="#">영어</a> <a href="#">한국사</a> <a
 									href="#">사회</a> <a href="#">과학</a> <a href="#">제2외국어</a></li>
 								<li class="submenuContentGroup6">
-									<!-- 근데 여기가 사이트 자료실인가 선생님 자료실인가? --> <a href="#">사이트 자료실</a>
+									<!-- 근데 여기가 사이트 자료실인가 선생님 자료실인가? --> <a href="/gotoPostList.do?type=D">사이트 자료실</a>
 								</li>
 							</ul>
 						</div>
