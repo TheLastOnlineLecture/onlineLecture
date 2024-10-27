@@ -1,14 +1,14 @@
-const searchOption = document.getElementById("searchOption");
-const searchInput = document.getElementById("searchInput");
+const searchOption = document.getElementById("searchType");
+const searchInput = document.getElementById("searchKeyword");
 
 searchOption.addEventListener("change", function() {
 	const selectedOption = searchOption.value;
 
-	if (selectedOption === "board_title") {
+	if (selectedOption === "title") {
 		searchInput.placeholder = "제목";
-	} else if (selectedOption === "board_writer") {
+	} else if (selectedOption === "writer") {
 		searchInput.placeholder = "아이디";
-	} else if (selectedOption === "board_title_content") {
+	} else if (selectedOption === "title_content") {
 		searchInput.placeholder = "제목 + 내용";
 	}
 });
@@ -78,3 +78,5 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 	}
 });
+
+console.log("js 반영 완료");

@@ -1,77 +1,160 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-<%@ taglib uri="jakarta.tags.core" prefix="c"%>
-<%@ page import="java.net.URLEncoder" %>
+	pageEncoding="UTF-8"%>
+<%@ page trimDirectiveWhitespaces="true"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>스마트 해법</title>
+
+<!-- // link태그 -->
+<link rel="stylesheet" href="<c:url value="/stylegroup/main/styles.css" />" />
+<link rel="stylesheet"
+	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
+<!-- link 태그 // -->
 </head>
 <body>
-<h3> 자유 게시글 상세보기 내가 쓴글 체크해서 지우는 버튼 </h3>
-<p>댓글 개수: ${commentCount}</p>
-<form id="postFrm" action="deletePost.do" method="POST">
-	<input type="hidden" name="idx" value="${boardDTO.boardIdx}"/>
-	<input type="hidden" name="type" value="${boardDTO.boardType}"/>
-	<h2>${boardDTO.boardTitle}</h2>
-	<p><strong>작성자:</strong> ${boardDTO.boardWriter}</p>
-	<p><strong>등록일:</strong> ${boardDTO.boardRegdate}</p>
-	<p><strong>내용:</strong></p>
-	<div>${boardDTO.boardContent}</div>
-<!-- 	<img src="/uploads/board/4bde963a-2510-4357-8d85-2b61161d4b2e_119850714.jpeg" /> -->
-	<button type="button" onclick="gotoModify()">수정</button>
-	<button onclick="gotoDelete()">삭제</button>
-</form>
-<h3>첨부 파일</h3>
-<c:if test="${!empty fileList}">
-    <c:set var="file" value="${fileList[0]}" />
-    <ul>
-        <li>
-            <c:choose>
-                <c:when test="${file.fileName.endsWith('.jpg') || file.fileName.endsWith('.jpeg') || file.fileName.endsWith('.png') || file.fileName.endsWith('.gif')}">
-                    <img src="uploads/${file.filePath}" alt="${file.fileName}" width="200px" height="200px">
-                	 <a href="downloadFile.do?filePath=${file.filePath}&fileName=${file.fileName}">
-					    ${file.fileName}
-					</a>
-                </c:when>
-                <c:otherwise>
-                    <a href="downloadFile.do?filePath=${file.filePath}&fileName=${file.fileName}">
-                        ${file.fileName}
-                    </a>
-                </c:otherwise>
-            </c:choose>
-        </li>
-    </ul>
-</c:if>
-<c:if test="${empty fileList}">
-    <p>첨부된 파일이 없습니다.</p>
-</c:if>
-<c:if test="${boardDTO.boardType != 'R' && boardDTO.boardType != 'N' && boardDTO.boardType != 'D' && boardDTO.boardType != 'C'}">
-	<c:if test="${not empty commentList}">
-		<h3>댓글 목록</h3>
-		<ul>
-		    <c:forEach var="comment" items="${commentList}">
-		        <li>${comment.commentContent} - <strong>${comment.userId}</strong> ${comment.commentRegdate}</li>
-		    </c:forEach>
-		</ul>
-	</c:if>
-	<form id="commentFrm" action="postCommentWrite.do" method="POST">
-	    <input type="hidden" name="boardIdx" value="${boardDTO.boardIdx}"/> 
-	    <textarea name="commentContent" rows="4" cols="50" placeholder="댓글을 입력하세요" required></textarea><br>
-	    <button type="submit">댓글작성</button>
-	</form>
-</c:if>
-</body>
+	<div class="boxContainer">
+		<!-- // 상단 이미지 -->
+		<jsp:include page="../commonArea/pageTopImageArea.jsp" />
+		<!-- 상단 이미지 // -->
+		
+		<!-- // navbar 영역 -->
+		<jsp:include page="../commonArea/header.jsp" />
+		<!-- navbar 영역 // -->
 
-<script>
-function gotoModify() {
-    location.href = "gotoPostModify.do?idx=${boardDTO.boardIdx}"; 
-}
-function gotoDelete() {
-    if (confirm("정말 삭제하시겠습니까?")) { 
-    	document.getElementById("postFrm").submit();
-    }
-}
-</script>
+
+		<!-- // 메인 콘텐츠 영역 -->
+      <main>
+        <div class="mainArea">
+          <div class="boardDetailContainer">
+            <div class="boardDetailContent">
+              <div class="boardDetailUp">
+                <div class="moveList"><a href="gotoPostList.do?type=${boardType}" class="boardTitle" data-board-type="${boardType}">${boardType} ></a></div>
+                <div class="boardDetailTitle">${boardDTO.boardTitle}</div>
+                <div
+                  class="boardDetailUserInfo"
+                  style="justify-content: space-between"
+                >
+                  <div class="boardDetailUserInfo">
+                    <img
+                      src="/public/myprofile.png"
+                      alt=""
+                      class="boardProfileImg"
+                    />
+                    <div class="boardDetailUserInfoCon">
+                      <span class="boardNick">${boardDTO.boardWriter}</span>
+                      <div>
+                        <span class="boardRegdate">${boardDTO.boardRegdate}</span>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="margin-right: 30px">
+                    <img src="/public/comment.png" class="boardCommentImg" />
+                    <span style="font-weight: bold">댓글 (2)</span>
+                    <span style="position: relative">
+                      <img
+                        src="/public/menuBar.png"
+                        alt=""
+                        class="menuQ"
+                        onclick="toggleBottomBar()"
+                      />
+                      <div class="bottomBar" id="bottomBar">
+                        <div><a href="#">수정</a></div>
+                        <div
+                          class="navMainBoundary"
+                          style="margin: 10px 0 10px 0"
+                        ></div>
+                        <div>
+                          <a href="#" onclick="confirmDelete()">삭제</a>
+                        </div>
+                      </div>
+                    </span>
+                  </div>
+                </div>
+              </div>
+              <div class="navMainBoundary"></div>
+              <div class="boardMainContent">
+                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
+                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
+                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
+                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
+                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
+                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
+                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
+                컨텐츠 영역 컨텐츠 영역
+              </div>
+              <div class="navMainBoundary"></div>
+              <div class="boardDetailDown">
+                <div style="margin-bottom: 30px">
+                  <img src="/public/comment.png" class="boardCommentImg" />
+                  <span style="font-weight: bold">댓글 (2)</span>
+                </div>
+                <div>
+                  <div style="margin: 10px 0 10px 0">
+                    <div class="commentUserArea">
+                      <img
+                        src="/public/myprofile.png"
+                        alt=""
+                        class="commentProfile"
+                      />
+                      <div style="margin-left: 5px">댓글 닉네임1</div>
+                    </div>
+                    <div>댓글 내용0</div>
+                    <div class="boardRegdate">regDate</div>
+                  </div>
+                  <div class="navMainBoundary"></div>
+                </div>
+                <div>
+                  <div style="margin: 10px 0 10px 0">
+                    <div class="commentUserArea">
+                      <img
+                        src="/public/myprofile.png"
+                        alt=""
+                        class="commentProfile"
+                      />
+                      <div style="margin-left: 5px">댓글 닉네임2</div>
+                    </div>
+                    <div>댓글 내용0</div>
+                    <div class="boardRegdate">regDate</div>
+                  </div>
+                  <div class="navMainBoundary"></div>
+                </div>
+                <div class="commentWrite">
+                  <form
+                    action="#"
+                    method="post"
+                    onsubmit="return validateComment()"
+                  >
+                    <div class="commentMyNickName" id="userNickname">
+                      내 닉네임
+                    </div>
+                    <textarea
+                      id="commentContent"
+                      name="commentContent"
+                      placeholder="댓글을 남겨보세요."
+                      oninput="updateCharCount()"
+                    ></textarea>
+                    <div class="formActions">
+                      <button class="submitBtn" type="submit">등록</button>
+                      <span id="charCount" class="charCount">0/1000</span>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+      <!-- 메인 콘텐츠 영역 // -->
+
+		<!-- // 푸터 영역 -->
+		<jsp:include page="../commonArea/footer.jsp" />
+		<!-- 푸터 영역 // -->
+		<script src="/jsGroup/post/listDetail.js"></script>
+	</div>
+</body>
 </html>
