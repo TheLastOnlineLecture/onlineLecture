@@ -1,18 +1,12 @@
+/**
+ * 
+ */
 function toggleBottomBar() {
   const bottomBar = document.getElementById("bottomBar");
   if (bottomBar.style.display === "none" || bottomBar.style.display === "") {
     bottomBar.style.display = "block";
   } else {
     bottomBar.style.display = "none";
-  }
-}
-
-function confirmDelete() {
-  if (confirm("정말 삭제하시겠습니까?")) {
-    window.location.href = "/post/common/deletePost.do";
-  } else {
-    alert("삭제가 취소되었습니다.");
-    return false;
   }
 }
 
@@ -101,4 +95,11 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 });
 
-console.log("js 반영 완료");
+function confirmDelete() {
+  if (confirm("정말 삭제하시겠습니까?")) {
+    document.getElementById("postFrm").submit();
+  } else {
+    alert("삭제가 취소되었습니다.");
+    return false;
+  }
+}

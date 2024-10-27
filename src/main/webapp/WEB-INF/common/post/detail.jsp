@@ -14,6 +14,7 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
+<link rel="stylesheet" href="/stylegroup/list/list.css" />
 <!-- link 태그 // -->
 </head>
 <body>
@@ -33,7 +34,7 @@
           <div class="boardDetailContainer">
             <div class="boardDetailContent">
               <div class="boardDetailUp">
-                <div class="moveList"><a href="gotoPostList.do?type=${boardType}" class="boardTitle" data-board-type="${boardType}">${boardType} ></a></div>
+                <div class="moveList"><a href="gotoPostList.do?type=${boardDTO.boardType}" class="boardTitle" data-board-type="${boardDTO.boardType}">${boardDTO.boardType} ></a></div>
                 <div class="boardDetailTitle">${boardDTO.boardTitle}</div>
                 <div
                   class="boardDetailUserInfo"
@@ -54,7 +55,7 @@
                   </div>
                   <div style="margin-right: 30px">
                     <img src="/public/comment.png" class="boardCommentImg" />
-                    <span style="font-weight: bold">댓글 (2)</span>
+                    <span style="font-weight: bold">댓글 (${commentCount})</span>
                     <span style="position: relative">
                       <img
                         src="/public/menuBar.png"
@@ -62,37 +63,58 @@
                         class="menuQ"
                         onclick="toggleBottomBar()"
                       />
-                      <div class="bottomBar" id="bottomBar">
-                        <div><a href="#">수정</a></div>
-                        <div
-                          class="navMainBoundary"
-                          style="margin: 10px 0 10px 0"
-                        ></div>
-                        <div>
-                          <a href="#" onclick="confirmDelete()">삭제</a>
-                        </div>
-                      </div>
+                      <form id="postFrm" action="deletePost.do" method="POST">
+                        <input type="hidden" name="idx" value="${boardDTO.boardIdx}"/>
+						<input type="hidden" name="type" value="${boardDTO.boardType}"/>
+	                      <div class="bottomBar" id="bottomBar">
+	                        <div>
+	                        	<button type="button" onclick="location.href = 'gotoPostModify.do?idx=${boardDTO.boardIdx}'" style="border:none; background-color:white; font-size:16px; cursor:pointer;">수정</button>
+	                        </div>
+	                        <div
+	                          class="navMainBoundary"
+	                          style="margin: 10px 0 10px 0"
+	                        ></div>
+	                        <div>
+	                          <a href="#" onclick="confirmDelete()">삭제</a>
+	                        </div>
+	                      </div>
+                      </form>
                     </span>
                   </div>
                 </div>
               </div>
               <div class="navMainBoundary"></div>
               <div class="boardMainContent">
-                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
-                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
-                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
-                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
-                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
-                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
-                컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역 컨텐츠 영역
-                컨텐츠 영역 컨텐츠 영역
+                ${boardDTO.boardContent}
               </div>
+                    <c:if test="${!empty fileList}">
+					    <c:set var="file" value="${fileList[0]}" />
+					    <ul>
+					        <li>
+					            <c:choose>
+					                <c:when test="${file.fileName.endsWith('.jpg') || file.fileName.endsWith('.jpeg') || file.fileName.endsWith('.png') || file.fileName.endsWith('.gif')}">
+					                    <img src="/uploads/${file.filePath}" alt="${file.fileName}" width="100%" height="auto">
+					                	 <a href="downloadFile.do?filePath=${file.filePath}&fileName=${file.fileName}">
+										    ${file.fileName}
+										</a>
+					                </c:when>
+					                <c:otherwise>
+					                    <a href="downloadFile.do?filePath=${file.filePath}&fileName=${file.fileName}">
+					                        ${file.fileName}
+					                    </a>
+					                </c:otherwise>
+					            </c:choose>
+					        </li>
+					    </ul>
+					</c:if>
               <div class="navMainBoundary"></div>
+              <c:if test="${boardDTO.boardType != 'R' && boardDTO.boardType != 'N' && boardDTO.boardType != 'D' && boardDTO.boardType != 'C'}">
               <div class="boardDetailDown">
                 <div style="margin-bottom: 30px">
                   <img src="/public/comment.png" class="boardCommentImg" />
-                  <span style="font-weight: bold">댓글 (2)</span>
+                  <span style="font-weight: bold">댓글 (${commentCount})</span>
                 </div>
+                <c:forEach var="comment" items="${commentList}">
                 <div>
                   <div style="margin: 10px 0 10px 0">
                     <div class="commentUserArea">
@@ -101,36 +123,25 @@
                         alt=""
                         class="commentProfile"
                       />
-                      <div style="margin-left: 5px">댓글 닉네임1</div>
+                      <div style="margin-left: 5px">${comment.userId}</div>
                     </div>
-                    <div>댓글 내용0</div>
-                    <div class="boardRegdate">regDate</div>
+                    <div>${comment.commentContent}</div>
+                    <!-- <div><img src="" /></div> -->
+                    <div class="boardRegdate">${comment.commentRegdate}</div>
                   </div>
                   <div class="navMainBoundary"></div>
                 </div>
-                <div>
-                  <div style="margin: 10px 0 10px 0">
-                    <div class="commentUserArea">
-                      <img
-                        src="/public/myprofile.png"
-                        alt=""
-                        class="commentProfile"
-                      />
-                      <div style="margin-left: 5px">댓글 닉네임2</div>
-                    </div>
-                    <div>댓글 내용0</div>
-                    <div class="boardRegdate">regDate</div>
-                  </div>
-                  <div class="navMainBoundary"></div>
-                </div>
+                </c:forEach>
                 <div class="commentWrite">
                   <form
-                    action="#"
+                    action="postCommentWrite.do"
                     method="post"
+                    id="commentFrm"
                     onsubmit="return validateComment()"
                   >
+                  	<input type="hidden" name="boardIdx" value="${boardDTO.boardIdx}"/> 
                     <div class="commentMyNickName" id="userNickname">
-                      내 닉네임
+                      ${sessionScope.user.userId}
                     </div>
                     <textarea
                       id="commentContent"
@@ -145,6 +156,7 @@
                   </form>
                 </div>
               </div>
+              </c:if>
             </div>
           </div>
         </div>
@@ -154,7 +166,6 @@
 		<!-- // 푸터 영역 -->
 		<jsp:include page="../commonArea/footer.jsp" />
 		<!-- 푸터 영역 // -->
-		<script src="/jsGroup/post/listDetail.js"></script>
-	</div>
+		<script src="/jsgroup/list/listDetail.js"></script>
 </body>
 </html>

@@ -25,10 +25,6 @@ public class CommentWriterController extends HttpServlet {
 	    String userId = user.getUserId();    
         
 	    // 댓글 작성 확인용! 추후 삭제
-	    if (userId == null) {
-	        userId = "user1"; 
-	        
-	    }
 
 	    System.out.println("postIdx: " + postIdx);
 	    System.out.println("Comment Content: " + commentContent);
