@@ -82,7 +82,7 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 function goToRegister() {
-  window.location.href = "/member/common/gotoRegister.do";
+  window.location.href = "/goto.do?page=register";
 }
 
 // 로그인 팝업 ---

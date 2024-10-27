@@ -38,6 +38,7 @@ public class PostWriteController extends HttpServlet {
 		
 //		MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 //		String userType = user.getUserType();
+
 		String userType = "A";
 		
 		String boardType = request.getParameter("type");

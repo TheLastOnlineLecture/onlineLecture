@@ -314,8 +314,4 @@ public class BoardDAO implements IFBoardDAO{
         
         return boardIdx;  
     }
-
-	
-    
-
 }

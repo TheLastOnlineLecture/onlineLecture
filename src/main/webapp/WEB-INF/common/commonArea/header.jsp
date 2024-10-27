@@ -36,38 +36,38 @@
 				<nav class="navbarContainer">
 					<div class="navbarMain">
 						<div>
-							<img src="/public/logo.png" alt="logo" class="logoImg" />
+							<a href="/main.do">
+								<img src="/public/logo.png" alt="logo" class="logoImg" />
+							</a>
 						</div>
 						<div style="width: 200px"></div>
 						<ul class="navbarGroup">
 							<li>브랜드 소개</li>
 							<li>강의 목록</li>
-							<li>프로그래밍</li>
+							<li>이벤트</li>
 							<li>게시판</li>
 							<li>선생님</li>
 							<li>자료실</li>
 						</ul>
 						<div class="submenu">
 							<ul>
-								<li class="submenuContentGroup1"><a href="#">브랜드 소개</a><a
-									href="#">오시는 길</a></li>
+								<li class="submenuContentGroup1"><a href="https://www.smarthb-math.co.kr/about/about.php">브랜드 소개</a><a
+									href="https://www.smarthb-math.co.kr/about/about.php">오시는 길</a></li>
 								<li class="submenuContentGroup2"><a href="#">국어</a> <a
 									href="#">수학</a> <a href="#">영어</a> <a href="#">한국사</a> <a
 									href="#">사회</a> <a href="#">과학</a> <a href="#">제2외국어</a></li>
-								<li class="submenuContentGroup3"><a href="#">FrontEnd</a> <a
-									href="#">BackEnd</a> <a href="#">Cloud</a></li>
+								<li class="submenuContentGroup3"><a href="https://high.milkt.co.kr/DalJa/Attend/frm_Attend_Event.aspx?menucode=110900">출석체크 이벤트</a> <a
+									href="https://high.milkt.co.kr/DalJa/Tchallenge/frm_Tchallenge_Default.aspx?MenuCode=112000">스마트 천재 챌린지</a> <a href="https://high.milkt.co.kr/DalJa/TPlay/frm_TPlay.aspx?MenuCode=110211">T-Play 이벤트</a></li>
 								<li class="submenuContentGroup4"><a
-									href="/inquiy/user/gotoInquiy.do
-                          ">1대1
+									href="/gotoQnaList.do?type=G">1대1
 										QnA 게시판</a> <a
-									href="/post/user/gotoPostList.do
-                          ">자유게시판</a>
+									href="/gotoPostList.do?type=P">자유게시판</a>
 								</li>
 								<li class="submenuContentGroup5"><a href="#">국어</a> <a
 									href="#">수학</a> <a href="#">영어</a> <a href="#">한국사</a> <a
 									href="#">사회</a> <a href="#">과학</a> <a href="#">제2외국어</a></li>
 								<li class="submenuContentGroup6">
-									<!-- 근데 여기가 사이트 자료실인가 선생님 자료실인가? --> <a href="#">사이트 자료실</a>
+									<!-- 근데 여기가 사이트 자료실인가 선생님 자료실인가? --> <a href="/gotoPostList.do?type=D">사이트 자료실</a>
 								</li>
 							</ul>
 						</div>
@@ -76,10 +76,19 @@
 								<img src="/public/loginBtn.png" alt="" />
 							</button>
 							<div class="dropdown-content">
-								<button class="loginPopupButton">Login</button>
+								<div class="loginArea">
+								    <c:choose>
+								        <c:when test="${not empty sessionScope.user}">
+								            <p>${sessionScope.user.userNickname}님 환영합니다!</p>
+								        </c:when>
+								        <c:otherwise>
+								            <button class="loginPopupButton">Login</button>
+								        </c:otherwise>
+								    </c:choose>
+								</div>
 								<!-- 로그인하면 여기 유저 이름 들어올 예정 -->
 								<span id="changeLogin"></span>
-								<a href="/goto.do?page=mypage">나의 학습방</a> <a href="/goto.do?page=modify">회원정보 수정</a> <a href="#">결제내역</a>
+								<a href="/goto.do?page=mypage">나의 학습방</a> <a href="<c:url value='/mypage/common/gotoMypage.do' /> ">마이페이지</a> <a href="#">결제내역</a>
 								<a href="#">장바구니 목록</a>
 							</div>
 						</div>

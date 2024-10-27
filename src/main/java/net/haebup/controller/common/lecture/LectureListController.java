@@ -44,6 +44,7 @@ public class LectureListController extends HttpServlet {
             request.setAttribute("sortBy", sortBy);
             request.setAttribute("filterBy", filterBy);
             request.setAttribute("filterValue", filterValue);
+            //<a href="?category=${lectures.lectureCode}"/>
 
             request.getRequestDispatcher("/WEB-INF/common/lecture/list.jsp").forward(request, response);
         } catch (SQLException e) {

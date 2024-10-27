@@ -39,7 +39,7 @@
               <div class="textCenter ehddml">
                 가입 정보 입력 및 약관에 동의해주세요.
               </div>
-              <form action="member/common/register.do" method="post">
+              <form action="/member/common/register.do" method="post">
                 <div>
                   <label for="userId" class="inputLabel">아이디:</label>
                   <input

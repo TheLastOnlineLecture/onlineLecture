@@ -33,9 +33,6 @@ public class GotoController extends HttpServlet {
 		System.out.println("goto"+pageName);
 		
 		switch(pageName){
-			case "login":
-				req.getRequestDispatcher("/WEB-INF/common/member/login.jsp").forward(req, res);
-				break;
 			case "register":
 				req.getRequestDispatcher("/WEB-INF/common/member/register.jsp").forward(req, res);
 				break;
@@ -74,6 +71,9 @@ public class GotoController extends HttpServlet {
 				break;
 			case "admin/filePost/write":
 				req.getRequestDispatcher("/WEB-INF/admin/filePost/write.jsp").forward(req, res);
+				break;
+			case "admin/login":
+				req.getRequestDispatcher("/WEB-INF/admin/adminLogin.jsp").forward(req, res);
 				break;
 			default:
 				req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, res);

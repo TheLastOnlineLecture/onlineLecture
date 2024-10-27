@@ -32,10 +32,10 @@
 				<div class="swiper2 mySwiper underSlide">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
-							<a href="#"><img src="public/mainSlider_1.png" alt="" /></a>
+							<a href="#"><img src="/public/mainSlider_1.png" alt="" /></a>
 						</div>
 						<div class="swiper-slide">
-							<a href="#"><img src="public/mainSlider_2.png" alt="" /></a>
+							<a href="#"><img src="/public/mainSlider_2.png" alt="" /></a>
 						</div>
 					</div>
 				</div>

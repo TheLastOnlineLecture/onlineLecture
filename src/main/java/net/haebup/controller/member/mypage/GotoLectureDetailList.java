@@ -19,7 +19,7 @@ public class GotoLectureDetailList extends HttpServlet {
         MemberDTO memberDTO = (MemberDTO) request.getSession().getAttribute("user");
         if(memberDTO == null){
             request.setAttribute("message", "로그인 후 이용해주세요.");
-            request.getRequestDispatcher("/WEB-INF/user/login/login.jsp").forward(request, response);
+            request.getRequestDispatcher("/goto.do?page=login").forward(request, response);
             return;
         }
         String lectureCode = request.getParameter("lectureCode");
