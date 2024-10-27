@@ -109,7 +109,7 @@
                     <td><a href="${pageContext.request.contextPath}/lecture/common/lectureDetail.do?code=${lecture.lectureCode}">${lecture.lectureName}</a></td>
                     <td>${lecture.lecturePrice}원</td>
                     <td>${lecture.lectureRegdate}</td>
-                    <td><a href="${pageContext.request.contextPath}/lecture/common/lectureList.do?filterBy=teacher&filterValue=${lecture.teacherName}">${lecture.teacherName}</a></td>
+                    <td><a href="${pageContext.request.contextPath}/gotoTeacherInfo.do?teacherId=${lecture.teacherId}">${lecture.teacherName}</a></td>
                 </tr>
             </c:forEach>
         </table>
