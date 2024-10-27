@@ -9,24 +9,4 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
-  <servlet>
-    <description></description>
-    <display-name>MyPostListController</display-name>
-    <servlet-name>MyPostListController</servlet-name>
-    <servlet-class>net.haebup.controller.board.MyPostListController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MyPostListController</servlet-name>
-    <url-pattern>/MyPostListController</url-pattern>
-  </servlet-mapping>
-  <servlet>
-    <description></description>
-    <display-name>MyCommentListController</display-name>
-    <servlet-name>MyCommentListController</servlet-name>
-    <servlet-class>net.haebup.controller.board.comment.MyCommentListController</servlet-class>
-  </servlet>
-  <servlet-mapping>
-    <servlet-name>MyCommentListController</servlet-name>
-    <url-pattern>/MyCommentListController</url-pattern>
-  </servlet-mapping>
 </web-app>

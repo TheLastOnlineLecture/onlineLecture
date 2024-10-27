@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -7,7 +8,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h3> 강으 ㅣ 리뷰 전체목록  </h3>
+<h3> 해당 강의 리뷰</h3>
 <table border="1">
 	<tr>
 		<th>제목</th>

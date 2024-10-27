@@ -25,7 +25,7 @@ ${boardType}
 	<input type="text" name="boardWriter" required><br>
 	
 	<input type="submit" value="등록">
-	<c:if test="${boardType != 'R'}">
+	<c:if test="${boardDTO.boardType != 'R' && boardDTO.boardType != 'N' && boardDTO.boardType != 'C'}">
 		<input type="file" name="attachedFile">
 	</c:if>
 </form>

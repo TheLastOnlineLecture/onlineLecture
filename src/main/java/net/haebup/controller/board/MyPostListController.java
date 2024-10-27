@@ -64,7 +64,7 @@ public class MyPostListController extends HttpServlet {
 
      } catch (Exception e) {
          e.printStackTrace();
-         response.getWriter().write("서버 오류가 발생했습니다.");
+         response.getWriter().print("<script>alert('내가 쓴글 확인 실패'); location.href='javascript:history.back();';</script>");
      }
  }
 

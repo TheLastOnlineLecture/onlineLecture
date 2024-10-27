@@ -9,6 +9,17 @@
 </head>
 <body>
 <h3> 강의실 qna 리스트  </h3>
+<form action="gotoQnaList.do" method="get">
+    <input type="hidden" name="type" value="${qnaType}"/>
+    <label for="searchType">검색 유형:</label>
+    <select name="searchType" id="searchType">
+        <option value="title">제목</option>
+        <option value="writer">작성자</option>
+        <option value="title_content">제목 + 내용</option>
+    </select>
+    <input type="text" name="searchKeyword" placeholder="검색어 입력" />
+    <input type="submit" value="검색" />
+</form>
 <table border="1">
 	<tr>
 		<th>제목</th>
@@ -55,6 +66,6 @@
 		</td>
 	</tr>
 </table>
-<a href="/goto.do?page=qna/write&type=${qnaType}&qnaCategory=${qnaCategory}">작성</a>
+<a href="/goto.do?user/page=qna/write&type=${qnaType}&qnaCategory=${qnaCategory}">작성</a>
 </body>
 </html>

@@ -21,6 +21,10 @@ public class GotoPostList extends HttpServlet {
         String pageNoParam = request.getParameter("pageNo");
         String pageSizeParam = request.getParameter("pageSize");
         String boardType = request.getParameter("type");  
+        String boardCategory = request.getParameter("category");  
+        
+        // 값 확인용 추후 삭제
+//        boardCategory = "SCI001";
 
         int pageNo = pageNoParam != null ? Integer.parseInt(pageNoParam) : 1;      
         int pageSize = pageSizeParam != null ? Integer.parseInt(pageSizeParam) : 10; 
@@ -37,10 +41,10 @@ public class GotoPostList extends HttpServlet {
 
              if (searchKeyword != null && !searchKeyword.isEmpty()) {
                  totalCount = boardDAO.getTotalCount(boardType, searchType, searchKeyword);
-                 boardList = boardDAO.getSearchBoardList(pageSize, (pageNo - 1) * pageSize, boardType, searchType, searchKeyword);
+                 boardList = boardDAO.getSearchBoardList(pageSize, (pageNo - 1) * pageSize, boardType, boardCategory, searchType, searchKeyword);
              } else {
-                 totalCount = boardDAO.getTotalCount(boardType);
-                 boardList = boardDAO.getBoardListByPage(pageNo, pageSize, boardType);
+                 totalCount = boardDAO.getTotalCount(boardType, boardCategory);
+                 boardList = boardDAO.getBoardListByPage(pageNo, pageSize, boardType, boardCategory);
              }
              
 
@@ -51,6 +55,7 @@ public class GotoPostList extends HttpServlet {
                  System.out.println("writer : " + boardDTO.getBoardWriter());
                  System.out.println("reqdate : " + boardDTO.getBoardRegdate());
                  System.out.println("type : " + boardDTO.getBoardType());
+                 System.out.println("category : " + boardDTO.getBoardCategory());
              }
              System.out.println("====================");
 
@@ -59,27 +64,41 @@ public class GotoPostList extends HttpServlet {
 
             request.setAttribute("boardType", boardType);
             request.setAttribute("boardList", boardList);         
+            request.setAttribute("boardCategory", boardCategory);       
             request.setAttribute("pagination", pagination);       
             
             
             // P 자유게시판 D 자료실 N 공지사항 C 강의공지 R 수강후기
+            // 자료업로드 되는거 P D
+            // 안되는거 N C R
             switch(boardType) {
             	case "P" :  
             		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/post/list.jsp").forward(request, response);
             		break;
             	case "D" :  
-            		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/filePost/list.jsp").forward(request, response);
+            		if(boardCategory != null) {
+            			request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/fileList.jsp").forward(request, response);
+            		} else {
+            			request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/filePost/fileList.jsp").forward(request, response);
+            		}
             		break;
             	case "N" :  
             		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/noticePost/noticeList.jsp").forward(request, response);
             		break;
             	// 강의 코드 필요함
-            	case 
-            	"C" :  
-            		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/lectureNoticeList.jsp").forward(request, response);
+            	case "C" :  
+            		if(boardCategory != null) {
+            			request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/lectureNoticeList.jsp").forward(request, response);
+            		}else {
+            			request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/lectureNoticeList.jsp").forward(request, response);
+            		}
             		break;
             	case "R" :  
-            		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/lectureReview.jsp").forward(request, response);
+            		if(boardCategory != null) {
+            			request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/lectureReview.jsp").forward(request, response);
+            		}else {
+            			request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/lectureReview.jsp").forward(request, response);
+            		}
             		break;
             }
 //            System.out.println("Pagination Object: " + pagination);
