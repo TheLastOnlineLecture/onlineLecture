@@ -32,6 +32,21 @@ public class CommentDAO {
         return commentList;
     }
     
+    public int getCount(int boardIdx) throws SQLException{
+        String sql = "SELECT COUNT(*) FROM tbl_comment WHERE board_idx = ?";
+        try(Connection conn = DBConnPool.getConnection();
+            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{boardIdx})){
+                ResultSet rs = dbUtil.executeQuery();
+                if(rs.next()){
+                    return rs.getInt(1);
+                }
+                return 0;
+        }catch(SQLException e){
+            e.printStackTrace();
+            throw new RuntimeException("댓글 개수 조회 중 오류가 발생하였습니다."+e);
+        }
+    }
+    
 
     public int insertComment(BoardCommentDTO commentDTO) throws SQLException{
         String sql = "INSERT INTO tbl_comment (post_idx, comment_content, user_id) VALUES (?, ?, ?)";
