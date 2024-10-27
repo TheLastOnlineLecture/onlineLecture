@@ -23,6 +23,7 @@ public class GotoDetail extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int boardIdx = Integer.parseInt(request.getParameter("idx"));
+		String boardType = request.getParameter("type");
 		BoardDAO boardDAO = new BoardDAO();
 		BoardDTO boardDTO = null;
 
@@ -50,9 +51,14 @@ public class GotoDetail extends HttpServlet {
 //	            }
 	            
 	            request.setAttribute("commentList", commentList);
+	            
+	            int commentCount = commentDAO.getCount(boardIdx);
+	            request.setAttribute("commentCount", commentCount); 
 	        } catch (SQLException e) {
 	            e.printStackTrace();
 	        }
+	        
+
 	        
 	        FileDAO fileDAO = new FileDAO();
 	        try {
@@ -66,6 +72,7 @@ public class GotoDetail extends HttpServlet {
 	                    file.setFileName(encodedFileName);
 	                }
 	                request.setAttribute("fileList", fileList);  
+	                request.setAttribute("boardType", boardType);  
 	            }
 	        } catch (SQLException e) {
 	            e.printStackTrace();
