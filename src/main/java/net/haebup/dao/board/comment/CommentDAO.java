@@ -1,5 +1,6 @@
 package net.haebup.dao.board.comment;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import net.haebup.dto.board.comment.BoardCommentDTO;
 import java.sql.Connection;
@@ -21,7 +22,10 @@ public class CommentDAO {
                     commentDTO.setCommentIdx(rs.getInt("comment_idx"));
                     commentDTO.setPostIdx(rs.getInt("post_idx"));
                     commentDTO.setCommentContent(rs.getString("comment_content"));
-                    commentDTO.setCommentRegdate(rs.getString("comment_regdate"));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = dateFormat.format(rs.getTimestamp("comment_regdate"));
+                    commentDTO.setCommentRegdate(formattedDate);
+                    
                     commentDTO.setUserId(rs.getString("user_id"));
                     commentList.add(commentDTO);
                 }

@@ -21,9 +21,7 @@ ${qnaType}
 	<label for="qnaContent">내용:</label><br>
 	<textarea  name="qnaContent" rows="5" cols="40" required></textarea><br>
 	
-	<label for="qnaWriter">작성자:</label>
-	<input type="text" name="qnaWriter" required><br>
-	
+	<input type="hidden" name="qnaWriter" value=${sessionScope.user.userId}><br>
 	<input type="submit" value="등록">
 </form>
 

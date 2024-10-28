@@ -81,7 +81,8 @@ public class PostWriteController extends HttpServlet {
                 }
                 request.setAttribute("type", boardType);
                 request.setAttribute("msg", "게시글 작성 성공했습니다.");
-                request.setAttribute("url", "/gotoPostList.do"+boardType); 
+ 
+                request.setAttribute("url", "/gotoPostList.do?type="+boardType); 
                 request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
             } else {
             	 request.setAttribute("msg", "게시글이 작성되지 않았습니다.");

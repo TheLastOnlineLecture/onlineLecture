@@ -156,16 +156,27 @@ public class QnaDAO{
 
     //질문 삭제
     public int deleteQna(int qnaIdx) throws SQLException{
-        String sql = "DELETE FROM tbl_qna WHERE qna_idx = ?";
-        int result = 0; 
-        try(Connection conn = DBConnPool.getConnection();
-            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaIdx})){
-                result = dbUtil.executeUpdate();
-        }catch(SQLException e){
-            e.printStackTrace();
-            throw new RuntimeException("질문 삭제 중 오류가 발생하였습니다."+e);
-        }
-        return result;
+    	 String deleteCommentsSql = "DELETE FROM tbl_Qna_comment WHERE qna_idx = ?";
+ 	    String deleteQnaSql = "DELETE FROM tbl_qna WHERE qna_idx = ?";
+ 	   try (Connection conn = DBConnPool.getConnection()) {
+	        conn.setAutoCommit(false); 
+
+	        try (DbQueryUtil commentUtil = new DbQueryUtil(conn, deleteCommentsSql, new Object[]{qnaIdx})) {
+	            commentUtil.executeUpdate();
+	        }
+
+	        try (DbQueryUtil qnaUtil = new DbQueryUtil(conn, deleteQnaSql, new Object[]{qnaIdx})) {
+	            int result = qnaUtil.executeUpdate();
+	            conn.commit(); 
+	            return result;
+	        } catch (SQLException e) {
+	            conn.rollback();  
+	            throw new RuntimeException("게시글 삭제 중 오류가 발생하였습니다. " + e);
+	        }
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	        throw new RuntimeException("게시글 삭제 중 오류가 발생하였습니다. " + e);
+	    }
     }
 
     //질문 상세 조회

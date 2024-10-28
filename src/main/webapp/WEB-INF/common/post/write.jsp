@@ -21,8 +21,7 @@ ${boardType}
 	<label for="boardContent">내용:</label><br>
 	<textarea  name="boardContent" rows="5" cols="40" required></textarea><br>
 	
-	<label for="boardWriter">작성자:</label>
-	<input type="text" name="boardWriter" required><br>
+	<input type="hidden" name="boardWriter" value=${sessionScope.user.userId}><br>
 	
 	<input type="submit" value="등록">
 	<c:if test="${boardDTO.boardType != 'R' && boardDTO.boardType != 'N' && boardDTO.boardType != 'C'}">
