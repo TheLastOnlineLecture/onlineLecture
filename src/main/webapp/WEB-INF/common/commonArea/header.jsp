@@ -1,3 +1,4 @@
+<%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
@@ -11,6 +12,9 @@
 <title>chunjaeHaebup</title>
 </head>
 <body>
+<%
+Date now = new Date();
+%>
 	<!-- // navbar 영역 -->
 	<div class="center">
 		<div class="navTop">
@@ -99,7 +103,7 @@
 	</div>
 	<div class="loginContainer"></div>
 	<div class="navMainBoundary"></div>
-	<script src="/jsgroup/main/script.js"></script>
+	<script src="/jsgroup/main/script.js?now=<%=now.getTime()%>"></script>
 	<!-- navbar 영역 // -->
 </body>
 </html>
