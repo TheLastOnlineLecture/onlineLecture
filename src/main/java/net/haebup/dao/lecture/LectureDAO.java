@@ -10,7 +10,7 @@ import net.haebup.utils.DatabaseUtil.DbQueryUtil;
 import java.util.ArrayList;
 import java.sql.ResultSet;
 // import net.haebup.dto.lecture.lectureDetail.LectureDetailDTO;
-import net.haebup.dto.lecture.lectureDetail.LetureDetailDTO;
+import net.haebup.dto.lecture.lectureDetail.LectureDetailDTO;
 
 // LectureDAO: 강의 관련 데이터베이스 작업을 처리하는 클래스
 public class LectureDAO {
@@ -302,5 +302,26 @@ public class LectureDAO {
             }
             return 0; // 결과가 없을 경우 0 반환
         }
+    }
+
+    public List<LectureDetailDTO> getLectureDetails(String lectureCode) throws SQLException {
+        String sql = "SELECT * FROM TBL_LECTURE_DETAIL WHERE lecture_code = ? ORDER BY lecture_detail_idx";
+        List<LectureDetailDTO> details = new ArrayList<>();
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{lectureCode})) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                LectureDetailDTO detail = new LectureDetailDTO();
+                detail.setLectureDetailIdx(rs.getInt("lecture_detail_idx"));
+                detail.setLectureCode(rs.getString("lecture_code"));
+                detail.setLectureDetailContent(rs.getString("lecture_detail_content"));
+                detail.setLectureDetailFilePath(rs.getString("lecture_detail_file_path"));
+                detail.setLectureDetailFileName(rs.getString("lecture_detail_file_name"));
+                detail.setLectureDetailFileSize(rs.getLong("lecture_detail_file_size"));
+                details.add(detail);
+            }
+        }
+        return details;
     }
 }
