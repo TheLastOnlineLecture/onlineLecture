@@ -123,7 +123,7 @@
 					                  </c:if>
 					                  <c:if test="${pagination.hasLastPage()}">
 					                    <a href="?pageNo=${pagination.totalPages}&type=${boardType}"
-					                      >>></a
+					                      >></a
 					                    >
 					                  </c:if>
 					                </div>
