@@ -67,9 +67,9 @@ Date now = new Date();
 										QnA 게시판</a> <a
 									href="/gotoPostList.do?type=P">자유게시판</a>
 								</li>
-								<li class="submenuContentGroup5"><a href="#">국어</a> <a
-									href="#">수학</a> <a href="#">영어</a> <a href="#">한국사</a> <a
-									href="#">사회</a> <a href="#">과학</a> <a href="#">제2외국어</a></li>
+								<li class="submenuContentGroup5"><a href="/teacherList.do?subject=kor">국어</a> <a
+									href="/teacherList.do?subject=math">수학</a> <a href="/teacherList.do?subject=eng">영어</a><a
+									href="/teacherList.do?subject=soc">사회</a> <a href="/teacherList.do?subject=sci">과학</a></li>
 								<li class="submenuContentGroup6">
 									<!-- 근데 여기가 사이트 자료실인가 선생님 자료실인가? --> <a href="/gotoPostList.do?type=D">사이트 자료실</a>
 								</li>

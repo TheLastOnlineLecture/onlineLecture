@@ -36,10 +36,10 @@ public class PostWriteController extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 		
-//		MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-//		String userType = user.getUserType();
-
-		String userType = "A";
+		MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+		String userType = user.getUserType();
+		System.out.println("userType + " +  userType);
+		// String userType = "A";
 		
 		String boardType = request.getParameter("type");
 //		System.out.println("타입확인 : "+boardType);
@@ -51,12 +51,12 @@ public class PostWriteController extends HttpServlet {
         boardDTO.setBoardWriter(request.getParameter("boardWriter"));
 
         // 게시글 작성 권한 확인
-        if (!checkUser(userType, boardType)) {
-            request.setAttribute("msg", "해당 게시판에 작성 권한이 없습니다.");
-            request.setAttribute("url", "javascript:history.back();"); 
-            request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
-            return;
-        }
+//        if (!checkUser(userType, boardType)) {
+//            request.setAttribute("msg", "해당 게시판에 작성 권한이 없습니다.");
+//            request.setAttribute("url", "javascript:history.back();"); 
+//            request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
+//            return;
+//        }
 
         BoardDAO boardDAO = new BoardDAO();
         int boardIdx = 0;
@@ -95,18 +95,18 @@ public class PostWriteController extends HttpServlet {
         }
 	}
 	
-	private boolean checkUser(String userType, String boardType) {
-	    // 관리자 A: N 공지사항, D 자료실, C 강의공지, P 자유게시판
-	    if ("A".equals(userType)) {
-	        return "N".equals(boardType) || "D".equals(boardType) || "C".equals(boardType) || "P".equals(boardType);
-	    } 
-	    // 선생님 T: D 자료실, C 강의공지, P 자유게시판
-	    else if ("T".equals(userType)) {
-	        return "D".equals(boardType) || "C".equals(boardType) || "P".equals(boardType);
-	    }
-	    // 일반 학생: P 자유게시판, R 수강후기
-	    else {
-	        return "P".equals(boardType) || "R".equals(boardType);
-	    }
-	}
+//	private boolean checkUser(String userType, String boardType) {
+//	    // 관리자 A: N 공지사항, D 자료실, C 강의공지, P 자유게시판
+//	    if ("A".equals(userType)) {
+//	        return "N".equals(boardType) || "D".equals(boardType) || "C".equals(boardType) || "P".equals(boardType);
+//	    } 
+//	    // 선생님 T: D 자료실, C 강의공지, P 자유게시판
+//	    else if ("T".equals(userType)) {
+//	        return "D".equals(boardType) || "C".equals(boardType) || "P".equals(boardType);
+//	    }
+//	    // 일반 학생: P 자유게시판, R 수강후기
+//	    else {
+//	        return "P".equals(boardType) || "R".equals(boardType);
+//	    }
+//	}
 }
