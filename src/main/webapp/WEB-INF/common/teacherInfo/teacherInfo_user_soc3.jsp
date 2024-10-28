@@ -51,9 +51,9 @@
 		<!-- // 메인 콘텐츠 영역 -->
 		<main>
 			<div class="center">
-				<div class="teacherDetailImg">
+				<div class="teacherDetailImg" style="background-color:#ECF7FD">
 					<div class="center">
-						<img src="/public/teacher_kor/kor_kwon.jpg" alt="" />
+						<img src="/public/teacher_society/society_moon.jpg" alt="" />
 						<div class="teacherInfo">
 							<!-- 선생님 이름 동적으로 변경 -->
 							<div class="teacherName">${teacherInfo.userName} 선생님</div>
@@ -106,7 +106,7 @@
 											src="https://high.milkt.co.kr/UploadFile/LecturerImg/228_%EB%AC%B8%EB%B3%91%EC%9D%BC_Img10_0.png"
 											alt="" class="teacherCircleImg" />
 										<div class="textCenter">
-											<span>국어</span> ${lecture.teacherName}
+											<span>사회</span> ${teacherInfo.userName}
 										</div>
 									</div>
 									<div class="teacherLectureArea">
