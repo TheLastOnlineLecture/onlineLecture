@@ -1,4 +1,4 @@
-package net.haebup.controller.member;
+package net.haebup.controller.common;
 
 import java.io.IOException;
 import jakarta.servlet.ServletException;
