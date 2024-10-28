@@ -57,7 +57,7 @@ Date now = new Date();
 							<ul>
 								<li class="submenuContentGroup1"><a href="https://www.smarthb-math.co.kr/about/about.php">브랜드 소개</a><a
 									href="https://www.smarthb-math.co.kr/about/about.php">오시는 길</a></li>
-								<li class="submenuContentGroup2"><a href="#">국어</a> <a
+								<li class="submenuContentGroup2"><a href="/gotoTeacherInfo.do?teacherId=user_kor1">국어</a> <a
 									href="#">수학</a> <a href="#">영어</a> <a href="#">한국사</a> <a
 									href="#">사회</a> <a href="#">과학</a> <a href="#">제2외국어</a></li>
 								<li class="submenuContentGroup3"><a href="https://high.milkt.co.kr/DalJa/Attend/frm_Attend_Event.aspx?menucode=110900">출석체크 이벤트</a> <a
