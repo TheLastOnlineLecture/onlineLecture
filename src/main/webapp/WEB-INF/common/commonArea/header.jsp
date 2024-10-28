@@ -1,6 +1,6 @@
 <%@page import="java.util.Date"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+    pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
@@ -15,20 +15,20 @@
 <%
 Date now = new Date();
 %>
-	<!-- // navbar 영역 -->
-	<div class="center">
-		<div class="navTop">
-			<div class="navTopContent">
-				<a href="https://www.chunjae.co.kr/#/main" target="_blank">천재교육</a><span>|</span>
-				<a href="https://www.milkt.co.kr/HME/sellpa" target="_blank">T셀파</a>
-				<span>|</span> <a href="https://mall.chunjae.co.kr/#/main/main"
-					target="_blank">천재교육 쇼핑몰</a> <span>|</span> <a
-					href="https://www.genia.academy/" target="_blank">천재IT교육센터</a>
-			</div>
-			<div class="navTopContent">
-				<span class="dDay">2025학년도 수능 <strong id="dDayCount">수능날짜가
-						동적으로 바뀜</strong></span> <span>|</span> <a href="#">협업기업</a><span>|</span> <a
-					href="/inquiy/user/gotoInquiy.do
+    <!-- // navbar 영역 -->
+    <div class="center">
+        <div class="navTop">
+            <div class="navTopContent">
+                <a href="https://www.chunjae.co.kr/#/main" target="_blank">천재교육</a><span>|</span>
+                <a href="https://www.milkt.co.kr/HME/sellpa" target="_blank">T셀파</a>
+                <span>|</span> <a href="https://mall.chunjae.co.kr/#/main/main"
+                    target="_blank">천재교육 쇼핑몰</a> <span>|</span> <a
+                    href="https://www.genia.academy/" target="_blank">천재IT교육센터</a>
+            </div>
+            <div class="navTopContent">
+                <span class="dDay">2025학년도 수능 <strong id="dDayCount">수능날짜가
+                        동적으로 바뀜</strong></span> <span>|</span> <a href="#">협업기업</a><span>|</span> <a
+                    href="/inquiy/user/gotoInquiy.do
             ">고객센터</a>
 			</div>
 		</div>
@@ -122,5 +122,6 @@ Date now = new Date();
 	<div class="navMainBoundary"></div>
 	<script src="/jsgroup/main/script.js?now=<%=now.getTime()%>"></script>
 	<!-- navbar 영역 // -->
+
 </body>
 </html>
