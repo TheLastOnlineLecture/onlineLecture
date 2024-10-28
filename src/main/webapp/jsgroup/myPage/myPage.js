@@ -2,7 +2,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const myLectureButton = document.getElementById("myLectureButton");
 
 myLectureButton.addEventListener("click", () => {
-    window.location.href = "/lecture/common/gotoMylecture.do";
+    window.location.href = "/mypage/common/gotoMyLecture.do";
   });
 });
 
@@ -59,4 +59,100 @@ document.addEventListener("DOMContentLoaded", () => {
       comment.textContent = originalText.slice(0, maxLength) + "...";
     }
   });
+});
+
+// 게시글 유형 바꾸기
+document.addEventListener("DOMContentLoaded", function () {
+    const postTypeElements = document.querySelectorAll("td.postType");
+
+    postTypeElements.forEach((element) => {
+        const postType = element.dataset.type; // dataset에서 postType을 가져옴
+
+        let labelHtml = "";
+        switch (postType) {
+            case "P":
+                labelHtml = '<span class="label free">자유게시판</span>';
+                break;
+            case "D":
+                labelHtml = '<span class="label file">자료실</span>';
+                break;
+            case "N":
+                labelHtml = '<span class="label notice">공지사항</span>';
+                break;
+            case "C":
+                labelHtml = '<span class="label lecNotice">강의공지</span>';
+                break;
+            case "R":
+                labelHtml = '<span class="label review">수강후기</span>';
+                break;
+            default:
+                labelHtml = '<span class="label unknown">알 수 없음</span>';
+                break;
+        }
+        element.innerHTML = labelHtml;
+    });
+});
+
+// 댓글 유형 바꾸기
+document.addEventListener("DOMContentLoaded", function () {
+    const commentTypeElements = document.querySelectorAll("td.commentType");
+
+    commentTypeElements.forEach((element) => {
+        const type = element.dataset.type; // dataset에서 type을 가져옴
+
+        let labelHtml = "";
+        switch (type) {
+            case "P":
+                labelHtml = '<span class="label free">자유게시판</span>';
+                break;
+            case "D":
+                labelHtml = '<span class="label file">자료실</span>';
+                break;
+            case "N":
+                labelHtml = '<span class="label notice">공지사항</span>';
+                break;
+            case "C":
+                labelHtml = '<span class="label lecNotice">강의공지</span>';
+                break;
+            case "R":
+                labelHtml = '<span class="label review">수강후기</span>';
+                break;
+            default:
+                labelHtml = '<span class="label unknown">알 수 없음</span>';
+                break;
+        }
+        element.innerHTML = labelHtml;
+    });
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const lectureCodeElements = document.querySelectorAll("td.lectureCode");
+
+    lectureCodeElements.forEach((element) => {
+		// 세 글자 뜯어오기
+        const code = element.dataset.code.substring(0, 3);
+
+        let labelHtml = "";
+        switch (code) {
+            case "KOR":
+                labelHtml = '<span class="label kor">국어</span>';
+                break;
+            case "MAT":
+                labelHtml = '<span class="label mat">수학</span>';
+                break;
+            case "ENG":
+                labelHtml = '<span class="label eng">영어</span>';
+                break;
+            case "SOC":
+                labelHtml = '<span class="label soc">사회</span>';
+                break;
+            case "SCI":
+                labelHtml = '<span class="label sci">과학</span>';
+                break;
+            default:
+                labelHtml = '<span class="label unknown">알 수 없음</span>';
+                break;
+        }
+        element.innerHTML = labelHtml; // 해당 요소에 HTML 추가
+    });
 });
