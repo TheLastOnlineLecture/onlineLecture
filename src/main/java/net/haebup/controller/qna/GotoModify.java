@@ -20,10 +20,9 @@ public class GotoModify extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		int qnaIdx = Integer.parseInt(request.getParameter("idx")); 
         QnaDAO qnaDAO = new QnaDAO();
-        QnaDTO qnaDTO = new QnaDTO();
         
         try {
-            qnaDAO.updateQna(qnaDTO); 
+        	QnaDTO qnaDTO = qnaDAO.selectQnaDetail(qnaIdx); 
             
             if (qnaDTO != null) {
                 request.setAttribute("qnaDTO", qnaDTO); 

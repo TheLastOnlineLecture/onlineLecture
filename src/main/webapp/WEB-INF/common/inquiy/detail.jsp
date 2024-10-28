@@ -17,7 +17,6 @@
 	<p><strong>등록일:</strong> ${qnaDTO.qnaRegdate}</p>
 	<p><strong>내용:</strong></p>
 	<div>${qnaDTO.qnaContent}</div>
-	<button type="button" onclick="gotoModify()">수정</button>
 	<button onclick="gotoDelete()">삭제</button>
 </form>
 <c:if test="${not empty commentList}">
@@ -35,9 +34,6 @@
 </form>
 
 <script>
-function gotoModify() {
-    location.href = "gotoQnaModify.do?idx=${qnaDTO.qnaIdx}"; 
-}
 function gotoDelete() {
     if (confirm("정말 삭제하시겠습니까?")) { 
     	document.getElementById("postFrm").submit();

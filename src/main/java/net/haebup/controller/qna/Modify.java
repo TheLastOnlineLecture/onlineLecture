@@ -29,9 +29,22 @@ public class Modify extends HttpServlet {
         qnaDTO.setQnaContent(content);
 
         QnaDAO qnaDAO = new QnaDAO();
+        
+        request.setAttribute("qnaIdx", qnaIdx);
+        
+        int result = 0;
 
 	        try {
-	        	qnaDAO.updateQna(qnaDTO); 
+	        	result = qnaDAO.updateQna(qnaDTO); 
+	        	if(result>0) {
+	        		request.setAttribute("msg", "qna 수정이 완료되었습니다.");
+	                request.setAttribute("url", "/gotoQnaDetail.do?idx=" + qnaIdx);
+	                request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
+	        	}else {
+	        		request.setAttribute("msg", "qna 수정에 실패했습니다..");
+	                request.setAttribute("url", "/gotoQnaDetail.do?idx=" + qnaIdx);
+	                request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
+	        	}
 	            response.sendRedirect("gotoQnaDetail.do?idx=" + qnaIdx); 
 	        } catch (SQLException e) {
 	            e.printStackTrace();

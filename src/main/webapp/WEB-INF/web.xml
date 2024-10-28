@@ -9,4 +9,14 @@
     <welcome-file>default.jsp</welcome-file>
     <welcome-file>default.htm</welcome-file>
   </welcome-file-list>
+  <servlet>
+    <description></description>
+    <display-name>DeleteListController</display-name>
+    <servlet-name>DeleteListController</servlet-name>
+    <servlet-class>net.haebup.controller.board.DeleteListController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteListController</servlet-name>
+    <url-pattern>/DeleteListController</url-pattern>
+  </servlet-mapping>
 </web-app>

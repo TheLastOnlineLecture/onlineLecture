@@ -23,7 +23,7 @@ public class Delete extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int boardIdx = Integer.parseInt(request.getParameter("idx"));
         String boardType = request.getParameter("type");
-        String boardCategory = request.getParameter("category"); 
+//        String boardCategory = request.getParameter("category"); 
 
         BoardDAO boardDAO = new BoardDAO();
         BoardDTO boardDTO = null; 
@@ -48,55 +48,23 @@ public class Delete extends HttpServlet {
             }
 
             // 게시글 삭제
+            response.setContentType("text/html; charset=UTF-8");
+            response.setCharacterEncoding("UTF-8");
+            String msg = "";
             int result = boardDAO.deleteByBoardIdx(boardIdx);
-            String msg, url;
-
             if (result > 0) {
-                msg = "게시글이 삭제되었습니다.";
-                url = getRedirectUrl(request, boardType, boardCategory);
+            	msg="게시글 삭제 성공";
+                response.getWriter().print("<script>alert('"+ msg +"'); location.href='/gotoPostList.do?type=" + boardType + "';</script>");
             } else {
-                msg = "게시글 삭제에 실패했습니다.";
-                url = "javascript:history.back();";
+            	msg="게시글 삭제 실패";
+                response.getWriter().print("<script>alert('"+ msg +"'); location.href='javascript:history.back();';</script>");
             }
-
-            request.setAttribute("msg", msg);
-            request.setAttribute("url", url); 
-            request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
 
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("msg", "오류 발생: " + e.getMessage());
-            request.setAttribute("url", "javascript:history.back();");
-            request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
+            response.getWriter().print("<script>alert('오류 발생: " + e.getMessage() + "'); location.href='javascript:history.back();';</script>");
         }
     }
+  
 
-    private String getRedirectUrl(HttpServletRequest request, String boardType, String boardCategory) {
-        String url = "";
-        switch (boardType) {
-            case "P":
-                url = request.getContextPath() + "/WEB-INF/common/post/list.jsp";
-                break;
-            case "D":
-                url = request.getContextPath() + "/WEB-INF/common/lecture/fileList.jsp";
-                break;
-            case "N":
-                url = request.getContextPath() + "/WEB-INF/common/noticePost/noticeList.jsp";
-                break;
-            case "C":
-                url = request.getContextPath() + "/WEB-INF/common/lecture/lectureNoticeList.jsp";
-                break;
-            case "R":
-                url = request.getContextPath() + "/WEB-INF/common/lecture/lectureReview.jsp";
-                break;
-            default:
-                url = "javascript:history.back();";
-                break;
-        }
-        // 카테고리 추가
-        if (boardCategory != null) {
-            url += "?category=" + boardCategory;
-        }
-        return url;
-    }
-	}
+}
