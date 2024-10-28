@@ -24,6 +24,7 @@ public class CommentWriterController extends HttpServlet {
 		int postIdx = Integer.parseInt(request.getParameter("boardIdx"));
 	    String commentContent = request.getParameter("commentContent");
 	    MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+
 	    if (user == null) {
             request.setAttribute("msg", "작성 권한이 없습니다. 로그인 후 다시 시도해 주세요.");
             request.setAttribute("url", "/gotoPostDetail.do?idx=" + postIdx);

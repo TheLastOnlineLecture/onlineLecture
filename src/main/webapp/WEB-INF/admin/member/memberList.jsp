@@ -90,7 +90,7 @@
     <!-- 네비게이션 바 -->
     <div class="navbar">
         <a href="#">회원 관리</a>
-        <a href="#">강의 관리</a>
+        <a href="${pageContext.request.contextPath}/admin/lecture/manage?action=list">강의 관리</a>
         <a href="#">게시판 관리</a>
     </div>
     

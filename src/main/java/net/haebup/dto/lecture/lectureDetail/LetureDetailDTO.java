@@ -21,6 +21,13 @@ public class LetureDetailDTO {
 	private int lectureDetailIdx; // 강의 상세 아이디
 	private String lectureCode; // 강의 코드
 	private String lectureDetailContent; // 강의 상세 내용
+	private String lectureDetailFilePath; // 강의 상세 파일 경로
+	private String lectureDetailFileName; // 강의 상세 파일 이름
+	private long lectureDetailFileSize; // 강의 상세 파일 사이즈
+
+	public LetureDetailDTO() {
+		super();
+	}
 
 	public int getLectureDetailIdx() {
 		return lectureDetailIdx;
@@ -46,4 +53,27 @@ public class LetureDetailDTO {
 		this.lectureDetailContent = lectureDetailContent;
 	}
 
+	public String getLectureDetailFilePath() {
+		return lectureDetailFilePath;
+	}
+
+	public void setLectureDetailFilePath(String lectureDetailFilePath) {
+		this.lectureDetailFilePath = lectureDetailFilePath;
+	}
+
+	public String getLectureDetailFileName() {
+		return lectureDetailFileName;
+	}
+
+	public void setLectureDetailFileName(String lectureDetailFileName) {
+		this.lectureDetailFileName = lectureDetailFileName;
+	}
+
+	public long getLectureDetailFileSize() {
+		return lectureDetailFileSize;
+	}
+
+	public void setLectureDetailFileSize(long lectureDetailFileSize) {
+		this.lectureDetailFileSize = lectureDetailFileSize;
+	}
 }
