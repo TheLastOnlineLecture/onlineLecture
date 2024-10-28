@@ -68,8 +68,7 @@ public class MyPostListController extends HttpServlet {
                 PaymentDAO paymentDAO = new PaymentDAO();
                 paymentList = paymentDAO.getPaymentListAll(user.getUserId());
 
-                // lectureTotalCount =
-                // lectureDAO.getLectureTotalCountByUserId(memberDTO.getUserId());
+                lectureDAO.getLectureTotalCountByUserId(user.getUserId());
             } catch (SQLException e) {
                 System.out.println("SQL 예외 발생: " + e.getMessage());
                 request.setAttribute("message", "강의 목록 조회 중 오류가 발생하였습니다.");
@@ -80,14 +79,14 @@ public class MyPostListController extends HttpServlet {
             request.setAttribute("lectureList", lectureList);
             request.setAttribute("lectureTotalCount", lectureTotalCount);
             request.setAttribute("paymentList", paymentList);
-            // 요청 속성 설정
             request.setAttribute("postList", postList);
+            System.out.println(postList);
             request.setAttribute("postPagination", postPagination);
             request.setAttribute("commentList", commentList);
             request.setAttribute("commentPagination", commentPagination);
             request.setAttribute("writer", writer);
 
-            request.getRequestDispatcher("/WEB-INF/common/myStudyRoom/writeList.jsp").forward(request, response);
+            request.getRequestDispatcher("/WEB-INF/common/myPage/myPage.jsp").forward(request, response);
 
         } catch (Exception e) {
             e.printStackTrace();

@@ -142,7 +142,6 @@
 		<!-- // 푸터 영역 -->
 		<jsp:include page="common/commonArea/footer.jsp" />
 		<!-- 푸터 영역 // -->
-		
 	</div>
 
 	<script src="/jsgroup/main/script.js"></script>
