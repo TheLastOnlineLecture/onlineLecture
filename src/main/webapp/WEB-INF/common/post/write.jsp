@@ -9,8 +9,8 @@
 </head>
 <body>
 <h3> 자유게시글 작성  </h3>
-${boardType}
-<form action="postWrite.do" enctype="multipart/form-data" method="post">
+
+<form action="postWrite.do?type=${boardType}" enctype="multipart/form-data" method="post">
 <input type="hidden" name="type" value="${boardType}"/>
 <!-- 	<label for="boardType">게시판 유형:</label> -->
 <!-- 	<input type="text"  name="boardType" required><br> -->
@@ -24,7 +24,7 @@ ${boardType}
 	<input type="hidden" name="boardWriter" value=${sessionScope.user.userId}><br>
 	
 	<input type="submit" value="등록">
-	<c:if test="${boardDTO.boardType != 'R' && boardDTO.boardType != 'N' && boardDTO.boardType != 'C'}">
+	<c:if test="${boardType != 'R' && boardType != 'N' && boardType != 'C'}">
 		<input type="file" name="attachedFile">
 	</c:if>
 </form>

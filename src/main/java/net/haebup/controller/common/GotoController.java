@@ -64,8 +64,10 @@ public class GotoController extends HttpServlet {
 				break;
 			case "post/write":
 	              if (type.equals("N")) {
+	            	  req.setAttribute("boardType", type);
 	            	  req.getRequestDispatcher("/WEB-INF/admin/noticePost/write.jsp").forward(req, res);
 	                }else {
+	                  req.setAttribute("boardType", type);
 	                  req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
 	                }
 				req.setAttribute("boardType", type);

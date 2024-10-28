@@ -19,4 +19,24 @@
     <servlet-name>DeleteListController</servlet-name>
     <url-pattern>/DeleteListController</url-pattern>
   </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>commentUpdateController</display-name>
+    <servlet-name>commentUpdateController</servlet-name>
+    <servlet-class>net.haebup.controller.board.comment.commentUpdateController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>commentUpdateController</servlet-name>
+    <url-pattern>/commentUpdateController</url-pattern>
+  </servlet-mapping>
+  <servlet>
+    <description></description>
+    <display-name>DeleteCommentController</display-name>
+    <servlet-name>DeleteCommentController</servlet-name>
+    <servlet-class>net.haebup.controller.board.comment.DeleteCommentController</servlet-class>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>DeleteCommentController</servlet-name>
+    <url-pattern>/DeleteCommentController</url-pattern>
+  </servlet-mapping>
 </web-app>

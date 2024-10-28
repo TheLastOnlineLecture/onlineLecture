@@ -19,19 +19,17 @@
 	<div>${qnaDTO.qnaContent}</div>
 	<button onclick="gotoDelete()">삭제</button>
 </form>
-<c:if test="${not empty commentList}">
 	<h3>댓글 목록</h3>
 	<ul>
 	    <c:forEach var="qnaComment" items="${commentQnaList}">
-	        <li>${qnaComment.commentContent} - <strong>${qnaComment.userId}</strong> ${qnaComment.commentRegdate}</li>
+	        <li>${qnaComment.qnaCommentContent} - <strong>${qnaComment.qnaCommentWriter}</strong> ${qnaComment.qnaCommentRegdate}</li>
 	    </c:forEach>
 	</ul>
-</c:if>
-<form id="commentFrm" action="qnaCommentWrite.do" method="POST">
-    <input type="hidden" name="qnaIdx" value="${qnaDTO.qnaIdx}"/> 
-    <textarea name="commentQnaContent" rows="4" cols="50" placeholder="댓글을 입력하세요" required></textarea><br>
-    <button type="submit">댓글작성</button>
-</form>
+	<form id="commentFrm" action="qnaCommentWrite.do" method="POST">
+	    <input type="hidden" name="qnaIdx" value="${qnaDTO.qnaIdx}"/> 
+	    <textarea name="commentQnaContent" rows="4" cols="50" placeholder="댓글을 입력하세요" required></textarea><br>
+	    <button type="submit">댓글작성</button>
+	</form>
 
 <script>
 function gotoDelete() {

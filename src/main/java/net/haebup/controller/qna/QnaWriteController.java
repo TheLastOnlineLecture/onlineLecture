@@ -33,19 +33,23 @@ public class QnaWriteController extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 		
-//		MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-//		String userType = user.getUserType();
+		MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+		String userType = user.getUserType();
+		String userId = user.getUserId();
 //		String userType = "A";
 //		
 		String qnaType = request.getParameter("type");
-//		System.out.println("타입확인 : "+boardType);
+//		System.out.println("타입확인 : "+qnaType);
 		
 		QnaDTO qnaDTO = new QnaDTO();
 		qnaDTO.setQnaType(qnaType);  
+		System.out.println("qna 게시글 type"+qnaType);
+		System.out.println("dsd"+request.getParameter("qnaTitle"));
 		qnaDTO.setQnaTitle(request.getParameter("qnaTitle"));
 		qnaDTO.setQnaContent(request.getParameter("qnaContent"));
 		qnaDTO.setQnaWriter(request.getParameter("qnaWriter"));
 
+		System.out.println(request.getParameter("qnaContent"));
         // 게시글 작성 권한 확인
 //        if (!checkUser(userType, boardType)) {
 //            response.getWriter().print("<script>alert('해당 게시판에 작성 권한이 없습니다.'); location.href='javascript:history.back();';</script>");
@@ -54,16 +58,18 @@ public class QnaWriteController extends HttpServlet {
 
         QnaDAO qndDAO = new QnaDAO();
         int result = 0;
-
         try {
         	result = qndDAO.insertQna(qnaDTO);
-            if (result > 0) { 
-            	System.out.println("게시물 등록 성공!");
-            	request.setAttribute("type", qnaType);
-            	request.getRequestDispatcher("/gotoQnaList.do").forward(request, response);
-                }else {
-                response.getWriter().print("<script>alert('게시글 등록 실패'); location.href='javascript:history.back();';</script>");
-            }
+        	
+        	if(result>0) {
+        		request.setAttribute("msg", "qna 등록 성공.");
+                request.setAttribute("url", "/gotoQnaList.do?type=" + qnaType);
+                request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
+        	}else {
+        		request.setAttribute("msg", "qna 등록실패");
+                request.setAttribute("url", "/gotoQnaList.do?type=" + qnaType);
+                request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
+        	}
         } catch (SQLException e) {
             e.printStackTrace();
             response.getWriter().print("<script>alert('오류 발생: " + e.getMessage() + "'); location.href='javascript:history.back();';</script>");

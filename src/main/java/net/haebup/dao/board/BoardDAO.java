@@ -320,18 +320,18 @@ public class BoardDAO implements IFBoardDAO{
         int boardIdx = 0;  // 새로 생성된 게시글의 ID를 저장할 변수
         
         try (Connection conn = DBConnPool.getConnection();
-             PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+             PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             
-            pstmt.setString(1, boardDTO.getBoardType());
-            pstmt.setString(2, boardDTO.getBoardTitle());
-            pstmt.setString(3, boardDTO.getBoardContent());
-            pstmt.setString(4, boardDTO.getBoardWriter());
-            pstmt.setString(5, boardDTO.getBoardCategory());
+        	pstm.setString(1, boardDTO.getBoardType());
+        	pstm.setString(2, boardDTO.getBoardTitle());
+        	pstm.setString(3, boardDTO.getBoardContent());
+        	pstm.setString(4, boardDTO.getBoardWriter());
+        	pstm.setString(5, boardDTO.getBoardCategory());
             
-            int affectedRows = pstmt.executeUpdate();
+            int row = pstm.executeUpdate();
             
-            if (affectedRows > 0) {
-                ResultSet rs = pstmt.getGeneratedKeys();
+            if (row > 0) {
+                ResultSet rs = pstm.getGeneratedKeys();
                 if (rs.next()) {
                 	boardIdx = rs.getInt(1);  
                 }

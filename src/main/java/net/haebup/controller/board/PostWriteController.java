@@ -38,8 +38,8 @@ public class PostWriteController extends HttpServlet {
 		
 		MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 		String userType = user.getUserType();
-		System.out.println("userType + " +  userType);
-		// String userType = "A";
+		System.out.println("타입확인 : "+userType);
+
 		
 		String boardType = request.getParameter("type");
 //		System.out.println("타입확인 : "+boardType);
@@ -61,6 +61,8 @@ public class PostWriteController extends HttpServlet {
         BoardDAO boardDAO = new BoardDAO();
         int boardIdx = 0;
 
+        request.setAttribute("type", boardType);
+
         try {
             boardIdx = boardDAO.insertBoard(boardDTO);
             
@@ -79,7 +81,6 @@ public class PostWriteController extends HttpServlet {
                     fileDAO.insertFile(fileDTO);
                     
                 }
-                request.setAttribute("type", boardType);
                 request.setAttribute("msg", "게시글 작성 성공했습니다.");
  
                 request.setAttribute("url", "/gotoPostList.do?type="+boardType); 
