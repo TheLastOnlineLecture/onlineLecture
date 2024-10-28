@@ -2,7 +2,9 @@ package net.haebup.dao.qna;
 import java.util.List;
 import net.haebup.utils.DatabaseUtil.*;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.text.SimpleDateFormat;
 import java.sql.ResultSet;
 import java.util.ArrayList;
@@ -130,17 +132,43 @@ public class QnaDAO{
     //qna_type : G, T
     //qna_category : 강의 코드 또는 null가능(1대1 질문일경우 질문타입 가능)
     //null 일 경우 일반 QnA (G)
+//    public int insertQna(QnaDTO qnaDTO) throws SQLException{
+//        String sql = "INSERT INTO tbl_qna (qna_type,qna_category, qna_title, qna_content, qna_writer) VALUES (?, ?, ?, ?, ?)";
+//        int result = 0;
+//        try(Connection conn = DBConnPool.getConnection();
+//            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaDTO.getQnaType(), qnaDTO.getQnaCategory(), qnaDTO.getQnaTitle(), qnaDTO.getQnaContent(), qnaDTO.getQnaWriter()})){
+//                result = dbUtil.executeUpdate();
+//        }catch(SQLException e){
+//            e.printStackTrace();
+//            throw new RuntimeException("질문 등록 중 오류가 발생하였습니다."+e);
+//        }
+//        return result;
+//    }
     public int insertQna(QnaDTO qnaDTO) throws SQLException{
-        String sql = "INSERT INTO tbl_qna (qna_type,qna_category, qna_title, qna_content, qna_writer) VALUES (?, ?, ?, ?, ?)";
-        int result = 0;
-        try(Connection conn = DBConnPool.getConnection();
-            DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaDTO.getQnaType(), qnaDTO.getQnaCategory(), qnaDTO.getQnaTitle(), qnaDTO.getQnaContent(), qnaDTO.getQnaWriter()})){
-                result = dbUtil.executeUpdate();
-        }catch(SQLException e){
-            e.printStackTrace();
-            throw new RuntimeException("질문 등록 중 오류가 발생하였습니다."+e);
-        }
-        return result;
+    	String sql = "INSERT INTO tbl_qna (qna_type, qna_category, qna_title, qna_content, qna_writer) VALUES (?, ?, ?, ?, ?)";
+    	int qnaIdx = 0;
+    	try(Connection conn = DBConnPool.getConnection();
+			PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+    		pstm.setString(1, qnaDTO.getQnaType());
+    		pstm.setString(2, qnaDTO.getQnaCategory());
+    		pstm.setString(3, qnaDTO.getQnaTitle());
+    		pstm.setString(4, qnaDTO.getQnaContent());
+    		pstm.setString(5, qnaDTO.getQnaWriter());
+    		
+    		 int row = pstm.executeUpdate();
+             
+             if (row > 0) {
+                 ResultSet rs = pstm.getGeneratedKeys();
+                 if (rs.next()) {
+                	 qnaIdx = rs.getInt(1);  
+                 }
+             }
+    	
+    	}catch(SQLException e){
+    		e.printStackTrace();
+    		throw new RuntimeException("질문 등록 중 오류가 발생하였습니다."+e);
+    	}
+    	return qnaIdx;
     }
 
     public int updateQna(QnaDTO qnaDTO) throws SQLException{

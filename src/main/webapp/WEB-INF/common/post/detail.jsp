@@ -128,6 +128,7 @@
                     <!-- <div><img src="" /></div> -->
                     <div class="boardRegdate">${comment.commentRegdate}</div>
                   </div>
+
                   <div class="navMainBoundary"></div>
                 </div>
                 </c:forEach>

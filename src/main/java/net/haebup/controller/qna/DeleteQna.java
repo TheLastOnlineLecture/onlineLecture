@@ -39,10 +39,10 @@ public class DeleteQna extends HttpServlet {
             MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
             String loginId = user != null ? user.getUserId() : null; 
             
-            if (loginId == null || !writerId.equals(loginId)) {
-                response.getWriter().print("<script>alert('삭제 권한이 없습니다.'); location.href='javascript:history.back();';</script>");
-                return;
-            }
+//            if (loginId == null || !writerId.equals(loginId)) {
+//                response.getWriter().print("<script>alert('삭제 권한이 없습니다.'); location.href='javascript:history.back();';</script>");
+//                return;
+//            }
 
             response.setContentType("text/html; charset=UTF-8");
             response.setCharacterEncoding("UTF-8");
