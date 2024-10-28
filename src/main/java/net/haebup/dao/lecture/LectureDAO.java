@@ -9,6 +9,8 @@ import net.haebup.utils.DatabaseUtil.DBConnPool;
 import net.haebup.utils.DatabaseUtil.DbQueryUtil;
 import java.util.ArrayList;
 import java.sql.ResultSet;
+// import net.haebup.dto.lecture.lectureDetail.LectureDetailDTO;
+import net.haebup.dto.lecture.lectureDetail.LetureDetailDTO;
 
 // LectureDAO: 강의 관련 데이터베이스 작업을 처리하는 클래스
 public class LectureDAO {
@@ -190,6 +192,24 @@ public class LectureDAO {
             throw new SQLException("새 강의 등록 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
+    // //강의 상세정보 등록
+    // public int insertLectureDetail(LectureDetailDTO lectureDetailDTO) throws SQLException {
+    //     String sql = "INSERT INTO TBL_LECTURE_DETAIL (lecture_code, lecture_detail_content, lecture_detail_file_path, lecture_detail_file_name, lecture_detail_file_size) VALUES (?, ?, ?, ?, ?)";
+        
+    //     try (Connection conn = DBConnPool.getConnection();
+    //          DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] {
+    //              lectureDetailDTO.getLectureCode(),
+    //              lectureDetailDTO.getLectureDetailContent(),
+    //              lectureDetailDTO.getLectureDetailFilePath(),
+    //              lectureDetailDTO.getLectureDetailFileName(),
+    //              lectureDetailDTO.getLectureDetailFileSize()
+    //          })) {
+    //         return dbUtil.executeUpdate();
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //         throw new SQLException("강의 상세정보 등록 중 오류가 발생했습니다: " + e.getMessage());
+    //     }
+    // }
 
     // 강의 정보를 수정하는 메소드
     public int updateLecture(LectureDTO lectureDTO) throws SQLException {

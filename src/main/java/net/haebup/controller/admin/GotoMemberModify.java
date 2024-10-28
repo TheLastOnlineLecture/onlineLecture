@@ -34,7 +34,7 @@ public class GotoMemberModify extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "데이터베이스 오류가 발생했습니다.");
             }
         } else {
-            response.sendRedirect(request.getContextPath() + "/goto.do?page=admin/adminLogin");
+            response.sendRedirect(request.getContextPath() + "/goto.do?page=admin/login");
         }
     }
 }
