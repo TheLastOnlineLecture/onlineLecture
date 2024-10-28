@@ -74,7 +74,6 @@ public class GotoController extends HttpServlet {
 				break;
 			case "admin/login":
 				req.getRequestDispatcher("/WEB-INF/admin/adminLogin.jsp").forward(req, res);
-				break;
 			default:
 				req.getRequestDispatcher("/WEB-INF/main.jsp").forward(req, res);
 				break;

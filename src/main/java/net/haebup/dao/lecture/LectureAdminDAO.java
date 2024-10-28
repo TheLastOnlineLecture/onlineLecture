@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.sql.ResultSet;
 import net.haebup.dto.lecture.LectureDTO;
+import net.haebup.dto.lecture.lectureDetail.LectureDetailDTO;
 import net.haebup.utils.DatabaseUtil.DBConnPool;
 import net.haebup.utils.DatabaseUtil.DbQueryUtil;
 
@@ -87,5 +88,70 @@ public class LectureAdminDAO {
             }
         }
         return lectures;
+    }
+
+    // 강의 상세 내용 조회
+    public List<LectureDetailDTO> getLectureDetails(String lectureCode) throws SQLException {
+        String sql = "SELECT * FROM TBL_LECTURE_DETAIL WHERE lecture_code = ? ORDER BY lecture_detail_idx";
+        List<LectureDetailDTO> details = new ArrayList<>();
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{lectureCode})) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                LectureDetailDTO detail = new LectureDetailDTO();
+                detail.setLectureDetailIdx(rs.getInt("lecture_detail_idx"));
+                detail.setLectureCode(rs.getString("lecture_code"));
+                detail.setLectureDetailContent(rs.getString("lecture_detail_content"));
+                detail.setLectureDetailFilePath(rs.getString("lecture_detail_file_path"));
+                detail.setLectureDetailFileName(rs.getString("lecture_detail_file_name"));
+                detail.setLectureDetailFileSize(rs.getLong("lecture_detail_file_size"));
+                details.add(detail);
+            }
+        }
+        return details;
+    }
+
+    // 강의 상세 내용 추가
+    public int insertLectureDetail(LectureDetailDTO detail) throws SQLException {
+        String sql = "INSERT INTO TBL_LECTURE_DETAIL (lecture_code, lecture_detail_content, lecture_detail_file_path, lecture_detail_file_name, lecture_detail_file_size) VALUES (?, ?, ?, ?, ?)";
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{
+                 detail.getLectureCode(),
+                 detail.getLectureDetailContent(),
+                 detail.getLectureDetailFilePath(),
+                 detail.getLectureDetailFileName(),
+                 detail.getLectureDetailFileSize()
+             })) {
+            return dbUtil.executeUpdate();
+        }
+    }
+
+    // 강의 상세 내용 수정
+    public int updateLectureDetail(LectureDetailDTO detail) throws SQLException {
+        String sql = "UPDATE TBL_LECTURE_DETAIL SET lecture_detail_content = ?, lecture_detail_file_path = ?, lecture_detail_file_name = ?, lecture_detail_file_size = ? WHERE lecture_detail_idx = ? AND lecture_code = ?";
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{
+                 detail.getLectureDetailContent(),
+                 detail.getLectureDetailFilePath(),
+                 detail.getLectureDetailFileName(),
+                 detail.getLectureDetailFileSize(),
+                 detail.getLectureDetailIdx(),
+                 detail.getLectureCode()
+             })) {
+            return dbUtil.executeUpdate();
+        }
+    }
+
+    // 강의 상세 내용 삭제
+    public int deleteLectureDetail(int detailIdx, String lectureCode) throws SQLException {
+        String sql = "DELETE FROM TBL_LECTURE_DETAIL WHERE lecture_detail_idx = ? AND lecture_code = ?";
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{detailIdx, lectureCode})) {
+            return dbUtil.executeUpdate();
+        }
     }
 }
