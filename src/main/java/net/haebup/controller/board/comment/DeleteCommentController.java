@@ -7,6 +7,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import net.haebup.dao.board.comment.CommentDAO;
 import net.haebup.dto.board.comment.BoardCommentDTO;
+import net.haebup.dto.member.MemberDTO;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -21,7 +22,9 @@ public class DeleteCommentController extends HttpServlet {
 
 	 protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	        int commentIdx = Integer.parseInt(request.getParameter("commentIdx"));
-	        String userId = (String) request.getSession().getAttribute("userId");
+	        String boardIdx = request.getParameter("boardIdx");
+	        MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+	        String userId = user.getUserId(); 
 
 	        CommentDAO commentDAO = new CommentDAO();
 	        try {
@@ -29,11 +32,11 @@ public class DeleteCommentController extends HttpServlet {
 	            if (comment.getUserId().equals(userId)) {
 	                commentDAO.deleteComment(commentIdx); 
 	                request.setAttribute("msg", "댓글 삭제 완료.");
-	                request.setAttribute("url", "/gotoQnaList.do");
+	                request.setAttribute("url", "/gotoPostDetail.do?idx="+boardIdx);
 	                request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
 	            } else {
 	            	request.setAttribute("msg", "댓글 삭제 실패");
-	                request.setAttribute("url", "/gotoQnaList.do");
+	                request.setAttribute("url", "/gotoPostDetail.do?idx="+boardIdx);
 	                request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
 	            }
 	        } catch (SQLException e) {

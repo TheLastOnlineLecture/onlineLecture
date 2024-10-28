@@ -128,7 +128,34 @@
                     <!-- <div><img src="" /></div> -->
                     <div class="boardRegdate">${comment.commentRegdate}</div>
                   </div>
-
+<!--                   댓글수정 삭제부분  -->
+					<c:if test="${comment.userId == sessionScope.user.userId}">
+					    <!-- 수정 버튼 -->
+					    <button type="button" onclick="openEditModal('${comment.commentIdx}', '${comment.commentContent}')">수정</button>
+					
+					    <!-- 삭제 폼 -->
+					    <form action="commentDelete.do" method="post" style="display:inline;">
+					        <input type="hidden" name="commentIdx" value="${comment.commentIdx}" />
+					        <input type="hidden" name="boardIdx" value="${boardDTO.boardIdx}"/> 
+					        
+					        
+					        <button type="submit">삭제</button>
+					    </form>
+					</c:if>
+					
+					<div id="editModal" style="display: none;">
+					    <div class="modalContent">
+					        <h2>댓글 수정</h2>
+					        <form id="editCommentForm" action="commentUpdate.do" method="post">
+					        <input type="hidden" name="boardIdx" value="${boardDTO.boardIdx}"/> 
+					            <input type="hidden" name="commentIdx" id="editCommentIdx" />
+					            <textarea name="commentContent" id="editCommentContent"></textarea>
+					            <button type="submit">등록</button>
+					            <button type="button" onclick="closeEditModal()">취소</button>
+					        </form>
+					    </div>
+					</div>
+<!-- 					끝 -->
                   <div class="navMainBoundary"></div>
                 </div>
                 </c:forEach>
@@ -161,6 +188,26 @@
           </div>
         </div>
       </main>
+<!--       댓글 수정 스크립트-->
+<script>
+    // 수정 모달 열기
+    function openEditModal(commentIdx, commentContent) {
+        document.getElementById('editCommentIdx').value = commentIdx;
+        document.getElementById('editCommentContent').value = commentContent;
+        document.getElementById('editModal').style.display = 'block';
+    }
+
+    // 수정 모달 닫기
+    function closeEditModal() {
+        document.getElementById('editModal').style.display = 'none';
+    }
+
+    // 폼 전송 후 모달 닫기
+    document.getElementById('editCommentForm').onsubmit = function () {
+        closeEditModal();
+    };
+</script>
+
       <!-- 메인 콘텐츠 영역 // -->
 
 		<!-- // 푸터 영역 -->

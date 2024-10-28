@@ -12,7 +12,7 @@ import java.text.SimpleDateFormat;
 
 public class BoardDAO implements IFBoardDAO{
     
-    // 게시물 목록 조회 : 게시물 타입에 따른 게시물 목록 조회 p = 자유게시판, n = 공지사항, d : 자료실, c:강의공지 
+    // 게시물 목록 조회 : 게시물 타입에 따른 게시물 목록 조회 p = 자유게시판, n = 공지사항, d : 자료실, c:강의공지 특정강의 공지, 자료실 이동가능
     @Override  
     public List<BoardDTO> getBoardList(int limit, int offset, String boardType, String boardCategory) throws SQLException {
         String sql = "SELECT * FROM tbl_board WHERE board_type = ?";
@@ -58,6 +58,7 @@ public class BoardDAO implements IFBoardDAO{
         return boardList;
     }
 	
+    // 검색조건있는거
     public List<BoardDTO> getSearchBoardList(int limit, int offset, String boardType, String boardCategory, String searchType, String searchKeyword) throws SQLException {
         String sql = "SELECT * FROM tbl_board WHERE board_type = ?";
         
@@ -126,6 +127,39 @@ public class BoardDAO implements IFBoardDAO{
         int offset = (pageNo - 1) * pageSize;          
 
         return getBoardList(limit, offset, boardType, boardCategory);
+    }
+    
+    // 선생님의 자료실
+    public List<BoardDTO> getTeacherDataList(int limit, int offset) throws SQLException {
+        String sql = "SELECT * FROM tbl_board WHERE board_type = 'D' AND board_writer LIKE 'teacher_%' "
+                   + "ORDER BY board_regdate DESC LIMIT ? OFFSET ?";
+
+        List<BoardDTO> boardList = new ArrayList<>();
+        List<Object> params = new ArrayList<>();
+        params.add(limit);
+        params.add(offset);
+
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, params.toArray())) {
+
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                BoardDTO boardDTO = new BoardDTO();
+                boardDTO.setBoardIdx(rs.getInt("board_idx"));
+                boardDTO.setBoardType(rs.getString("board_type"));
+                boardDTO.setBoardCategory(rs.getString("board_category"));
+                boardDTO.setBoardTitle(rs.getString("board_title"));
+                boardDTO.setBoardWriter(rs.getString("board_writer"));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = dateFormat.format(rs.getTimestamp("board_regdate"));
+                boardDTO.setBoardRegdate(formattedDate);
+                boardList.add(boardDTO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("선생님 자료실 게시물 조회 중 오류가 발생하였습니다." + e);
+        }
+        return boardList;
     }
 
     // 내 게시물 목록 조회
