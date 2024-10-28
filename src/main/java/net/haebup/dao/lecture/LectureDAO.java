@@ -246,7 +246,7 @@ public class LectureDAO {
     // 선생님 아이디로 강의 목록 조회
 
     public List<LectureDTO> getLectureListByTeacherId(String teacherId) throws SQLException {
-        String sql = "SELECT lecture_code, lecture_name FROM TBL_LECTURE WHERE teacher_id = ?";
+        String sql = "SELECT lecture_code, lecture_name, lecture_price ,lecture_regdate FROM TBL_LECTURE WHERE teacher_id = ?";
         List<LectureDTO> lectureList = new ArrayList<>();
         try (Connection conn = DBConnPool.getConnection();
 
@@ -256,6 +256,8 @@ public class LectureDAO {
                 LectureDTO lectureDTO = new LectureDTO();
                 lectureDTO.setLectureCode(rs.getString("lecture_code"));
                 lectureDTO.setLectureName(rs.getString("lecture_name"));
+                lectureDTO.setLecturePrice(rs.getInt("lecture_price"));
+                lectureDTO.setLectureRegdate(rs.getString("lecture_regdate"));
                 lectureList.add(lectureDTO);
             }
         }
