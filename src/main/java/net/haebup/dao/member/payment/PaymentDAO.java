@@ -227,4 +227,38 @@ public class PaymentDAO {
             return dbUtil.executeUpdate();
         }
     }
+
+    // PaymentDAO에 새로운 메서드 추가
+    public List<PaymentDTO> getStudentsByLectureCode(String lectureCode) throws SQLException {
+        String sql = "SELECT p.*, m.user_name, m.user_nickname, m.user_email " +
+                "FROM TBL_PAYMENT p " +
+                "JOIN TBL_MEMBER m ON p.user_id = m.user_id " +
+                "WHERE p.lecture_code = ? " +
+                "AND p.payment_status = 'P' " +
+                "ORDER BY p.payment_date DESC";
+                
+        List<PaymentDTO> enrollments = new ArrayList<>();
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode })) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                PaymentDTO payment = new PaymentDTO();
+                payment.setPaymentIdx(rs.getInt("payment_idx"));
+                payment.setUserId(rs.getString("user_id"));
+                payment.setLectureCode(rs.getString("lecture_code"));
+                payment.setPaymentDate(rs.getString("payment_date"));
+                payment.setPaymentStatus(rs.getString("payment_status"));
+                payment.setLectureStartDate(rs.getString("lecture_start_date"));
+                
+                // MemberDTO 정보도 추가
+                payment.setUserName(rs.getString("user_name"));
+                payment.setUserNickname(rs.getString("user_nickname"));
+                payment.setUserEmail(rs.getString("user_email"));
+                
+                enrollments.add(payment);
+            }
+        }
+        return enrollments;
+    }
 }

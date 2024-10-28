@@ -326,4 +326,34 @@ public class LectureDAO {
         }
         return details;
     }
+
+    public List<LectureDTO> getLecturesByTeacherId(String teacherId) throws SQLException {
+        String sql = "SELECT l.*, m.user_name AS teacher_name " +
+                    "FROM TBL_LECTURE l " +
+                    "JOIN TBL_MEMBER m ON l.teacher_id = m.user_id " +
+                    "WHERE l.teacher_id = ? " +
+                    "ORDER BY l.lecture_regdate DESC";
+
+        List<LectureDTO> lectureList = new ArrayList<>();
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { teacherId })) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                LectureDTO lectureDTO = new LectureDTO();
+                lectureDTO.setLectureCode(rs.getString("lecture_code"));
+                lectureDTO.setLectureName(rs.getString("lecture_name"));
+                lectureDTO.setLecturePrice(rs.getInt("lecture_price"));
+                lectureDTO.setLectureRegdate(rs.getString("lecture_regdate"));
+                lectureDTO.setLectureLimitDate(rs.getString("lecture_limit_date"));
+                lectureDTO.setTeacherId(rs.getString("teacher_id"));
+                lectureDTO.setTeacherName(rs.getString("teacher_name"));
+                lectureList.add(lectureDTO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("선생님의 강의 목록 조회 중 오류가 발생했습니다: " + e.getMessage());
+        }
+        return lectureList;
+    }
 }

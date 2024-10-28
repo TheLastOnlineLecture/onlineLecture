@@ -81,31 +81,35 @@ Date now = new Date();
 							</button>
 							<c:choose>
 								<c:when test="${not empty sessionScope.user}">
-							<div class="dropdown-content">
-								<div class="loginArea">
-								     <p>${sessionScope.user.userNickname}님</p>
-								</div>
-								<span id="changeLogin"></span>
-								<a href="/goto.do?page=mypage">나의 강의실</a> <a href="<c:url value='/mypage/common/gotoMypage.do' /> ">마이페이지</a> <a href="#">결제내역</a>
-								<a href="/payments/user/gotoPayments.do">장바구니 목록</a>
-							</div>
-								</c:when>
-								<c:when test="${not empty sessionScope.user and sessionScope.user.userType == 'T'}">
 									<div class="dropdown-content">
 										<div class="loginArea">
-										     <p>${sessionScope.user.userNickname}님</p>
+											<p>${sessionScope.user.userNickname}님</p>
 										</div>
 										<span id="changeLogin"></span>
-										<a href="/teacherMyLectureList.do">내 강의실</a> <a href="<c:url value='/mypage/common/gotoMypage.do' /> ">마이페이지</a>
+										<c:choose>
+											<c:when test="${sessionScope.user.userType == 'T'}">
+												<a href="/teacherMyLectureList.do">내 강의실</a>
+												<a href="<c:url value='/mypage/common/gotoMypage.do' />">마이페이지</a>
+											</c:when>
+											<c:otherwise>
+												<a href="/goto.do?page=mypage">나의 강의실</a>
+												<a href="#">결제내역</a>
+												<a href="/payments/user/gotoPayments.do">장바구니 목록</a>
+												<a href="<c:url value='/mypage/common/gotoMypage.do' />">마이페이지</a>
+											</c:otherwise>
+										</c:choose>
 									</div>
 								</c:when>
 								<c:otherwise>
-									<div class="loginArea">
-										<button class="loginPopupButton">Login</button>
+									<div class="dropdown-content">
+										<div class="loginArea">
+											<button class="loginPopupButton">Login</button>
+										</div>
+										<a href="/goto.do?page=mypage">나의 강의실</a>
+										<a href="#">결제내역</a>
+										<a href="/payments/user/gotoPayments.do">장바구니 목록</a>
+										<a href="<c:url value='/mypage/common/gotoMypage.do' />">마이페이지</a>
 									</div>
-									<span id="changeLogin"></span>
-									<a href="/goto.do?page=mypage">나의 학습방</a> <a href="<c:url value='/mypage/common/gotoMypage.do' /> ">마이페이지</a> <a href="#">결제내역</a>
-									<a href="/payments/user/gotoPayments.do">장바구니 목록</a>
 								</c:otherwise>
 							</c:choose>
 						</div>
