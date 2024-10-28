@@ -52,7 +52,9 @@ public class PostWriteController extends HttpServlet {
 
         // 게시글 작성 권한 확인
         if (!checkUser(userType, boardType)) {
-            response.getWriter().print("<script>alert('해당 게시판에 작성 권한이 없습니다.'); location.href='javascript:history.back();';</script>");
+            request.setAttribute("msg", "해당 게시판에 작성 권한이 없습니다.");
+            request.setAttribute("url", "javascript:history.back();"); 
+            request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
             return;
         }
 
@@ -75,12 +77,16 @@ public class PostWriteController extends HttpServlet {
 
                     FileDAO fileDAO = new FileDAO();
                     fileDAO.insertFile(fileDTO);
+                    
                 }
-                
                 request.setAttribute("type", boardType);
-                request.getRequestDispatcher("/gotoPostList.do").forward(request, response);
+                request.setAttribute("msg", "게시글 작성 성공했습니다.");
+                request.setAttribute("url", "/gotoPostList.do"+boardType); 
+                request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
             } else {
-                response.getWriter().print("<script>alert('게시글 등록 실패'); location.href='javascript:history.back();';</script>");
+            	 request.setAttribute("msg", "게시글이 작성되지 않았습니다.");
+                 request.setAttribute("url", "javascript:history.back();"); 
+                 request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -67,7 +67,7 @@ public class gotoQnaList extends HttpServlet {
 	            
 	            // G : 일반 QnA, T : 선생님 QnA
 	            if ("G".equals(qnaType)) {
-	                request.getRequestDispatcher("WEB-INF/common/inquiry/list.jsp").forward(request, response);
+	                request.getRequestDispatcher("WEB-INF/common/inquiy/list.jsp").forward(request, response);
 	            } else if ("T".equals(qnaType)) {
 	                if (qnaCategory != null && !qnaCategory.isEmpty()) {
 	                    request.getRequestDispatcher("WEB-INF/teacher/qna/qnaList.jsp").forward(request, response);

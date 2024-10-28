@@ -24,7 +24,6 @@ public class FileDAO{
                     fileDTO.setFileName(rs.getString("file_name"));
                     fileDTO.setFilePath(rs.getString("file_path"));
                     fileList.add(fileDTO);
-                    System.out.println(fileDTO);
                 }
         }catch(SQLException e){
             e.printStackTrace();
