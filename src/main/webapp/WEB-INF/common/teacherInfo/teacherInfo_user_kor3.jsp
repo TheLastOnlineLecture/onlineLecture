@@ -136,7 +136,7 @@
 											src="https://high.milkt.co.kr/UploadFile/LecturerImg/17_%EC%97%84%EC%9D%80%EB%82%98_Img10_0.png"
 											alt="" class="teacherCircleImg" />
 										<div class="textCenter">
-											<span>국어</span> ${lecture.teacherName}
+											<span>국어</span> ${teacherInfo.userName}
 										</div>
 									</div>
 									<div class="teacherLectureArea">
