@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>관리자 페이지</title>
+    <title>관리자 페이지 - 회원 관리</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -18,6 +18,7 @@
         .navbar {
             background-color: #333;
             overflow: hidden;
+            margin-bottom: 20px;
         }
         .navbar a {
             float: left;
@@ -26,62 +27,114 @@
             text-align: center;
             padding: 14px 20px;
             text-decoration: none;
-            font-size: 18px;
+            font-size: 16px;
         }
         .navbar a:hover {
-            background-color: #575757;
+            background-color: #555;
         }
-        /* 페이지 콘텐츠 스타일 */
+        /* 컨테이너 스타일 */
         .container {
+            max-width: 1200px;
+            margin: 0 auto;
             padding: 20px;
+            background-color: white;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         }
         h1 {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
+            color: #333;
         }
+        /* 검색 폼 스타일 */
         .search-container {
             text-align: center;
-            margin-bottom: 20px;
+            margin-bottom: 30px;
         }
+        .search-container select,
         .search-container input {
-            padding: 10px;
-            width: 200px;
+            padding: 8px;
             margin-right: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
         }
         .search-container button {
-            padding: 10px 15px;
+            padding: 8px 15px;
             background-color: #333;
             color: white;
             border: none;
+            border-radius: 4px;
             cursor: pointer;
         }
         .search-container button:hover {
-            background-color: #575757;
+            background-color: #555;
         }
         /* 테이블 스타일 */
         table {
             width: 100%;
             border-collapse: collapse;
             margin: 20px 0;
-            background-color: white;
         }
         th, td {
-            border: 1px solid #ddd;
-            padding: 10px;
+            padding: 12px;
             text-align: center;
+            border: 1px solid #ddd;
         }
         th {
             background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        tr:hover {
+            background-color: #f5f5f5;
+        }
+        /* 버튼 스타일 */
+        .action-btn {
+            padding: 6px 12px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 14px;
+        }
+        .modify-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+        .delete-btn {
+            background-color: #f44336;
+            color: white;
+        }
+        .action-btn:hover {
+            opacity: 0.8;
         }
         /* 페이징 스타일 */
         .pagination {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 20px;
         }
         .pagination a {
-            margin: 0 5px;
-            text-decoration: none;
             color: #333;
+            padding: 8px 12px;
+            text-decoration: none;
+            border: 1px solid #ddd;
+            margin: 0 4px;
+            border-radius: 4px;
+        }
+        .pagination a:hover {
+            background-color: #f5f5f5;
+        }
+        .pagination strong {
+            background-color: #333;
+            color: white;
+            padding: 8px 12px;
+            border: 1px solid #333;
+            margin: 0 4px;
+            border-radius: 4px;
         }
     </style>
 </head>
@@ -133,8 +186,8 @@
                         <td>${member.mileage}</td>
                         <td>${member.userPhone}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/member/admin/gotoMemberModify.do?userId=${member.userId}">수정</a>
-                            <button onclick="deleteMember('${member.userId}')">삭제</button>
+                            <a href="${pageContext.request.contextPath}/member/admin/gotoMemberModify.do?userId=${member.userId}" class="action-btn modify-btn">수정</a>
+                            <button onclick="deleteMember('${member.userId}')" class="action-btn delete-btn">삭제</button>
                         </td>
                     </tr>
                 </c:forEach>
