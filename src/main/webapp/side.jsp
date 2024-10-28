@@ -16,8 +16,10 @@
 <li><a href="gotoPostList.do?type=C">강의공지</a>  </li>
 <li><a href="gotoPostList.do?type=R">수강후기</a> </li>
 <li><a href="gotoQnaList.do?type=G">1:1QNA</a> </li>
-<li><a href="gotoQnaList.do?type=T">선생님의 QNA</a> </li>
-<li><a href="gotoQnaList.do?type=T">강의실의 QNA</a></li>
+<!-- 파라미터로 선생님id -->
+<li><a href="gotoQnaList.do?type=T&teacherId=teacher_eng2">선생님의 QNA</a> </li>
+<!-- 파라미터로 강의코드받기 -->
+<li><a href="gotoQnaList.do?type=T&category=ENG001">강의실의 QNA</a></li>
 <li><a href="/myStudyRoom/common/gotoWriteDetail.do">내 댓글& 글</a></li>
 </ul>
 

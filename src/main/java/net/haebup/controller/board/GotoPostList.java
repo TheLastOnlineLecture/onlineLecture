@@ -18,87 +18,84 @@ public class GotoPostList extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        String pageNoParam = request.getParameter("pageNo");
-        String pageSizeParam = request.getParameter("pageSize");
-        String boardType = request.getParameter("type");  
-        String boardCategory = request.getParameter("category");  
-        
-        // 값 확인용 추후 삭제
-//        boardCategory = "SCI001";
+		//category 강의 코드
+		//boardWriter 선생님
+		String pageNoParam = request.getParameter("pageNo");
+		String pageSizeParam = request.getParameter("pageSize");
+		String boardType = request.getParameter("type");  
+		String boardCategory = request.getParameter("category"); 
+		System.out.println("boardCategory"+boardCategory);
+		String boardWriter = request.getParameter("teacherId");  
 
-        int pageNo = pageNoParam != null ? Integer.parseInt(pageNoParam) : 1;      
-        int pageSize = pageSizeParam != null ? Integer.parseInt(pageSizeParam) : 10; 
-        
-     // 검색 유형 (title, writer, title+content)
-        String searchType = request.getParameter("searchType");   
-        String searchKeyword = request.getParameter("searchKeyword"); 
+		int pageNo = pageNoParam != null ? Integer.parseInt(pageNoParam) : 1;      
+		int pageSize = pageSizeParam != null ? Integer.parseInt(pageSizeParam) : 10; 
 
-        BoardDAO boardDAO = new BoardDAO();
+		// 검색 유형 (title, writer, title+content)
+		String searchType = request.getParameter("searchType");   
+		String searchKeyword = request.getParameter("searchKeyword"); 
 
-        try {
-        	 int totalCount;
-             List<BoardDTO> boardList;
+		BoardDAO boardDAO = new BoardDAO();
 
-             if (searchKeyword != null && !searchKeyword.isEmpty()) {
-                 totalCount = boardDAO.getTotalCount(boardType, searchType, searchKeyword);
-                 boardList = boardDAO.getSearchBoardList(pageSize, (pageNo - 1) * pageSize, boardType, boardCategory, searchType, searchKeyword);
-             } else {
-                 totalCount = boardDAO.getTotalCount(boardType, boardCategory);
-                 boardList = boardDAO.getBoardListByPage(pageNo, pageSize, boardType, boardCategory);
-             }
-             
+		try {
+		    List<BoardDTO> boardList;
+		    int totalCount;
 
-             System.out.println("========게시판 리스트 확인==========");
-             for (BoardDTO boardDTO : boardList) {
-                 System.out.println("idx : " + boardDTO.getBoardIdx());
-                 System.out.println("title  : " + boardDTO.getBoardTitle());
-                 System.out.println("writer : " + boardDTO.getBoardWriter());
-                 System.out.println("reqdate : " + boardDTO.getBoardRegdate());
-                 System.out.println("type : " + boardDTO.getBoardType());
-                 System.out.println("category : " + boardDTO.getBoardCategory());
-             }
-             System.out.println("====================");
+		    if (searchKeyword != null && !searchKeyword.isEmpty()) {
+		        totalCount = boardDAO.getTotalCount(boardType, boardCategory, searchType, searchKeyword, boardWriter);
+		        boardList = boardDAO.getBoardListByPage(pageNo, pageSize, boardType, boardCategory, boardWriter, searchType, searchKeyword);
+		    } else {
+		        totalCount = boardDAO.getTotalCount(boardType, boardCategory, boardWriter);
+		        boardList = boardDAO.getBoardListByPage(pageNo, pageSize, boardType, boardCategory, boardWriter, null, null);
+		    }
 
-            // 10 -> blockSize 
-            Pagination pagination = new Pagination(pageNo, pageSize, totalCount, 10);
+		    System.out.println("========게시판 리스트 확인==========");
+		    for (BoardDTO boardDTO : boardList) {
+		        System.out.println("idx : " + boardDTO.getBoardIdx());
+		        System.out.println("title  : " + boardDTO.getBoardTitle());
+		        System.out.println("writer : " + boardDTO.getBoardWriter());
+		        System.out.println("reqdate : " + boardDTO.getBoardRegdate());
+		        System.out.println("type : " + boardDTO.getBoardType());
+		        System.out.println("category : " + boardDTO.getBoardCategory());
+		    }
+		    System.out.println("====================");
 
-            request.setAttribute("boardType", boardType);
-            request.setAttribute("boardList", boardList);         
-            request.setAttribute("boardCategory", boardCategory);       
-            request.setAttribute("pagination", pagination);       
-            
-            
-            // P 자유게시판 D 자료실 N 공지사항 C 강의공지 R 수강후기
-            // 자료업로드 되는거 P D
-            // 안되는거 N C R
-            String url = "";
-            switch(boardType) {
-            	case "P" :  
-            		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/post/list.jsp").forward(request, response);
-            		break;
-            	case "D" :  
-        			request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/fileList.jsp").forward(request, response);
-            		break;
-            	case "N" :  
-            		request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/noticePost/noticeList.jsp").forward(request, response);
-            		break;
-            	// 강의 코드 필요함
-            	case "C" :  
-        			request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/lectureNoticeList.jsp").forward(request, response);
-            		break;
-            	case "R" :  
-        			request.getRequestDispatcher(request.getContextPath() +"WEB-INF/common/lecture/lectureReview.jsp").forward(request, response);
-            		break;
-            }
-            if (boardCategory != null) {
-	            url += "?category=" + boardCategory;
-	        }
-//            System.out.println("Pagination Object: " + pagination);
+		    // 10 -> blockSize 
+		    Pagination pagination = new Pagination(pageNo, pageSize, totalCount, 10);
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+		    request.setAttribute("boardType", boardType);
+		    request.setAttribute("boardList", boardList);         
+		    request.setAttribute("boardCategory", boardCategory);       
+		    request.setAttribute("pagination", pagination);       
+
+		    String url = "";
+		    switch(boardType) {
+		        case "P":  
+		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/post/list.jsp").forward(request, response);
+		            break;
+		        case "D":  
+		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/lecture/fileList.jsp").forward(request, response);
+		            break;
+		        case "N":  
+		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/noticePost/noticeList.jsp").forward(request, response);
+		            break;
+		        case "C":  
+		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/lecture/lectureNoticeList.jsp").forward(request, response);
+		            break;
+		        case "R":  
+		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/lecture/lectureReview.jsp").forward(request, response);
+		            break;
+		    }
+		    if (boardCategory != null) {
+		        url += "?category=" + boardCategory;
+		    }
+		    if (boardWriter != null) {
+		        url += "?writer=" + boardWriter;
+		    }
+
+		} catch (SQLException e) {
+		    e.printStackTrace();
+		}
+	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 	}
