@@ -31,6 +31,7 @@ public class GotoController extends HttpServlet {
 		String pageName = req.getParameter("page");
 		String type = req.getParameter("type");  
 		System.out.println("goto"+pageName);
+		MemberDTO memberDto = (MemberDTO) req.getSession().getAttribute("user");
 		
 		switch(pageName){
 			case "register":
@@ -40,10 +41,10 @@ public class GotoController extends HttpServlet {
 				req.getRequestDispatcher("/WEB-INF/common/member/registerSelectPage.jsp").forward(req, res);
 				break;
 			case "modify":
-				MemberDTO memberDto = (MemberDTO) req.getSession().getAttribute("user");
 				if (memberDto == null) {
-					req.setAttribute("error", "로그인 후 이용해주세요.");
-					req.getRequestDispatcher("/goto.do?page=login").forward(req, res);
+					req.setAttribute("msg", "로그인 후 이용 가능합니다");
+					req.setAttribute("url", "/main.do"); 
+					req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
 					return;
 				}else{
 					try {
@@ -62,17 +63,78 @@ public class GotoController extends HttpServlet {
 				req.setAttribute("qnaType", type);
 				req.getRequestDispatcher("/WEB-INF/common/inquiy/write.jsp").forward(req, res);
 				break;
+				// 작성권한체크
 			case "post/write":
-	              if (type.equals("N")) {
-	            	  req.setAttribute("boardType", type);
-	            	  req.getRequestDispatcher("/WEB-INF/admin/noticePost/write.jsp").forward(req, res);
-	                }else {
-	                  req.setAttribute("boardType", type);
-	                  req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
-	                }
-				req.setAttribute("boardType", type);
-				req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
-				break;
+		        if (type.equals("N")) {
+		            if (memberDto != null) {
+		                String userType = memberDto.getUserType();
+		                if (userType.equals("A")) {
+		                    req.setAttribute("boardType", type);
+		                    req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
+		                } else {
+		                    req.setAttribute("msg", "공지사항 작성 권한이 없습니다.");
+		                    req.setAttribute("url", "javascript:history.back();"); 
+		                    req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
+		                }
+		            } else {
+		                req.setAttribute("msg", "로그인이 필요합니다.");
+		                req.setAttribute("url", "/main.do"); 
+		                req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
+		            }
+		        } else if(type.equals("C")){
+		        	 if (memberDto != null) {
+			                String userType = memberDto.getUserType();
+			                if (userType.equals("T")||userType.equals("A")) {
+			                    req.setAttribute("boardType", type);
+			                    req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
+			                } else {
+			                    req.setAttribute("msg", "공지사항 작성 권한이 없습니다.");
+			                    req.setAttribute("url", "javascript:history.back();"); 
+			                    req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
+			                }
+			            } else {
+			                req.setAttribute("msg", "로그인이 필요합니다.");
+			                req.setAttribute("url", "/main.do"); 
+			                req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
+			            }
+		        }else if (type.equals("R")) {
+		            if (memberDto != null) {
+		                String userType = memberDto.getUserType();
+		                if (userType.startsWith("S")) {
+		                    req.setAttribute("boardType", type);
+		                    req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
+		                } else {
+		                    req.setAttribute("msg", "작성 권한이 없습니다. 강의 후기는 학생만 작성 가능합니다");
+		                    req.setAttribute("url", "javascript:history.back();");
+		                    req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
+		                }
+		            } else {
+		                req.setAttribute("msg", "로그인이 필요합니다.");
+		                req.setAttribute("url", "/main.do"); 
+		                req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
+		            }
+		        }else if (type.equals("D")) 
+		        	 if (memberDto != null) {
+			                String userType = memberDto.getUserType();
+			                if (userType.equals("T")||userType.equals("A")) {
+			                    req.setAttribute("boardType", type);
+			                    req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
+			                } else {
+			                    req.setAttribute("msg", "자료실 작성 권한이 없습니다.");
+			                    req.setAttribute("url", "javascript:history.back();"); 
+			                    req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
+			                }
+			            } else {
+			                req.setAttribute("msg", "로그인이 필요합니다.");
+			                req.setAttribute("url", "/main.do"); 
+			                req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
+			            }
+		        else {
+		            req.setAttribute("boardType", type);
+		            req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
+		        }
+		        break;
+		        
 			case "admin/notice/write":
 				req.getRequestDispatcher("/WEB-INF/admin/notice/write.jsp").forward(req, res);
 				break;

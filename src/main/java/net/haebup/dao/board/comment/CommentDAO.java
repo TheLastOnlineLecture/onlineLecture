@@ -92,7 +92,7 @@ public class CommentDAO {
     
     //수정
      public int updateComment(BoardCommentDTO commentDTO) throws SQLException{
-         String sql = "UPDATE comment SET comment_content = ? WHERE comment_idx = ?";
+         String sql = "UPDATE tbl_comment SET comment_content = ? WHERE comment_idx = ?";
          int result = 0;
          try(Connection conn = DBConnPool.getConnection();
              DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{commentDTO.getCommentContent(), commentDTO.getCommentIdx()})){
