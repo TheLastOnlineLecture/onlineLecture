@@ -24,13 +24,14 @@ public class QnaCommentWriterController extends HttpServlet {
 	    int qnaIdx = Integer.parseInt(request.getParameter("qnaIdx"));
 	    String commentQnaContent = request.getParameter("commentQnaContent");
 	    MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-	    String userId = user.getUserId();    
         
-	    // 댓글 작성 확인용! 추후 삭제
-	    if (userId == null) {
-	        userId = "user1"; 
-	        
-	    }
+	    if (user == null) {
+            request.setAttribute("msg", "작성 권한이 없습니다. 로그인 후 다시 시도해 주세요.");
+            request.setAttribute("url", "/gotoPostDetail.do?idx=" + qnaIdx);
+            request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
+            return; 
+        }
+	    String userId = user.getUserId();    
 
 	    System.out.println("qnaIdx: " + qnaIdx);
 	    System.out.println("commentQnaContent: " + commentQnaContent);

@@ -145,15 +145,13 @@ public class QnaDAO{
 
     public int updateQna(QnaDTO qnaDTO) throws SQLException{
         String sql = "UPDATE tbl_qna SET qna_title = ?, qna_content = ? WHERE qna_idx = ?";
-        int result = 0;
         try(Connection conn = DBConnPool.getConnection();
             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{qnaDTO.getQnaTitle(), qnaDTO.getQnaContent(), qnaDTO.getQnaIdx()})){
-                result = dbUtil.executeUpdate();
+        	return dbUtil.executeUpdate();
         }catch(SQLException e){
             e.printStackTrace();
             throw new RuntimeException("질문 수정 중 오류가 발생하였습니다."+e);
         }
-        return result;
     }
 
     //질문 삭제
@@ -184,7 +182,10 @@ public class QnaDAO{
                     qnaDTO.setQnaCategory(rs.getString("qna_category"));
                     qnaDTO.setQnaTitle(rs.getString("qna_title"));
                     qnaDTO.setQnaContent(rs.getString("qna_content"));
-                    qnaDTO.setQnaRegdate(rs.getString("qna_regdate"));
+                    // 날짜 변환
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = dateFormat.format(rs.getTimestamp("qna_regdate"));
+                    qnaDTO.setQnaRegdate(formattedDate);
                     qnaDTO.setQnaWriter(rs.getString("qna_writer"));
                     qnaDTO.setQnaCategory(rs.getString("qna_category"));
                 }
