@@ -1,6 +1,6 @@
 package net.haebup.dto.lecture.lectureDetail;
 
-public class LetureDetailDTO {
+public class LectureDetailDTO {
 	/**
 	 * -- haebup.TBL_LECTURE_DETAIL definition
 	 * 
@@ -25,7 +25,7 @@ public class LetureDetailDTO {
 	private String lectureDetailFileName; // 강의 상세 파일 이름
 	private long lectureDetailFileSize; // 강의 상세 파일 사이즈
 
-	public LetureDetailDTO() {
+	public LectureDetailDTO() {
 		super();
 	}
 

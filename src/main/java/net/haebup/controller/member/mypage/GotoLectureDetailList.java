@@ -11,6 +11,9 @@ import net.haebup.dao.member.payment.PaymentDAO;
 import java.sql.SQLException;
 import net.haebup.dao.lecture.LectureDAO;
 import net.haebup.dto.lecture.LectureDTO;
+import net.haebup.dto.lecture.lectureDetail.LectureDetailDTO;
+import java.util.ArrayList;
+import java.util.List;
 
 @WebServlet("/mypage/common/gotoLectureDetailList.do")
 public class GotoLectureDetailList extends HttpServlet {
@@ -22,21 +25,26 @@ public class GotoLectureDetailList extends HttpServlet {
             request.getRequestDispatcher("/goto.do?page=login").forward(request, response);
             return;
         }
-        String lectureCode = request.getParameter("lectureCode");
+        String[] lectureCodes = request.getParameterValues("lectureCode");
         PaymentDAO paymentDAO = new PaymentDAO();
         LectureDAO lectureDAO = new LectureDAO();
-        LectureDTO lectureDTO = null;
-        boolean isPaid = false;
+        List<LectureDTO> lectureDTOs = new ArrayList<>();
         try {
-            isPaid = paymentDAO.isPaid(memberDTO.getUserId(), lectureCode);
-            if(isPaid){
-                paymentDAO.updateLectureStartDate(memberDTO.getUserId(), lectureCode);
-                lectureDTO = lectureDAO.getLectureDetail(lectureCode);
+            for (String lectureCode : lectureCodes) {
+                if (paymentDAO.isPaid(memberDTO.getUserId(), lectureCode)) {
+                    paymentDAO.updateLectureStartDate(memberDTO.getUserId(), lectureCode);
+                    LectureDTO lectureDTO = lectureDAO.getLectureDetail(lectureCode);
+                    if (lectureDTO != null) {
+                        List<LectureDetailDTO> details = lectureDAO.getLectureDetails(lectureCode);
+                        lectureDTO.setLectureDetails(details);
+                        lectureDTOs.add(lectureDTO);
+                    }
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        request.setAttribute("lectureDTO", lectureDTO);
+        request.setAttribute("lectureDTOs", lectureDTOs);
         request.getRequestDispatcher("/WEB-INF/common/myPage/lectureDetailList.jsp").forward(request, response);
     }
 }
