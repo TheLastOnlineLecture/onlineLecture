@@ -36,8 +36,8 @@ public class GotoPayment extends HttpServlet {
             List<CartItemDTO> cartItems = paymentDAO.getCartListWithDetails(userId);
 
             if (cartItems.isEmpty()) {
-                request.setAttribute("message", "장바구니가 비어있습니다.");
-                request.getRequestDispatcher("/lecture/common/lectureList.do").forward(request, response);
+                request.setAttribute("msg", "장바구니가 비어있습니다.");
+                request.getRequestDispatcher("/main.do").forward(request, response);
                 return;
             }
 

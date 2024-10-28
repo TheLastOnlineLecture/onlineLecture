@@ -24,7 +24,7 @@ public class Payments extends HttpServlet {
         MemberDTO user = (MemberDTO) session.getAttribute("user");
         
         if (user == null) {
-            response.sendRedirect(request.getContextPath() + "/goto.do?page=login");
+            response.sendRedirect(request.getContextPath() + "/main.do");
             return;
         }
 
@@ -59,18 +59,20 @@ public class Payments extends HttpServlet {
                 // 마일리지 차감
                 int newMileage = userMileage - totalAmount;
                 memberDAO.updateMileage(userId, newMileage);
-
-                request.setAttribute("message", updatedCount + "개의 강의가 결제되었습니다.");
+                
+                request.setAttribute("msg", updatedCount + "개의 강의가 결제되었습니다.");
+                request.setAttribute("url", "/payments/user/goPay.do");
             } else {
-                request.setAttribute("message", "결제 처리 중 오류가 발생했습니다.");
+                request.setAttribute("msg", "결제 처리 중 오류가 발생했습니다.");
+                request.setAttribute("url", "/payments/user/gotoPayments.do");
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
-            request.setAttribute("message", "데이터베이스 오류가 발생했습니다.");
+            request.setAttribute("msg", "데이터베이스 오류가 발생했습니다.");
         }
 
-        request.getRequestDispatcher("/lecture/common/lectureList.do").forward(request, response);
+        request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
     }
 
     private int calculateTotalAmount(String userId, List<String> lectureCodes) throws SQLException {

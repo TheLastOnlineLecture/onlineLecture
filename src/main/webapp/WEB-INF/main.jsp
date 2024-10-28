@@ -17,6 +17,11 @@
 <!-- link 태그 // -->
 </head>
 <body>
+	<c:if test="${not empty msg}">
+    	<script>
+    		alert('${msg}');
+    	</script>
+    </c:if>
 	<div class="boxContainer">
 		<!-- // 상단 이미지 -->
 		<jsp:include page="common/commonArea/pageTopImageArea.jsp" />
