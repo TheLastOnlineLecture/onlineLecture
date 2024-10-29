@@ -14,7 +14,7 @@ import net.haebup.dto.lecture.lectureDetail.LectureDetailDTO;
 import java.sql.SQLException;
 
 @WebServlet("/lecture/common/watchLecture.do")
-public class WatchLectureServlet extends HttpServlet {
+public class WatchLecture extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
