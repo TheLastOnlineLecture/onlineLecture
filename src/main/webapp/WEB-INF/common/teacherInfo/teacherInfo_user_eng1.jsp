@@ -71,11 +71,6 @@
 					</div>
 				</div>
 			</div>
-			<!-- 			선생님의 자료실 & qna-->
-			<h3>아이디${teacherInfo.userId}</h3>
-					<a href="/gotoPostList.do?type=D&teacherId=${teacherInfo.userId}">선생님의 자료실</a>
-					<a href="/gotoQnaList.do?type=T&teacherId=${teacherInfo.userId}">선생님의 qna</a>
-			<!-- 			선생님의 자료실 & qna -->
 			<div class="center" style="margin-top: 30px">
 				<div class="teacherDetailContainer"></div>
 			</div>

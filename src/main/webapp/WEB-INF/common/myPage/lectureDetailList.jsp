@@ -105,12 +105,6 @@
                             </div>
                         </c:forEach>
                     </div>
-				<!--                 강의실qna 강의실자료실 -->
-				<h3>아이디 확인용${lecture.teacherId}</h3>
-				<h3>코드 확인용${lecture.lectureCode}</h3>
-						<a href="/gotoPostList.do?type=D&category=${lecture.lectureCode}">강의실의 자료실</a>
-						<a href="/gotoQnaList.do?type=T&category=${lecture.lectureCode}">강의실의 qna</a>
-				<!--                 강의실qna 강의실자료실 -->
                 </c:forEach>
                 
                 <a href="/mypage/common/gotoMyLecture.do" class="back-btn">목록으로 돌아가기</a>
