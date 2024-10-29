@@ -36,14 +36,21 @@
           <div class="myPageMenu">
             <div class="myPageMenuGroup">
               <div class="myPageMenuGroupContent">
-                <img src="/public/myprofile.png" alt="" /> &nbsp;내 프로필&nbsp;&nbsp;&nbsp;&nbsp;<span><a href="#">회원 수정▶</a></span>
+                <img src="/public/myprofile.png" alt="" /> &nbsp;내 프로필&nbsp;&nbsp;&nbsp;&nbsp;<span><a href="/goto.do?page=modify" style="font-size:10px;">회원 수정▶</a></span>
               </div>
+              
+              <c:choose>
+              	<c:when test="${sessionScope.user.userType != 'T'}">
+              
               <div class="myPageMenuGroupContent">
                 <img src="/public/myplan.png" alt="" /> &nbsp;학습 현황
               </div>
               <div class="myPageMenuGroupContent">
                 <img src="/public/event.png" alt="" /> &nbsp;이벤트
               </div>
+              
+              	</c:when>
+              </c:choose>
             </div>
             <div class="myPageMenuGroup">
               <div class="myPageContent">
@@ -267,7 +274,7 @@
 			                      ${payList.lectureCode}
 			                      </span></td>
 			                      <td class="titleSummary">
-			                        <a href="/lecture/common/lectureDetail.do?code=${payList.lectureCode}">강의 이름 어디감 ㅅㅂ</a>
+			                        <a href="/lecture/common/lectureDetail.do?code=${payList.lectureCode}">${payList.lectureName}</a>
 			                      </td>
 			                      <td>${payList.lectureCode}</td>
 			                      <td>${payList.paymentDate}</td>

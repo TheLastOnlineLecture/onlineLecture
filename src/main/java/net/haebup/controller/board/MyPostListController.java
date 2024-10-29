@@ -68,7 +68,8 @@ public class MyPostListController extends HttpServlet {
                 PaymentDAO paymentDAO = new PaymentDAO();
                 paymentList = paymentDAO.getPaymentListAll(user.getUserId());
 
-                lectureDAO.getLectureTotalCountByUserId(user.getUserId());
+                lectureTotalCount = lectureDAO.getLectureTotalCountByUserId(user.getUserId());
+                
             } catch (SQLException e) {
                 System.out.println("SQL 예외 발생: " + e.getMessage());
                 request.setAttribute("message", "강의 목록 조회 중 오류가 발생하였습니다.");
@@ -78,6 +79,7 @@ public class MyPostListController extends HttpServlet {
 
             request.setAttribute("lectureList", lectureList);
             request.setAttribute("lectureTotalCount", lectureTotalCount);
+            System.out.println(lectureTotalCount);
             request.setAttribute("paymentList", paymentList);
             request.setAttribute("postList", postList);
             System.out.println(postList);

@@ -42,17 +42,20 @@ public class GotoController extends HttpServlet {
 				break;
 			case "modify":
 				if (memberDto == null) {
+					System.out.println("여기까지 오냐?1");
 					req.setAttribute("msg", "로그인 후 이용 가능합니다");
 					req.setAttribute("url", "/main.do"); 
 					req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
 					return;
 				}else{
 					try {
+						System.out.println("여기까지 오냐?2");
 						memberDto = new MemberDAO().getUserInfo(memberDto.getUserId());
 						req.setAttribute("modifyUser", memberDto);
 					} catch (SQLException e) {
 						e.printStackTrace();
 					}
+					System.out.println("여기까지 오냐?3");
 					req.getRequestDispatcher("/WEB-INF/common/member/modify.jsp").forward(req, res);
 				}
 				break;
