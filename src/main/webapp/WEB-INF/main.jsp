@@ -16,6 +16,50 @@
 <link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
 <!-- link 태그 // -->
 </head>
+<style>
+.slider {
+  position: relative;
+  width: 100%;
+  height: 395px;
+  overflow: hidden;
+  background-color:#008CD6;
+  border-radius:15px
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  color: white;
+  display:flex;
+  justify-content: center;
+  align-items: center
+}
+
+.nav {
+  margin-top: 20px;
+  display:flex;
+  justify-content: center;
+  position:relative;
+  bottom:100px;
+}
+
+.nav-btn {
+  background-color: #00c3d7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+</style>
+
 <body>
 	<c:if test="${not empty msg}">
     	<script>
@@ -83,7 +127,37 @@
 						</div>
 						<div class="swiper-pagination"></div>
 					</div>
-					<div>두 번째 슬라이드 들어갈 영역</div>
+				</div>
+					<div class="sliderContainer">
+					<div>
+						<div class="slider">
+					      <div class="slides">
+					        <div class="slide">
+					        <div>
+					          <h2>수능 전 과목 강좌</h2>
+					          <p>스마트 천재에만 있습니다.</p>
+					        </div>
+					        </div>
+					        <div class="slide">
+					        <div>
+					          <h2>파이널 의대 국어 수학</h2>
+					          <p>전문적인 파이널 강의</p>
+					        </div>
+					        </div>
+					        <div class="slide">
+					        <div>
+					          <h2>국수영사과</h2>
+					          <p>최고의 강사진과 함께하세요</p>
+					        </div>
+					        </div>
+					      </div>
+					    </div>
+					    <div class="nav">
+					      <button class="nav-btn" onclick="showSlide(0)">스마트 천재</button>
+					      <button class="nav-btn" onclick="showSlide(1)">파이널 강의</button>
+					      <button class="nav-btn" onclick="showSlide(2)">최고의 강사진</button>
+					    </div>
+					</div>
 				</div>
 			</div>
 			<div class="boardGroup">
