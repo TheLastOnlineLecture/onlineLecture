@@ -94,12 +94,13 @@ Date now = new Date();
 											<c:when test="${sessionScope.user.userType == 'T'}">
 												<a href="/teacherMyLectureList.do">내 강의실</a>
 												<a href="<c:url value='/myStudyRoom/common/gotoWriteDetail.do' />">마이페이지</a>
+												<a href="/common/login/logout.do">로그아웃</a>
 											</c:when>
 											<c:otherwise>
 												<a href="/goto.do?page=mypage">나의 강의실</a>
-												<a href="#">결제내역</a>
 												<a href="/payments/user/gotoPayments.do">장바구니 목록</a>
 												<a href="<c:url value='/myStudyRoom/common/gotoWriteDetail.do' />">마이페이지</a>
+												<a href="/common/login/logout.do">로그아웃</a>
 											</c:otherwise>
 										</c:choose>
 									</div>
@@ -109,9 +110,6 @@ Date now = new Date();
 										<div class="loginArea">
 											<button class="loginPopupButton">Login</button>
 										</div>
-										<a href="/mypage/common/gotoMyLecture.do">나의 강의실</a>
-										<a href="/payments/user/gotoPayments.do">장바구니 목록</a>
-										<a href="<c:url value='/myStudyRoom/common/gotoWriteDetail.do' />">마이페이지</a>
 									</div>
 								</c:otherwise>
 							</c:choose>

@@ -8,7 +8,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 <h3> 1:1 qna작성 작성  </h3>
 <form action="qnaWrite.do?type=${qnaType}" method="post">
 <input type="hidden" name="type" value="${qnaType}"/>

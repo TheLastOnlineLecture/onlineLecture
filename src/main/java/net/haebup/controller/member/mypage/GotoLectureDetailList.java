@@ -32,19 +32,15 @@ public class GotoLectureDetailList extends HttpServlet {
             return;
         }
 
-        PaymentDAO paymentDAO = new PaymentDAO();
         LectureDAO lectureDAO = new LectureDAO();
         List<LectureDTO> lectureDTOs = new ArrayList<>();
 
         try {
-            if (paymentDAO.isPaid(memberDTO.getUserId(), lectureCode)) {
-                paymentDAO.updateLectureStartDate(memberDTO.getUserId(), lectureCode);
-                LectureDTO lectureDTO = lectureDAO.getLectureDetail(lectureCode);
-                if (lectureDTO != null) {
-                    List<LectureDetailDTO> details = lectureDAO.getLectureDetails(lectureCode);
-                    lectureDTO.setLectureDetails(details);
-                    lectureDTOs.add(lectureDTO);
-                }
+            LectureDTO lectureDTO = lectureDAO.getLectureDetail(lectureCode);
+            if (lectureDTO != null) {
+                List<LectureDetailDTO> details = lectureDAO.getLectureDetails(lectureCode);
+                lectureDTO.setLectureDetails(details);
+                lectureDTOs.add(lectureDTO);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,3 +53,23 @@ public class GotoLectureDetailList extends HttpServlet {
         request.getRequestDispatcher("/WEB-INF/common/myPage/lectureDetailList.jsp").forward(request, response);
     }
 }
+
+/* 결제 여부 체크 로직
+PaymentDAO paymentDAO = new PaymentDAO();
+try {
+    if (paymentDAO.isPaid(memberDTO.getUserId(), lectureCode)) {
+        paymentDAO.updateLectureStartDate(memberDTO.getUserId(), lectureCode);
+        LectureDTO lectureDTO = lectureDAO.getLectureDetail(lectureCode);
+        if (lectureDTO != null) {
+            List<LectureDetailDTO> details = lectureDAO.getLectureDetails(lectureCode);
+            lectureDTO.setLectureDetails(details);
+            lectureDTOs.add(lectureDTO);
+        }
+    }
+} catch (SQLException e) {
+    e.printStackTrace();
+    request.setAttribute("message", "강의 정보를 불러오는데 실패했습니다.");
+    request.getRequestDispatcher("/mypage/common/gotoMyLecture.do").forward(request, response);
+    return;
+}
+*/

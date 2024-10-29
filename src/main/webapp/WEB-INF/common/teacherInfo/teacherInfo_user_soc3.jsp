@@ -85,6 +85,14 @@
 			<div class="center" style="margin-top: 30px">
 				<div class="teacherDetailContainer"></div>
 			</div>
+			<div class="center" style="display:flex; justify-content: space-around; margin-bottom:50px">
+					<div>
+					<a href="/gotoPostList.do?type=D&teacherId=${teacherInfo.userId}" class="link">${teacherInfo.userName} 선생님의 자료실 +</a>
+					</div>
+					<div>
+					<a href="/gotoQnaList.do?type=T&teacherId=${teacherInfo.userId}" class="link">${teacherInfo.userName} 선생님의 QnA +</a>
+					</div>
+			</div>
 			<img
 				src="https://high.milkt.co.kr/UploadFile/LecturerCurriculum/2a37abd3-ba46-4ba0-b238-721b8b8fbfaf20230612124820.jpg"
 				alt="" width="100%" />

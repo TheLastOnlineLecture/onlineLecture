@@ -23,7 +23,7 @@
 <c:if test="${not empty commentList}">
 	<h3>댓글 목록</h3>
 	<ul>
-	    <c:forEach var="qnaComment" items="${commenQnatList}">
+	    <c:forEach var="qnaComment" items="${commentQnaList}">
 	        <li>${comment.commentContent} - <strong>${comment.userId}</strong> ${comment.commentRegdate}</li>
 	    </c:forEach>
 	</ul>

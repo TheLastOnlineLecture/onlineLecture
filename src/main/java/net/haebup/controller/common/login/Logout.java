@@ -12,7 +12,8 @@ public class Logout extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         request.getSession().invalidate();
-        request.setAttribute("message", "로그아웃 되었습니다.");
-        request.getRequestDispatcher("/main.do").forward(request, response);
+        request.setAttribute("msg", "로그아웃 되었습니다.");
+        request.setAttribute("url", "/main.do");
+        request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
     }
 }
