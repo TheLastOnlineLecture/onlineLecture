@@ -15,12 +15,12 @@ import jakarta.servlet.http.HttpServletResponse;
 public class FileIOUtil {
 
     // 운영체제에 상관없이 경로 구분자 사용
-    // private static final String BOARD_UPLOAD_DIR = "uploads" + File.separator + "board";
-    // private static final String LECTURE_NOTICE_UPLOAD_DIR = "uploads" + File.separator + "lecture" + File.separator + "notice";
-    // private static final String LECTURE_DETAIL_UPLOAD_DIR = "uploads" + File.separator + "lecture" + File.separator + "detail";
-    private static final String BOARD_UPLOAD_DIR = "D:\\java7\\project\\onlineLecture\\src\\main\\webapp\\uploads\\board";
-    private static final String LECTURE_NOTICE_UPLOAD_DIR = "D:\\java7\\project\\onlineLecture\\src\\main\\webapp\\uploads\\lecture\\notice";
-    private static final String LECTURE_DETAIL_UPLOAD_DIR = "D:\\java7\\project\\onlineLecture\\src\\main\\webapp\\uploads\\lecture\\detail";
+    private static final String BOARD_UPLOAD_DIR = "resources/uploads/board";
+    private static final String LECTURE_NOTICE_UPLOAD_DIR = "resources/uploads/lecture/notice";
+    private static final String LECTURE_DETAIL_UPLOAD_DIR = "resources/uploads/lecture/detail";
+    // private static final String BOARD_UPLOAD_DIR = "D:\\java7\\project\\onlineLecture\\src\\main\\webapp\\uploads\\board";
+    // private static final String LECTURE_NOTICE_UPLOAD_DIR = "D:\\java7\\project\\onlineLecture\\src\\main\\webapp\\uploads\\lecture\\notice";
+    // private static final String LECTURE_DETAIL_UPLOAD_DIR = "D:\\java7\\project\\onlineLecture\\src\\main\\webapp\\uploads\\lecture\\detail";
 
     
     // 첨부파일 업로드 메서드
@@ -41,28 +41,27 @@ public class FileIOUtil {
 
     private static String uploadFile(HttpServletRequest request, String fieldName, String subDir)
             throws IOException, ServletException {
-//        String uploadPath = request.getServletContext().getRealPath(File.separator + subDir);
-        String uploadPath = subDir;
-        System.out.println("경로확인 : "+uploadPath);
+        String applicationPath = request.getServletContext().getRealPath("");
+        String uploadPath = applicationPath + File.separator + subDir;
+        
+        System.out.println("업로드 경로: " + uploadPath);
+        
         File uploadDir = new File(uploadPath);
         if (!uploadDir.exists()) {
-            uploadDir.mkdirs();
+            boolean created = uploadDir.mkdirs();
+            System.out.println("디렉토리 생성 결과: " + created);
         }
-
+        
         Part filePart = request.getPart(fieldName);
-        if (filePart == null) {
-            System.out.println("파일 업로드 실패 : " + fieldName);
-            return null;
-        }
-
-        String fileName = getSubmittedFileName(filePart);
-
-        if (fileName != null && !fileName.isEmpty()) {
+        if (filePart != null && filePart.getSize() > 0) {
+            String fileName = getSubmittedFileName(filePart);
             String uniqueFileName = UUID.randomUUID().toString() + "_" + fileName;
             String filePath = uploadPath + File.separator + uniqueFileName;
-
+            
+            System.out.println("파일 저장 경로: " + filePath);
+            
             filePart.write(filePath);
-            return subDir + File.separator + uniqueFileName; // 웹 경로 반환
+            return subDir + "/" + uniqueFileName;
         }
         return null;
     }
@@ -101,12 +100,14 @@ public class FileIOUtil {
     }
 
     private static String getSubmittedFileName(Part part) {
-        for (String cd : part.getHeader("content-disposition").split(";")) {
-            if (cd.trim().startsWith("filename")) {
-                return cd.substring(cd.indexOf('=') + 1).trim().replace("\"", "");
+        String contentDisp = part.getHeader("content-disposition");
+        String[] tokens = contentDisp.split(";");
+        for (String token : tokens) {
+            if (token.trim().startsWith("filename")) {
+                return token.substring(token.indexOf("=") + 2, token.length()-1);
             }
         }
-        return null;
+        return "";
     }
     
     

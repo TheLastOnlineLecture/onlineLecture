@@ -139,14 +139,7 @@
     </style>
 </head>
 <body>
-    
-    <!-- 네비게이션 바 -->
-    <div class="navbar">
-        <a href="#">회원 관리</a>
-        <a href="${pageContext.request.contextPath}/admin/lecture/manage?action=list">강의 관리</a>
-        <a href="#">게시판 관리</a>
-    </div>
-    
+    <jsp:include page="../common/header.jsp" />
     <!-- 메인 콘텐츠 -->
     <div class="container">
         <h1>회원 관리</h1>
@@ -186,7 +179,7 @@
                         <td>${member.mileage}</td>
                         <td>${member.userPhone}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/admin/member/memberModify.do?userId=${member.userId}" class="action-btn modify-btn">수정</a>
+                            <a href="${pageContext.request.contextPath}/admin/member/gotoMemberModify.do?userId=${member.userId}" class="action-btn modify-btn">수정</a>
                             <button onclick="deleteMember('${member.userId}')" class="action-btn delete-btn">삭제</button>
                         </td>
                     </tr>
@@ -216,8 +209,9 @@
     </div>
     <script>
         function deleteMember(userId) {
+            
             if(confirm('정말로 이 회원을 삭제하시겠습니까?')) {
-                fetch('${pageContext.request.contextPath}/member/admin/memberDelete.do', {
+                fetch('${pageContext.request.contextPath}/admin/member/memberDelete.do', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded',

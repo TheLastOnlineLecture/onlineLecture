@@ -32,8 +32,20 @@
     </style>
 </head>
 <body>
+    <jsp:include page="../common/header.jsp" />
     <div class="container">
         <h1>강의 목록</h1>
+        <div style="margin-bottom: 20px;">
+            <a href="${pageContext.request.contextPath}/admin/lecture/manage?action=new" class="btn-add" style="
+                padding: 10px 20px;
+                background-color: #4CAF50;
+                color: white;
+                text-decoration: none;
+                border-radius: 4px;
+                display: inline-block;">
+                새 강의 등록
+            </a>
+        </div>
         <table>
             <thead>
                 <tr>

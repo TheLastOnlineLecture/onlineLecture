@@ -25,6 +25,8 @@ public class LectureAdminController extends HttpServlet {
                 List<LectureDTO> lectures = lectureAdminDAO.getAllLectures();
                 request.setAttribute("lectures", lectures);
                 request.getRequestDispatcher("/WEB-INF/admin/lecture/list.jsp").forward(request, response);
+            } else if ("new".equals(action)) {
+                request.getRequestDispatcher("/WEB-INF/admin/lecture/lectureAdd.jsp").forward(request, response);
             } else if ("detail".equals(action)) {
                 String lectureCode = request.getParameter("lectureCode");
                 LectureDTO lecture = lectureAdminDAO.getLectureDetail(lectureCode);

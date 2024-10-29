@@ -55,6 +55,9 @@
     </style>
 </head>
 <body>
+    <!-- 공통 헤더 include -->
+    <jsp:include page="../common/header.jsp" />
+    
     <div class="container">
         <h1>강의 수정</h1>
         <form action="${pageContext.request.contextPath}/admin/lecture/manage" method="post">
