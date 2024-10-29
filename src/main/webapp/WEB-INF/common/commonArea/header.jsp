@@ -56,7 +56,7 @@ Date now = new Date();
 						<div class="submenu">
 							<ul>
 								<li class="submenuContentGroup1"><a href="https://www.smarthb-math.co.kr/about/about.php">브랜드 소개</a><a
-									href="https://www.smarthb-math.co.kr/about/about.php">오시는 길</a></li>
+									href="https://github.com/TheLastOnlineLecture/onlineLecture">개발 Github</a></li>
 								<li class="submenuContentGroup2">
 									<a href="${pageContext.request.contextPath}/lecture/common/lectureList.do?filterBy=subject&filterValue=KOR">국어</a>
 									<a href="${pageContext.request.contextPath}/lecture/common/lectureList.do?filterBy=subject&filterValue=MATH">수학</a>
