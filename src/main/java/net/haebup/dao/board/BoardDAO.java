@@ -236,17 +236,24 @@ public class BoardDAO implements IFBoardDAO{
     @Override
     public int deleteByBoardIdx(int boardIdx) throws SQLException{
     	 String deleteCommentsSql = "DELETE FROM tbl_comment WHERE post_idx = ?";
-    	    String deleteBoardSql = "DELETE FROM tbl_board WHERE board_idx = ?";
+    	 String deleteFileSql = "DELETE FROM tbl_file WHERE board_idx = ?";
+	     String deleteBoardSql = "DELETE FROM tbl_board WHERE board_idx = ?";
 
     	    try (Connection conn = DBConnPool.getConnection()) {
+    	    	//트랜잭션 시작
     	        conn.setAutoCommit(false); 
-
+    	        // 댓글삭제
     	        try (DbQueryUtil commentUtil = new DbQueryUtil(conn, deleteCommentsSql, new Object[]{boardIdx})) {
     	            commentUtil.executeUpdate();
     	        }
-
+    	        // 파일 삭제
+    	        try (DbQueryUtil fileUtil = new DbQueryUtil(conn, deleteFileSql, new Object[]{boardIdx})) {
+    	            fileUtil.executeUpdate(); 
+    	        }
+    	        // 게시글삭제
     	        try (DbQueryUtil boardUtil = new DbQueryUtil(conn, deleteBoardSql, new Object[]{boardIdx})) {
     	            int result = boardUtil.executeUpdate();
+    	            // 커밋
     	            conn.commit(); 
     	            return result;
     	        } catch (SQLException e) {

@@ -23,6 +23,7 @@ public class Delete extends HttpServlet {
   protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         int boardIdx = Integer.parseInt(request.getParameter("idx"));
         String boardType = request.getParameter("type");
+        System.out.println("삭제시 타입확인 : "+ boardType);
 //        String boardCategory = request.getParameter("category"); 
 
         BoardDAO boardDAO = new BoardDAO();
@@ -62,7 +63,6 @@ public class Delete extends HttpServlet {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            response.getWriter().print("<script>alert('오류 발생: " + e.getMessage() + "'); location.href='javascript:history.back();';</script>");
         }
     }
   
