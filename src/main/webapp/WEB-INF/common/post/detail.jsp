@@ -137,6 +137,7 @@
 					    <form action="commentDelete.do" method="post" style="display:inline;">
 					        <input type="hidden" name="commentIdx" value="${comment.commentIdx}" />
 					        <input type="hidden" name="boardIdx" value="${boardDTO.boardIdx}"/> 
+					        <input type="hidden" name="type" value="${boardDTO.boardType}"/> 
 					        
 					        
 					        <button type="submit">삭제</button>
