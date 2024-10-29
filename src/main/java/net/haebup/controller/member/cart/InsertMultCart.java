@@ -6,10 +6,11 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
+// import java.io.PrintWriter;
 import java.util.Arrays;
 import java.util.List;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import net.haebup.dao.member.payment.PaymentDAO;
 import net.haebup.dto.member.MemberDTO;
 import jakarta.servlet.annotation.WebServlet;
@@ -36,13 +37,31 @@ public class InsertMultCart extends HttpServlet {
         }
 
         List<String> lectureCodeList = Arrays.asList(lectureCodes);
+        List<String> duplicateLectures = new ArrayList<>();
+        List<String> newLectures = new ArrayList<>();
 
         try {
-            int addedCount = paymentDAO.addMultipleToCart(userId, lectureCodeList);
-            if (addedCount > 0) {
-                request.setAttribute("message", addedCount + "개의 강의가 장바구니에 추가되었습니다.");
+            for (String lectureCode : lectureCodeList) {
+                if (paymentDAO.isLectureInCart(userId, lectureCode)) {
+                    duplicateLectures.add(lectureCode);
+                } else {
+                    newLectures.add(lectureCode);
+                }
+            }
+
+            if (!newLectures.isEmpty()) {
+                int addedCount = paymentDAO.addMultipleToCart(userId, newLectures);
+                if (addedCount > 0) {
+                    String message = addedCount + "개의 강의가 장바구니에 추가되었습니다.";
+                    if (!duplicateLectures.isEmpty()) {
+                        message += " (" + duplicateLectures.size() + "개 강의는 이미 장바구니에 있습니다.)";
+                    }
+                    request.setAttribute("message", message);
+                } else {
+                    request.setAttribute("message", "장바구니 추가에 실패했습니다.");
+                }
             } else {
-                request.setAttribute("message", "장바구니 추가에 실패했습니다.");
+                request.setAttribute("message", "선택한 모든 강의가 이미 장바구니에 있습니다.");
             }
         } catch (SQLException e) {
             e.printStackTrace();
