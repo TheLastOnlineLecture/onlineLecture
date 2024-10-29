@@ -73,7 +73,7 @@ public class GotoPostList extends HttpServlet {
 		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/post/list.jsp").forward(request, response);
 		            break;
 		        case "D":  
-		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/lecture/fileList.jsp").forward(request, response);
+		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/filePost/fileList.jsp").forward(request, response);
 		            break;
 		        case "N":  
 		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/noticePost/noticeList.jsp").forward(request, response);

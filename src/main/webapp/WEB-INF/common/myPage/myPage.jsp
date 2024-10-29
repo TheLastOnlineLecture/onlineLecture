@@ -109,7 +109,7 @@
                 <!-- <div class="noStudyVideo">현재 수강중인 강의가 없습니다.</div> -->
                 <c:forEach var="lec" items="${lectureList}">
                 <a
-                  href="/lecture/common/gotoLectureDetail.do?"
+                  href="/lecture/common/lectureDetail.do?lectureCode=${lec.lectureCode}"
                   class="studyCardLink"
                 >
                   <div class="studyCard">

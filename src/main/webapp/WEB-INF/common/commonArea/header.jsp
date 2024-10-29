@@ -57,9 +57,13 @@ Date now = new Date();
 							<ul>
 								<li class="submenuContentGroup1"><a href="https://www.smarthb-math.co.kr/about/about.php">브랜드 소개</a><a
 									href="https://www.smarthb-math.co.kr/about/about.php">오시는 길</a></li>
-								<li class="submenuContentGroup2"><a href="/gotoTeacherInfo.do?teacherId=user_kor1">국어</a> <a
-									href="/lecture/common/lectureList.do">수학</a> <a href="#">영어</a> <a
-									href="#">사회</a> <a href="#">과학</a></li>
+								<li class="submenuContentGroup2">
+									<a href="${pageContext.request.contextPath}/lecture/common/lectureList.do?filterBy=subject&filterValue=KOR">국어</a>
+									<a href="${pageContext.request.contextPath}/lecture/common/lectureList.do?filterBy=subject&filterValue=MATH">수학</a>
+									<a href="${pageContext.request.contextPath}/lecture/common/lectureList.do?filterBy=subject&filterValue=ENG">영어</a>
+									<a href="${pageContext.request.contextPath}/lecture/common/lectureList.do?filterBy=subject&filterValue=SOC">사회</a>
+									<a href="${pageContext.request.contextPath}/lecture/common/lectureList.do?filterBy=subject&filterValue=SCI">과학</a>
+								</li>
 								<li class="submenuContentGroup3"><a href="https://high.milkt.co.kr/DalJa/Attend/frm_Attend_Event.aspx?menucode=110900">출석체크 이벤트</a> <a
 									href="https://high.milkt.co.kr/DalJa/Tchallenge/frm_Tchallenge_Default.aspx?MenuCode=112000">스마트 천재 챌린지</a> <a href="https://high.milkt.co.kr/DalJa/TPlay/frm_TPlay.aspx?MenuCode=110211">T-Play 이벤트</a></li>
 								<li class="submenuContentGroup4"><a
@@ -105,8 +109,7 @@ Date now = new Date();
 										<div class="loginArea">
 											<button class="loginPopupButton">Login</button>
 										</div>
-										<a href="/goto.do?page=mypage">나의 강의실</a>
-										<a href="#">결제내역</a>
+										<a href="/mypage/common/gotoMyLecture.do">나의 강의실</a>
 										<a href="/payments/user/gotoPayments.do">장바구니 목록</a>
 										<a href="<c:url value='/myStudyRoom/common/gotoWriteDetail.do' />">마이페이지</a>
 									</div>
