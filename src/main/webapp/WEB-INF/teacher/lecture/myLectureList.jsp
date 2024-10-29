@@ -58,8 +58,6 @@
                     <tr>
                         <th>강의 코드</th>
                         <th>강의명</th>
-                        <th>가격</th>
-                        <th>등록일</th>
                         <th>수강생 관리</th>
                     </tr>
                 </thead>
@@ -68,8 +66,6 @@
                         <tr>
                             <td>${lecture.lectureCode}</td>
                             <td>${lecture.lectureName}</td>
-                            <td>${lecture.lecturePrice}원</td>
-                            <td>${lecture.lectureRegdate}</td>
                             <td>
                                 <a href="/teacher/lecture/students.do?lectureCode=${lecture.lectureCode}" 
                                    class="student-list-btn">수강생 목록</a>

@@ -17,6 +17,12 @@
 <link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
 <link rel="stylesheet" href="/stylegroup/teacher/teacherDetail.css" />
 
+<style>
+	.link:hover {
+		text-decoration: underline;
+	}
+</style>
+
 <!-- link 태그 // -->
 </head>
 <body>
@@ -73,6 +79,14 @@
 			</div>
 			<div class="center" style="margin-top: 30px">
 				<div class="teacherDetailContainer"></div>
+			</div>
+			<div class="center" style="display:flex; justify-content: space-around; margin-bottom:50px">
+					<div>
+					<a href="/gotoPostList.do?type=D&teacherId=${teacherInfo.userId}" class="link">${teacherInfo.userName} 선생님의 자료실 +</a>
+					</div>
+					<div>
+					<a href="/gotoQnaList.do?type=T&teacherId=${teacherInfo.userId}" class="link">${teacherInfo.userName} 선생님의 QnA +</a>
+					</div>
 			</div>
 			<img
 				src="https://high.milkt.co.kr/UploadFile/LecturerCurriculum/599d90b0-dab4-495e-8c30-c3f62745d78d20230703090225.jpg"
