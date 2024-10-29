@@ -43,6 +43,7 @@
             font-size: 24px;
             margin: 20px 0;
             color: #333;
+            text-align:center;
         }
         .start-lecture-btn {
             display: inline-block;
@@ -71,8 +72,10 @@
         <jsp:include page="../commonArea/pageTopImageArea.jsp" />
         <jsp:include page="../commonArea/header.jsp" />
 
-        <main class="ccenter">
+        <main>
             <h1 class="lecture-title">내 강의 목록</h1>
+            <div class="ccenter">
+            <div style="width:1500px">
             <c:if test="${not empty lectureList}">
                 <table class="lecture-list">
                     <thead>
@@ -110,6 +113,8 @@
                     <p>등록된 강의가 없습니다.</p>
                 </div>
             </c:if>
+            </div>
+            </div>
         </main>
 
 

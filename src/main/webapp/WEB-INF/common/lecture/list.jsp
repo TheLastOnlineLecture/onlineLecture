@@ -144,7 +144,7 @@
 														<td><a
 															href="${pageContext.request.contextPath}/lecture/common/lectureList.do?filterBy=teacher&filterValue=${lecture.teacherName}">${lecture.teacherName}</a></td>
 														<td>
-								                            <button type="button" onclick="addToCart('${lecture.lectureCode}')">장바구니에 담기</button>
+								                            <button type="button" onclick="addToCart('${lecture.lectureCode}')" style="width:100%; height:100%; display:flex; justify-content: center; align-items:center; border:none; background-color:white; cursor:pointer; text-decoration:underline;">장바구니에 담기</button>
 								                        </td>
 													</tr>
 												</tbody>

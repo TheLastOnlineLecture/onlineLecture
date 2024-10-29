@@ -131,7 +131,7 @@
 <!--                   댓글수정 삭제부분  -->
 					<c:if test="${comment.userId == sessionScope.user.userId}">
 					    <!-- 수정 버튼 -->
-					    <button type="button" onclick="openEditModal('${comment.commentIdx}', '${comment.commentContent}')">수정</button>
+					    <button type="button" onclick="openEditModal('${comment.commentIdx}', '${comment.commentContent}')" class="commentBtn">수정</button>
 					
 					    <!-- 삭제 폼 -->
 					    <form action="commentDelete.do" method="post" style="display:inline;">
@@ -140,19 +140,18 @@
 					        <input type="hidden" name="type" value="${boardDTO.boardType}"/> 
 					        
 					        
-					        <button type="submit">삭제</button>
+					        <button type="submit" class="commentBtn">삭제</button>
 					    </form>
 					</c:if>
 					
 					<div id="editModal" style="display: none;">
 					    <div class="modalContent">
-					        <h2>댓글 수정</h2>
 					        <form id="editCommentForm" action="commentUpdate.do" method="post">
 					        <input type="hidden" name="boardIdx" value="${boardDTO.boardIdx}"/> 
 					            <input type="hidden" name="commentIdx" id="editCommentIdx" />
 					            <textarea name="commentContent" id="editCommentContent"></textarea>
-					            <button type="submit">등록</button>
-					            <button type="button" onclick="closeEditModal()">취소</button>
+					            <button type="submit" class="commentBtn">등록</button>
+					            <button type="button" onclick="closeEditModal()" class="commentBtn">취소</button>
 					        </form>
 					    </div>
 					</div>

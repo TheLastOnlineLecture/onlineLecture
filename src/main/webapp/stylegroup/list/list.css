@@ -366,3 +366,13 @@
 .overLimit {
   color: red;
 }
+
+.commentBtn{
+	border:none;
+	background-color:white;
+	cursor:pointer;
+}
+
+.commentBtn:hover {
+	text-decoration:underline;
+}

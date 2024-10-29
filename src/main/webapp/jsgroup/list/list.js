@@ -70,6 +70,20 @@ document.addEventListener("DOMContentLoaded", () => {
 				label.className = "label review";
 			});
 			break;
+		case "G":
+			titleElement.textContent = "1대1QnA";
+			labelElements.forEach(label => {
+				label.textContent = "1대1QnA";
+				label.className = "label review";
+			});
+			break;
+		case "T":
+			titleElement.textContent = "선생님QnA";
+			labelElements.forEach(label => {
+				label.textContent = "선생님QnA";
+				label.className = "label review";
+			});
+			break;
 		default:
 			titleElement.textContent = "error";
 			labelElements.forEach(label => {

@@ -194,19 +194,8 @@
 					</div>
 
 					<!-- 고객센터 섹션 -->
-					<div class="box notice">
-						<h2>공지사항</h2>
-						<ul>
-							<li><a href="#">[강좌] 2028 수능
-									통합사회... <span>24.10.22</span>
-							</a></li>
-							<li><a href="#">[일반] AI 트레이닝 앰스트롱
-									2학... <span>24.10.15</span>
-							</a></li>
-							<li><a href="#">[이벤트] AI 트레이닝 앰스트롱
-									2학... <span>24.10.11</span>
-							</a></li>
-						</ul>
+					<div class="box notice" style="display:flex; justify-content: center">
+						<img src="/public/userProblemCenter.png">
 					</div>
 				</div>
 			</div>

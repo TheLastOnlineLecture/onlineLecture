@@ -85,6 +85,12 @@ document.addEventListener("DOMContentLoaded", function () {
             case "R":
                 labelHtml = '<span class="label review">수강후기</span>';
                 break;
+			case "G":
+				labelHtml = '<span class="label review">1대1 QnA</span>';
+				break;
+			case "T":
+				labelHtml = '<span class="label review">선생님 QnA</span>';
+				break;
             default:
                 labelHtml = '<span class="label unknown">알 수 없음</span>';
                 break;

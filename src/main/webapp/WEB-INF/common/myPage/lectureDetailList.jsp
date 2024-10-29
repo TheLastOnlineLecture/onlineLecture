@@ -86,7 +86,11 @@
                             <span>수강 기한: ${lecture.lectureLimitDate}까지</span>
                         </div>
                     </div>
-                    
+                    <div>
+                    	<a href="#">성적표 보기</a>
+	                    <a href="/gotoPostList.do?type=D&category=${lecture.lectureCode}">강의실의 자료실</a>
+						<a href="/gotoQnaList.do?type=T&category=${lecture.lectureCode}">강의실의 qna</a>
+                    </div>
                     <div class="detail-list">
                         <c:forEach var="detail" items="${lecture.lectureDetails}">
                             <div class="detail-item">
