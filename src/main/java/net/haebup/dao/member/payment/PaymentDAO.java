@@ -207,11 +207,14 @@ public class PaymentDAO {
     }
     //구매여부 조회
     public boolean isPaid(String userId, String lectureCode) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM tbl_payment WHERE user_id = ? AND lecture_code = ? AND payment_status = 'P'";
+        String sql = "SELECT COUNT(*) as count FROM tbl_payment WHERE user_id = ? AND lecture_code = ? AND payment_status = 'P'";
         try (Connection conn = DBConnPool.getConnection();
                 DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId, lectureCode })) {
             ResultSet rs = dbUtil.executeQuery();
-            return rs.getInt(1) > 0;
+            if (rs.next()) {
+                return rs.getInt("count") > 0;
+            }
+            return false;
         }
     }
     //강의 시작일 업데이트

@@ -22,28 +22,37 @@ public class GotoLectureDetailList extends HttpServlet {
         MemberDTO memberDTO = (MemberDTO) request.getSession().getAttribute("user");
         if(memberDTO == null){
             request.setAttribute("message", "로그인 후 이용해주세요.");
-            request.getRequestDispatcher("/goto.do?page=login").forward(request, response);
+            request.getRequestDispatcher("/main.do").forward(request, response);
             return;
         }
-        String[] lectureCodes = request.getParameterValues("lectureCode");
+
+        String lectureCode = request.getParameter("lectureCode");
+        if(lectureCode == null || lectureCode.trim().isEmpty()) {
+            response.sendRedirect("/mypage/common/gotoMyLecture.do");
+            return;
+        }
+
         PaymentDAO paymentDAO = new PaymentDAO();
         LectureDAO lectureDAO = new LectureDAO();
         List<LectureDTO> lectureDTOs = new ArrayList<>();
+
         try {
-            for (String lectureCode : lectureCodes) {
-                if (paymentDAO.isPaid(memberDTO.getUserId(), lectureCode)) {
-                    paymentDAO.updateLectureStartDate(memberDTO.getUserId(), lectureCode);
-                    LectureDTO lectureDTO = lectureDAO.getLectureDetail(lectureCode);
-                    if (lectureDTO != null) {
-                        List<LectureDetailDTO> details = lectureDAO.getLectureDetails(lectureCode);
-                        lectureDTO.setLectureDetails(details);
-                        lectureDTOs.add(lectureDTO);
-                    }
+            if (paymentDAO.isPaid(memberDTO.getUserId(), lectureCode)) {
+                paymentDAO.updateLectureStartDate(memberDTO.getUserId(), lectureCode);
+                LectureDTO lectureDTO = lectureDAO.getLectureDetail(lectureCode);
+                if (lectureDTO != null) {
+                    List<LectureDetailDTO> details = lectureDAO.getLectureDetails(lectureCode);
+                    lectureDTO.setLectureDetails(details);
+                    lectureDTOs.add(lectureDTO);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            request.setAttribute("message", "강의 정보를 불러오는데 실패했습니다.");
+            request.getRequestDispatcher("/mypage/common/gotoMyLecture.do").forward(request, response);
+            return;
         }
+
         request.setAttribute("lectureDTOs", lectureDTOs);
         request.getRequestDispatcher("/WEB-INF/common/myPage/lectureDetailList.jsp").forward(request, response);
     }

@@ -149,12 +149,11 @@ public class LectureDAO {
         String sql = "SELECT l.*, m.user_name AS teacher_name FROM TBL_LECTURE l " +
                 "JOIN TBL_MEMBER m ON l.teacher_id = m.user_id " +
                 "WHERE l.lecture_code = ?";
-
+        
         try (Connection conn = DBConnPool.getConnection();
-                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode })) {
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode })) {
             ResultSet rs = dbUtil.executeQuery();
             if (rs.next()) {
-                // 결과셋에서 데이터를 추출하여 LectureDTO 객체 생성
                 LectureDTO lectureDTO = new LectureDTO();
                 lectureDTO.setLectureCode(rs.getString("lecture_code"));
                 lectureDTO.setLectureName(rs.getString("lecture_name"));
@@ -165,11 +164,28 @@ public class LectureDAO {
                 lectureDTO.setTeacherName(rs.getString("teacher_name"));
                 return lectureDTO;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new SQLException("강의 상세 정보 조회 중 오류가 발생했습니다: " + e.getMessage());
+            return null;
         }
-        return null;
+    }
+    //강의 상세정보 조회
+    public LectureDetailDTO getLectureDetailByIdx(String lectureCode, int detailIdx) throws SQLException {
+        String sql = "SELECT * FROM TBL_LECTURE_DETAIL WHERE lecture_code = ? AND lecture_detail_idx = ?";
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode, detailIdx })) {
+            ResultSet rs = dbUtil.executeQuery();
+            if (rs.next()) {
+                LectureDetailDTO detail = new LectureDetailDTO();
+                detail.setLectureDetailIdx(rs.getInt("lecture_detail_idx"));
+                detail.setLectureCode(rs.getString("lecture_code"));
+                detail.setLectureDetailContent(rs.getString("lecture_detail_content"));
+                detail.setLectureDetailFilePath(rs.getString("lecture_detail_file_path"));
+                detail.setLectureDetailFileName(rs.getString("lecture_detail_file_name"));
+                detail.setLectureDetailFileSize(rs.getLong("lecture_detail_file_size"));
+                return detail;
+            }
+            return null;
+        }
     }
 
     // 새로운 강의를 등록하는 메소드
