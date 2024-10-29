@@ -7,9 +7,18 @@ public class PaymentDTO {
     private String paymentDate;
     private String paymentStatus;
     private String lectureStartDate;
+    private String lectureName;
     private String userName;
     private String userNickname;
     private String userEmail;
+
+    public String getLectureName() {
+        return lectureName;
+    }
+
+    public void setLectureName(String lectureName) {
+        this.lectureName = lectureName;
+    }
 
     public int getPaymentIdx() {
         return paymentIdx;
