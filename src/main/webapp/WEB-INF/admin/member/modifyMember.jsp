@@ -87,7 +87,7 @@
     
     <div class="container">
         <h1>회원 정보 수정</h1>
-        <form action="${pageContext.request.contextPath}/member/admin/memberModify.do" method="post">
+        <form action="${pageContext.request.contextPath}/admin/member/memberModify.do" method="post">
             <input type="hidden" name="userId" value="${member.userId}">
             
             <label for="userName">이름:</label>

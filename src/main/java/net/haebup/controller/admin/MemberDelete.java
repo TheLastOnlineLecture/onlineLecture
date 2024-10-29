@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import net.haebup.dao.member.MemberDAO;
 
-@WebServlet("/member/admin/memberDelete.do")
+@WebServlet("/admin/member/memberDelete.do")
 public class MemberDelete extends HttpServlet {
     
     @Override

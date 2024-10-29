@@ -186,14 +186,14 @@
                         <td>${member.mileage}</td>
                         <td>${member.userPhone}</td>
                         <td>
-                            <a href="${pageContext.request.contextPath}/member/admin/gotoMemberModify.do?userId=${member.userId}" class="action-btn modify-btn">수정</a>
+                            <a href="${pageContext.request.contextPath}/admin/member/memberModify.do?userId=${member.userId}" class="action-btn modify-btn">수정</a>
                             <button onclick="deleteMember('${member.userId}')" class="action-btn delete-btn">삭제</button>
                         </td>
                     </tr>
                 </c:forEach>
             </tbody>
         </table>
-    
+
         <!-- 페이징 -->
         <div class="pagination">
             <c:if test="${currentPage > 1}">

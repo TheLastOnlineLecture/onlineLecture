@@ -12,7 +12,7 @@ import net.haebup.dao.member.MemberDAO;
 import java.util.List;
 import net.haebup.dto.member.MemberTypeDTO;
 
-@WebServlet("/member/admin/gotoMemberModify.do")
+@WebServlet("/admin/member/gotoMemberModify.do")
 public class GotoMemberModify extends HttpServlet {
     
     @Override

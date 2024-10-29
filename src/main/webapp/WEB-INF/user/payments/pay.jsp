@@ -103,7 +103,7 @@
                           <span class="payValue">${item.lecturePrice}</span>원
                           </td>
                           <td>
-                            <button type="button" class="deleteBtn">
+                            <button type="button" class="deleteBtn" data-payment-idx="${item.paymentIdx}">
                               삭제
                             </button>
                           </td>

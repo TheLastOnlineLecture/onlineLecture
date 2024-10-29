@@ -52,14 +52,36 @@ document.querySelectorAll(".lectureCheckbox").forEach((checkbox) => {
   });
 });
 
-// 삭제 버튼 클릭 시 해당 행을 삭제하는 기능
-document.querySelectorAll(".deleteBtn").forEach((deleteButton) => {
-  deleteButton.addEventListener("click", function () {
-    const row = this.closest("tr");
-    row.remove();
+// 삭제 버튼에 이벤트 리스너 추가
+document.querySelectorAll('.deleteBtn').forEach(button => {
+    button.addEventListener('click', function() {
+        if (!confirm('선택한 항목을 삭제하시겠습니까?')) return;
 
-    calculateTotalPrice();
-  });
+        const row = this.closest('tr');
+        const paymentIdx = this.getAttribute('data-payment-idx');
+
+        fetch('/payments/user/deleteCartItem.do', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: `paymentIdx=${paymentIdx}`
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                row.remove();
+                updateTotal(); // 총액 다시 계산
+                alert(data.message);
+            } else {
+                alert(data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('삭제 중 오류가 발생했습니다.');
+        });
+    });
 });
 
 // 선택 삭제 기능 구현

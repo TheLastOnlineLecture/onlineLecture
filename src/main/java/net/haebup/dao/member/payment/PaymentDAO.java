@@ -268,4 +268,13 @@ public class PaymentDAO {
         }
         return enrollments;
     }
+
+    // 장바구니 항목 삭제
+    public int deleteCartItem(int paymentIdx) throws SQLException {
+        String sql = "DELETE FROM tbl_payment WHERE payment_idx = ? AND payment_status = 'I'";
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { paymentIdx })) {
+            return dbUtil.executeUpdate();
+        }
+    }
 }
