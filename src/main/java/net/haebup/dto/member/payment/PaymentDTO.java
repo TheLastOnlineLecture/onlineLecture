@@ -11,6 +11,15 @@ public class PaymentDTO {
     private String userName;
     private String userNickname;
     private String userEmail;
+    private int lecturePrice;
+
+    public int getLecturePrice() {
+        return lecturePrice;
+    }
+
+    public void setLecturePrice(int lecturePrice) {
+        this.lecturePrice = lecturePrice;
+    }
 
     public String getLectureName() {
         return lectureName;
