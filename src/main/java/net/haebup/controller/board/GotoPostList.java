@@ -24,7 +24,7 @@ public class GotoPostList extends HttpServlet {
 		String pageSizeParam = request.getParameter("pageSize");
 		String boardType = request.getParameter("type");  
 		String boardCategory = request.getParameter("category"); 
-		System.out.println("boardCategory"+boardCategory);
+		System.out.println("boardCategory : "+boardCategory);
 		String boardWriter = request.getParameter("teacherId");  
 
 		int pageNo = pageNoParam != null ? Integer.parseInt(pageNoParam) : 1;      
@@ -40,7 +40,7 @@ public class GotoPostList extends HttpServlet {
 		    List<BoardDTO> boardList;
 		    int totalCount;
 
-		    if (searchKeyword != null && !searchKeyword.isEmpty()) {
+		    if (searchKeyword != null && !searchKeyword.trim().isEmpty()) {
 		        totalCount = boardDAO.getTotalCount(boardType, boardCategory, searchType, searchKeyword, boardWriter);
 		        boardList = boardDAO.getBoardListByPage(pageNo, pageSize, boardType, boardCategory, boardWriter, searchType, searchKeyword);
 		    } else {
@@ -48,31 +48,34 @@ public class GotoPostList extends HttpServlet {
 		        boardList = boardDAO.getBoardListByPage(pageNo, pageSize, boardType, boardCategory, boardWriter, null, null);
 		    }
 
-		    System.out.println("========게시판 리스트 확인==========");
-		    for (BoardDTO boardDTO : boardList) {
-		        System.out.println("idx : " + boardDTO.getBoardIdx());
-		        System.out.println("title  : " + boardDTO.getBoardTitle());
-		        System.out.println("writer : " + boardDTO.getBoardWriter());
-		        System.out.println("reqdate : " + boardDTO.getBoardRegdate());
-		        System.out.println("type : " + boardDTO.getBoardType());
-		        System.out.println("category : " + boardDTO.getBoardCategory());
-		    }
-		    System.out.println("====================");
+//		    System.out.println("========게시판 리스트 확인==========");
+//		    for (BoardDTO boardDTO : boardList) {
+//		        System.out.println("idx : " + boardDTO.getBoardIdx());
+//		        System.out.println("title  : " + boardDTO.getBoardTitle());
+//		        System.out.println("writer : " + boardDTO.getBoardWriter());
+//		        System.out.println("reqdate : " + boardDTO.getBoardRegdate());
+//		        System.out.println("type : " + boardDTO.getBoardType());
+//		        System.out.println("category : " + boardDTO.getBoardCategory());
+//		    }
+//		    System.out.println("====================");
 
 		    // 10 -> blockSize 
 		    Pagination pagination = new Pagination(pageNo, pageSize, totalCount, 10);
-
+		    
 		    request.setAttribute("boardType", boardType);
+		    System.out.println(boardType);
 		    request.setAttribute("boardList", boardList);         
-		    request.setAttribute("boardCategory", boardCategory);       
+		    System.out.println(boardList);
+		    request.setAttribute("category", boardCategory);       
+		    System.out.println(boardCategory);
 		    request.setAttribute("pagination", pagination);       
 
-		    String url = "";
+//		    String url = "";
 		    switch(boardType) {
 		        case "P":  
 		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/post/list.jsp").forward(request, response);
 		            break;
-		        case "D":  
+		        case "D": 
 		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/filePost/fileList.jsp").forward(request, response);
 		            break;
 		        case "N":  
@@ -85,12 +88,12 @@ public class GotoPostList extends HttpServlet {
 		            request.getRequestDispatcher(request.getContextPath() + "WEB-INF/common/lecture/lectureReview.jsp").forward(request, response);
 		            break;
 		    }
-		    if (boardCategory != null) {
-		        url += "?category=" + boardCategory;
-		    }
-		    if (boardWriter != null) {
-		        url += "?writer=" + boardWriter;
-		    }
+//		    if (boardCategory != null) {
+//		        url += "?category=" + boardCategory;
+//		    }
+//		    if (boardWriter != null) {
+//		        url += "?writer=" + boardWriter;
+//		    }
 
 		} catch (SQLException e) {
 		    e.printStackTrace();

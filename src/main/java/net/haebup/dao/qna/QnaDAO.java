@@ -131,7 +131,7 @@ public class QnaDAO{
     
     //선생님의 QNA
     public List<QnaDTO> selectQnaListByTeacher(int limit, int offset, String teacherId) throws SQLException {
-        String sql = "SELECT q.* FROM tbl_qna q JOIN tbl_lecture l ON q.qna_category = l.lecture_code WHERE l.teacher_id = ?";
+        String sql = "SELECT q.* FROM tbl_qna q JOIN tbl_lecture l ON q.qna_category = l.lecture_code OR q.qna_category = l.teacher_id WHERE l.teacher_id = ?";
         
         sql += " ORDER BY q.qna_regdate DESC LIMIT ? OFFSET ?";
 

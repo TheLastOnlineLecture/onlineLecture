@@ -39,7 +39,8 @@ public class PostWriteController extends HttpServlet {
 		MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
 		String userType = user.getUserType();
 		System.out.println("타입확인 : "+userType);
-
+		String category = request.getParameter("category");
+		System.out.println("작성 카테 고리: "+category);
 		
 		String boardType = request.getParameter("type");
 //		System.out.println("타입확인 : "+boardType);
@@ -49,6 +50,7 @@ public class PostWriteController extends HttpServlet {
         boardDTO.setBoardTitle(request.getParameter("boardTitle"));
         boardDTO.setBoardContent(request.getParameter("boardContent"));
         boardDTO.setBoardWriter(request.getParameter("boardWriter"));
+        boardDTO.setBoardCategory(category);
 
         // 게시글 작성 권한 확인
 //        if (!checkUser(userType, boardType)) {
@@ -82,7 +84,9 @@ public class PostWriteController extends HttpServlet {
                     
                 }
                 request.setAttribute("msg", "게시글 작성 성공했습니다.");
- 
+                if(category != null) {
+                	request.setAttribute("url", "/gotoPostList.do?type="+boardType+"category="+category); 
+                }
                 request.setAttribute("url", "/gotoPostList.do?type="+boardType); 
                 request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(request, response);
             } else {

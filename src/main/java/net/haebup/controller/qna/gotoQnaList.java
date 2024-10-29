@@ -55,9 +55,11 @@ public class gotoQnaList extends HttpServlet {
             Pagination pagination = new Pagination(pageNo, pageSize, totalCount, 10);
 
             request.setAttribute("qnaType", qnaType);
+            request.setAttribute("teacherId", teacherId);
             request.setAttribute("qnaCategory", qnaCategory);
             request.setAttribute("qnaList", qnaList);         
-            request.setAttribute("pagination", pagination);       
+            request.setAttribute("pagination", pagination);   
+            
             
             // G : 일반 QnA, T : 선생님 QnA
             if ("G".equals(qnaType)) {
@@ -70,7 +72,7 @@ public class gotoQnaList extends HttpServlet {
                 }
             }
 
-            System.out.println("Pagination: " + pagination);
+//            System.out.println("Pagination: " + pagination);
 
         } catch (SQLException e) {
             e.printStackTrace();
