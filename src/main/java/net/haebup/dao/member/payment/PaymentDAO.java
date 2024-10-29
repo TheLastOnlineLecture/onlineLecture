@@ -36,7 +36,9 @@ public class PaymentDAO {
     }
     //결제내역 전부 조회
     public List<PaymentDTO> getPaymentListAll(String userId) throws SQLException {
-        String sql = "SELECT * FROM tbl_payment WHERE user_id = ?";
+        String sql = "SELECT p.*, l.lecture_name FROM tbl_payment p " +
+                    "INNER JOIN tbl_lecture l ON p.lecture_code = l.lecture_code " +
+                    "WHERE p.user_id = ? AND p.payment_status != 'I'";
         List<PaymentDTO> paymentList = new ArrayList<PaymentDTO>();
         try (Connection conn = DBConnPool.getConnection();
                 DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId })) {
@@ -44,10 +46,11 @@ public class PaymentDAO {
             while (rs.next()) {
                 PaymentDTO paymentDTO = new PaymentDTO();
                 paymentDTO.setPaymentIdx(rs.getInt("payment_idx"));
-                paymentDTO.setUserId(rs.getString("user_id"));
+                paymentDTO.setUserId(rs.getString("user_id")); 
                 paymentDTO.setLectureCode(rs.getString("lecture_code"));
                 paymentDTO.setPaymentDate(rs.getString("payment_date"));
                 paymentDTO.setPaymentStatus(rs.getString("payment_status"));
+                paymentDTO.setLectureName(rs.getString("lecture_name"));
                 paymentList.add(paymentDTO);
             }
         }
