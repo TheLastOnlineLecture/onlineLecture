@@ -29,8 +29,8 @@ public class Mypage extends HttpServlet {
         if(memberDTO == null){
             System.out.println("사용자가 로그인하지 않음, 로그인 페이지로 리다이렉트");
             request.setAttribute("message", "로그인 후 이용해주세요.");
-            request.getRequestDispatcher(request.getContextPath()+"goto.do?page=login").forward(request, response);
-            System.out.println(request.getContextPath()+"goto.do?page=login");
+            request.getRequestDispatcher("/main.do").forward(request, response);
+            System.out.println(request.getContextPath()+"/main.do");
             return;
         }
 

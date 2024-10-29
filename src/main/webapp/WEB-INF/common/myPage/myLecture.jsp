@@ -1,67 +1,119 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <%@ page trimDirectiveWhitespaces="true"%>
 <%@ taglib prefix="c" uri="jakarta.tags.core"%>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>스마트 해법</title>
-
-<!-- // link태그 -->
-<link rel="stylesheet" href="<c:url value="/stylegroup/main/styles.css" />" />
-<link rel="stylesheet"
-	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
-<link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
-<link rel="stylesheet" href="/stylegroup/list/list.css" />
-<!-- link 태그 // -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>스마트 해법</title>
+    <link rel="stylesheet" href="<c:url value="/stylegroup/main/styles.css" />" />
+    <style>
+        .lecture-list {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background-color: white;
+        }
+        .lecture-list th, .lecture-list td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: center;
+        }
+        .lecture-list th {
+            background-color: #f0f0f0;
+            font-weight: bold;
+        }
+        .lecture-list tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+        .lecture-list tr:hover {
+            background-color: #f5f5f5;
+        }
+        .no-lectures {
+            text-align: center;
+            padding: 20px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin: 20px 0;
+        }
+        .lecture-title {
+            font-size: 24px;
+            margin: 20px 0;
+            color: #333;
+        }
+        .start-lecture-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #008CD6;
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            transition: background-color 0.3s;
+        }
+        .start-lecture-btn:hover {
+            background-color: #0073b1;
+        }
+        .lecture-name-link {
+            color: #008CD6;
+            text-decoration: none;
+            font-weight: bold;
+        }
+        .lecture-name-link:hover {
+            text-decoration: underline;
+        }
+    </style>
 </head>
 <body>
-	<div class="boxContainer">
-		<!-- // 상단 이미지 -->
-		<jsp:include page="../commonArea/pageTopImageArea.jsp" />
-		<!-- 상단 이미지 // -->
-		
-		<!-- // navbar 영역 -->
-		<jsp:include page="../commonArea/header.jsp" />
-		<!-- navbar 영역 // -->
+    <div class="boxContainer">
+        <jsp:include page="../commonArea/pageTopImageArea.jsp" />
+        <jsp:include page="../commonArea/header.jsp" />
 
-		<!-- // 메인 콘텐츠 영역 -->
-		<main class="ccenter">
-			<div class="myLectureArea">
-				<h1>내 강의 목록</h1>
-			    <c:if test="${not empty lectureList}">
-			        <table class="boardTable">
-			            <tr>
-			                <th>강의 코드</th>
-			                <th>강의명</th>
-			                <th>가격</th>
-			                <th>제한 날짜</th>
-			                <th>선생님</th>
-			            </tr>
-			            <c:forEach var="lecture" items="${lectureList}">
-			                <tr>
-			                    <td>${lecture.lectureCode}</td>
-			                    <td><a href="">${lecture.lectureName}</a></td>
-			                    <td>${lecture.lecturePrice}원</td>
-			                    <td>${lecture.lectureLimitDate}</td>
-			                    <td>${lecture.teacherName}</td>
-			                </tr>
-			            </c:forEach>
-			        </table>
-			    </c:if>
-			    <c:if test="${empty lectureList}">
-			        <p>등록된 강의가 없습니다.</p>
-			    </c:if>
-			</div>
-		</main>
-		<!-- 메인 콘텐츠 영역 // -->
+        <main class="ccenter">
+            <h1 class="lecture-title">내 강의 목록</h1>
+            <c:if test="${not empty lectureList}">
+                <table class="lecture-list">
+                    <thead>
+                        <tr>
+                            <th>강의 코드</th>
+                            <th>강의명</th>
+                            <th>가격</th>
+                            <th>제한 날짜</th>
+                            <th>선생님</th>
+                            <th>관리</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <c:forEach var="lecture" items="${lectureList}">
+                            <tr>
+                                <td>${lecture.lectureCode}</td>
+                                <td>
+                                    <a href="/mypage/common/gotoLectureDetailList.do?lectureCode=${lecture.lectureCode}" 
+                                       class="lecture-name-link">${lecture.lectureName}</a>
+                                </td>
+                                <td>${lecture.lecturePrice}원</td>
+                                <td>${lecture.lectureLimitDate}</td>
+                                <td>${lecture.teacherName}</td>
+                                <td>
+                                    <a href="/mypage/common/gotoLectureDetailList.do?lectureCode=${lecture.lectureCode}" 
+                                       class="start-lecture-btn">강의 시작</a>
+                                </td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
+            </c:if>
+            <c:if test="${empty lectureList}">
+                <div class="no-lectures">
+                    <p>등록된 강의가 없습니다.</p>
+                </div>
+            </c:if>
+        </main>
 
-		<!-- // 푸터 영역 -->
-		<jsp:include page="../commonArea/footer.jsp" />
-		<!-- 푸터 영역 // -->
-		
-	</div>
+
+        <jsp:include page="../commonArea/footer.jsp" />
+    </div>
 </body>
 </html>
