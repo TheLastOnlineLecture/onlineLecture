@@ -77,6 +77,7 @@ public class MyPostListController extends HttpServlet {
 
             request.setAttribute("lectureList", lectureList);
             request.setAttribute("lectureTotalCount", lectureTotalCount);
+            System.out.println(lectureTotalCount);
             request.setAttribute("paymentList", paymentList);
             request.setAttribute("postList", postList);
             System.out.println(postList);
