@@ -141,7 +141,6 @@
 						</c:if>
 						<c:if test="${empty sessionScope.user}">
 							<!-- 강의 목록 (비로그인 사용자용) -->
-
 							<c:forEach var="lecture" items="${lectures}">
 								<div class="teacherLectureListContent">
 									<div>
@@ -159,7 +158,7 @@
 												<div>
 													<span class="best">BEST</span> <span
 														class="lectureTitleBold"><a
-														href="${pageContext.request.contextPath}/lecture/common/lectureDetail.do?code=${lecture.lectureCode}">${lecture.lectureName}</a></span>
+														href="${pageContext.request.contextPath}/lecture/common/lectureDetail.do?lectureCode=${lecture.lectureCode}">${lecture.lectureName}</a></span>
 												</div>
 												<div>
 													<a href="#">강의 수강평</a>
