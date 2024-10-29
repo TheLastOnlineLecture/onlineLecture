@@ -28,7 +28,7 @@ Date now = new Date();
             <div class="navTopContent">
                 <span class="dDay">2025학년도 수능 <strong id="dDayCount">수능날짜가
                         동적으로 바뀜</strong></span> <span>|</span> <a href="#">협업기업</a><span>|</span> <a
-                    href="/inquiy/user/gotoInquiy.do
+                    href="/gotoQnaList.do?type=G
             ">고객센터</a>
 			</div>
 		</div>
@@ -67,9 +67,8 @@ Date now = new Date();
 								<li class="submenuContentGroup3"><a href="https://high.milkt.co.kr/DalJa/Attend/frm_Attend_Event.aspx?menucode=110900">출석체크 이벤트</a> <a
 									href="https://high.milkt.co.kr/DalJa/Tchallenge/frm_Tchallenge_Default.aspx?MenuCode=112000">스마트 천재 챌린지</a> <a href="https://high.milkt.co.kr/DalJa/TPlay/frm_TPlay.aspx?MenuCode=110211">T-Play 이벤트</a></li>
 								<li class="submenuContentGroup4"><a
-									href="/gotoQnaList.do?type=G">1대1
-										QnA 게시판</a> <a
 									href="/gotoPostList.do?type=P">자유게시판</a>
+									<a href="/gotoPostList.do?type=N">공지사항</a>
 								</li>
 								<li class="submenuContentGroup5"><a href="/teacherList.do?subject=kor">국어</a> <a
 									href="/teacherList.do?subject=math">수학</a> <a href="/teacherList.do?subject=eng">영어</a><a

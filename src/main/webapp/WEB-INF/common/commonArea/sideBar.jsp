@@ -26,7 +26,7 @@ Date now = new Date();
   bottom: 0px;
   left: 50px;
   width: 60px;
-  height: 250px;
+  height: 350px;
   background-color: #008cd6;
   color: #fff;
   display: flex;
@@ -106,8 +106,13 @@ Date now = new Date();
   z-index: 15;
 }
 
+li {
+	text-align:center;
+	color:white;
+}
+
 li a {
-	font-size:12px
+	font-size:12px;
 }
 
 /* 사이드 바 끝 */
@@ -121,14 +126,17 @@ li a {
 	                <ul>
 	                <c:choose>
 						<c:when test="${sessionScope.user.userType != 'T'}">
-	                    <li><a href="/mypage/common/gotoMyLecture.do">나의 강의실</a></li>
-	                    <li><a href="/payments/user/gotoPayments.do">장바구니 목록</a></li>
-	                    <li><a href="<c:url value='/myStudyRoom/common/gotoWriteDetail.do' />">마이페이지</a></li>
-	                    <li><a href="/common/login/logout.do">로그아웃</a></li>
+	                    <li><a href="/mypage/common/gotoMyLecture.do"><img src="/public/myLecture.png" width="70%" /></a></li>
+	                    <li><a href="/payments/user/gotoPayments.do"><img src="/public/cart.png" width="70%" /></a></li>
+	                    <li><a href="<c:url value='/myStudyRoom/common/gotoWriteDetail.do' />"><img src="/public/myPage.png" width="70%" /></a></li>
+	                    <li><a href="/common/login/logout.do"><img src="/public/logout.png" width="70%" /></a></li>
+	                    <li></li>
 	                    </c:when>
 	                    <c:otherwise>
-	                    <li><a href="/teacherMyLectureList.do">내 강의실</a></li>
-						<li><a href="<c:url value='/myStudyRoom/common/gotoWriteDetail.do' />">마이페이지</a></li>
+	                    <li><a href="/teacherMyLectureList.do"><img src="/public/myLecture.png" width="70%" /></a></li>
+						<li><a href="<c:url value='/myStudyRoom/common/gotoWriteDetail.do' />"><img src="/public/myPage.png" width="70%" /></a></li>
+						<li><a href="/common/login/logout.do"><img src="/public/logout.png" width="70%" /></a></li>
+						<li></li>
 	                    </c:otherwise>
 	                </c:choose>
 	                </ul>

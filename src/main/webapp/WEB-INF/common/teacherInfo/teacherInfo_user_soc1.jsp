@@ -148,10 +148,10 @@
 												<div>
 													<span class="best">BEST</span> <span
 														class="lectureTitleBold"><a
-														href="${pageContext.request.contextPath}/lecture/common/lectureDetail.do?code=${lecture.lectureCode}">${lecture.lectureName}</a></span>
+														href="${pageContext.request.contextPath}/lecture/common/lectureDetail.do?lectureCode=${lecture.lectureCode}">${lecture.lectureName}</a></span>
 												</div>
 												<div>
-													<a href="#">강의 수강평</a>
+													<a href="/gotoPostList.do?type=R&category=${lecture.lectureCode}">수강후기</a>
 												</div>
 												<div>강의 등록일 : ${lecture.lectureRegdate}</div>
 											</div>
