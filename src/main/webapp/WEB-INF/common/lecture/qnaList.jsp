@@ -32,7 +32,7 @@
 		<!-- // 메인 콘텐츠 영역 -->
 		
 		<main>
-			<h1 class="textCenter boardBoxTitle" data-board-type="${boardType}">강의실 QnA</h1>
+			<h1 class="textCenter boardBoxTitle" data-board-type="${qnaType}">강의실 QnA</h1>
 			<div class="areaDeployment"></div>
 			<div class="ccenter">
 				<div class="boardBoxMain">
@@ -50,8 +50,8 @@
 					</div>
 					<div class="boardContainer">
 						<div class="boardFilter">
-							<form action="/gotoPostList.do" method="get">
-								<input type="hidden" name="type" value="${boardType}"/>
+							<form action="/gotoQnaList.do" method="get">
+								<input type="hidden" name="type" value="${qnaType}"/>
 								<div class="boardTopBar">
 									<div>
 										<select id="searchType" name="searchType">
@@ -61,7 +61,7 @@
 										</select> <input type="text" id="searchKeyword" placeholder="제목" name="searchKeyword"/>
 										<button type="submit">검색</button>
 									</div>
-									<a href="/goto.do?page=post/write&type=${boardType}">글 작성</a>
+									<a href="/goto.do?page=user/qna/write&type=${qnaType}&category=${category}">글 작성</a>
 								</div>
 							</form>
 						</div>
@@ -77,14 +77,14 @@
 							</thead>
 							<tbody>
 								<c:choose>
-									<c:when test="${not empty boardList}">
-										<c:forEach var="board" items="${boardList}">
+									<c:when test="${not empty qnaList}">
+										<c:forEach var="qna" items="${qnaList}">
 											<tr>
 												<td>2024</td>
 												<td><span class="label notice">공지사항</span></td>
-												<td><a href="gotoPostDetail.do?idx=${board.boardIdx}">${board.boardTitle}</a></td>
-												<td>${board.boardRegdate}</td>
-												<td>${board.boardWriter}</td>
+												<td><a href="gotoPostDetail.do?idx=${qna.qnaIdx}">${qna.qnaTitle}</a></td>
+												<td>${qna.qnaRegdate}</td>
+												<td>${qna.qnaWriter}</td>
 											</tr>
 										</c:forEach>
 									</c:when>
@@ -98,11 +98,11 @@
 					              <td colspan="5">
 					                <div class="pagination">
 					                  <c:if test="${pagination.hasFirstPage()}">
-					                    <a href="?pageNo=1"></a>
+					                    <a href="?pageNo=1&type=${qnaType}"></a>
 					                  </c:if>
 					                  <c:if test="${pagination.hasPreviousBlock()}">
 					                    <a
-					                      href="?pageNo=${pagination.blockStartPage - 1}&type=${boardType}"
+					                      href="?pageNo=${pagination.blockStartPage - 1}&type=${qnaType}"
 					                      ><</a
 					                    >
 					                  </c:if>
@@ -112,17 +112,17 @@
 					                    begin="${pagination.blockStartPage}"
 					                    end="${pagination.blockEndPage}"
 					                  >
-					                    <a href="?pageNo=${i}&type=${boardType}">${i}</a>
+					                    <a href="?pageNo=${i}&type=${qnaType}">${i}</a>
 					                  </c:forEach>
 					
 					                  <c:if test="${pagination.hasNextBlock()}">
 					                    <a
-					                      href="?pageNo=${pagination.blockEndPage + 1}&type=${boardType}"
+					                      href="?pageNo=${pagination.blockEndPage + 1}&type=${qnaType}"
 					                      >></a
 					                    >
 					                  </c:if>
 					                  <c:if test="${pagination.hasLastPage()}">
-					                    <a href="?pageNo=${pagination.totalPages}&type=${boardType}"
+					                    <a href="?pageNo=${pagination.totalPages}&type=${qnaType}"
 					                      >></a
 					                    >
 					                  </c:if>
