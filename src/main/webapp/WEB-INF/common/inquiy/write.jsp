@@ -9,7 +9,7 @@
 </head>
 <body>
 ${qnaType}
-<h3> 1:1 qna작성 작성  </h3>
+<h3> 1:1 qna작성 </h3>
 <form action="qnaWrite.do?type=${qnaType}" method="post">
 <input type="hidden" name="type" value="${qnaType}"/>
 <!-- 	<label for="boardType">게시판 유형:</label> -->

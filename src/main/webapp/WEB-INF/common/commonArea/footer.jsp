@@ -6,6 +6,7 @@
 <html>
 <head>
 <link rel="stylesheet" href="/stylegroup/main/styles.css" />
+
 <meta charset="UTF-8">
 <title>footer</title>
 </head>
@@ -26,6 +27,9 @@
 					Corp. All Rights Reserved</p>
 			</div>
 			<img src="/public/footerRight.png" alt="가맹문의" />
+		</div>
+		<div>
+		<jsp:include page="../commonArea/sideBar.jsp" />
 		</div>
 	</footer>
 </body>

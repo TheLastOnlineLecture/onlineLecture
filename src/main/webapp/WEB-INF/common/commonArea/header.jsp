@@ -112,6 +112,7 @@ Date now = new Date();
 										<a href="/mypage/common/gotoMyLecture.do">나의 강의실</a>
 										<a href="/payments/user/gotoPayments.do">장바구니 목록</a>
 										<a href="<c:url value='/myStudyRoom/common/gotoWriteDetail.do' />">마이페이지</a>
+										<a href="/common/login/logout.do">로그아웃</a>
 									</div>
 								</c:otherwise>
 							</c:choose>

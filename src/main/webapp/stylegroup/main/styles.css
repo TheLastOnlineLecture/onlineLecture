@@ -500,3 +500,8 @@ a {
   height: 33px;
 }
 /* 발바닥 끝 */
+
+.plusBtnArea {
+  display: flex;
+  justify-content: space-between;
+}
