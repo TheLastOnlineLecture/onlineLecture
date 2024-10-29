@@ -1,5 +1,3 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ page trimDirectiveWhitespaces="true"%>
@@ -16,6 +14,7 @@
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
+<link rel="stylesheet" href="/stylegroup/list/list.css" />
 <!-- link 태그 // -->
 </head>
 <body>
@@ -29,31 +28,33 @@
 		<!-- navbar 영역 // -->
 
 		<!-- // 메인 콘텐츠 영역 -->
-		<main>
-			<h1>내 강의 목록</h1>
-    <c:if test="${not empty lectureList}">
-        <table border="1">
-            <tr>
-                <th>강의 코드</th>
-                <th>강의명</th>
-                <th>가격</th>
-                <th>제한 날짜</th>
-                <th>선생님</th>
-            </tr>
-            <c:forEach var="lecture" items="${lectureList}">
-                <tr>
-                    <td>${lecture.lectureCode}</td>
-                    <td>${lecture.lectureName}</td>
-                    <td>${lecture.lecturePrice}원</td>
-                    <td>${lecture.lectureLimitDate}</td>
-                    <td>${lecture.teacherName}</td>
-                </tr>
-            </c:forEach>
-        </table>
-    </c:if>
-    <c:if test="${empty lectureList}">
-        <p>등록된 강의가 없습니다.</p>
-    </c:if>
+		<main class="ccenter">
+			<div class="myLectureArea">
+				<h1>내 강의 목록</h1>
+			    <c:if test="${not empty lectureList}">
+			        <table class="boardTable">
+			            <tr>
+			                <th>강의 코드</th>
+			                <th>강의명</th>
+			                <th>가격</th>
+			                <th>제한 날짜</th>
+			                <th>선생님</th>
+			            </tr>
+			            <c:forEach var="lecture" items="${lectureList}">
+			                <tr>
+			                    <td>${lecture.lectureCode}</td>
+			                    <td><a href="">${lecture.lectureName}</a></td>
+			                    <td>${lecture.lecturePrice}원</td>
+			                    <td>${lecture.lectureLimitDate}</td>
+			                    <td>${lecture.teacherName}</td>
+			                </tr>
+			            </c:forEach>
+			        </table>
+			    </c:if>
+			    <c:if test="${empty lectureList}">
+			        <p>등록된 강의가 없습니다.</p>
+			    </c:if>
+			</div>
 		</main>
 		<!-- 메인 콘텐츠 영역 // -->
 
