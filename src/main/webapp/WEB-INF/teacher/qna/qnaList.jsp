@@ -139,8 +139,17 @@
 			</div>
 		</main>
 		<!-- 메인 콘텐츠 영역 // -->
-
-
+                <c:if test="${pagination.hasNextBlock()}">
+                    <a href="?pageNo=${pagination.blockEndPage + 1}&type=${qnaType}">></a>
+                </c:if>
+                <c:if test="${pagination.hasLastPage()}">
+                    <a href="?pageNo=${pagination.totalPages}&type=${qnaType}">>></a>
+                </c:if>
+            </div>
+		</td>
+	</tr>
+</table>
+<a href="/goto.do?page=user/qna/write&type=${qnaType}&category=${qnaCategory}&teacherId=${teacherId}">작성</a>
 		<!-- // 푸터 영역 -->
 		<jsp:include page="../../common/commonArea/footer.jsp" />
 		<!-- 푸터 영역 // -->

@@ -67,6 +67,6 @@
 		</td>
 	</tr>
 </table>
-<a href="/goto.do?page=post/write&type=${boardType}">작성</a>
+<a href="/goto.do?page=post/write&type=${boardType}&category=${category}">작성</a>
 </body>
 </html>

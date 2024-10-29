@@ -57,8 +57,8 @@ public class BoardDAO implements IFBoardDAO{
 	    params.add(limit);
 	    params.add(offset);
 	    
-	    System.out.println("SQL Query: " + sql.toString());
-	    System.out.println("Parameters: " + params);
+//	    System.out.println("SQL Query: " + sql.toString());
+//	    System.out.println("Parameters: " + params);
 	    // DB 연결 및 쿼리 실행
 	    try (Connection conn = DBConnPool.getConnection();
 	         DbQueryUtil dbUtil = new DbQueryUtil(conn, sql.toString(), params.toArray())) {
@@ -72,7 +72,9 @@ public class BoardDAO implements IFBoardDAO{
 	            boardDTO.setBoardCategory(rs.getString("board_category"));
 	            boardDTO.setBoardTitle(rs.getString("board_title"));
 	            boardDTO.setBoardWriter(rs.getString("board_writer"));
-	            boardDTO.setBoardRegdate(rs.getString("board_regdate"));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = dateFormat.format(rs.getTimestamp("board_regdate"));
+                boardDTO.setBoardRegdate(formattedDate);
 
 	            boardList.add(boardDTO);
 	        }
@@ -105,7 +107,9 @@ public class BoardDAO implements IFBoardDAO{
                     boardDTO.setBoardType(rs.getString("board_type"));
                     boardDTO.setBoardTitle(rs.getString("board_title"));
                     boardDTO.setBoardWriter(rs.getString("board_writer"));
-                    boardDTO.setBoardRegdate(rs.getString("board_regdate"));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = dateFormat.format(rs.getTimestamp("board_regdate"));
+                    boardDTO.setBoardRegdate(formattedDate);
                     boardList.add(boardDTO);
                 }
                 return boardList;
@@ -295,7 +299,7 @@ public class BoardDAO implements IFBoardDAO{
     public int insertBoard(BoardDTO boardDTO) throws SQLException {
         String sql = "INSERT INTO tbl_board (board_type, board_title, board_content, board_writer, board_category) VALUES (?, ?, ?, ?, ?)";
         int boardIdx = 0;  // 새로 생성된 게시글의 ID를 저장할 변수
-        
+        System.out.println("카테고리:"+boardDTO.getBoardCategory());
         try (Connection conn = DBConnPool.getConnection();
              PreparedStatement pstm = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
             

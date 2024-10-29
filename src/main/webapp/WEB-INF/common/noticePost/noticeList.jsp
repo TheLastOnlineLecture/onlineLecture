@@ -52,6 +52,7 @@
 						<div class="boardFilter">
 							<form action="/gotoPostList.do" method="get">
 								<input type="hidden" name="type" value="${boardType}"/>
+								<input type="hidden" name="category" value="${boardCategory}"/>
 								<div class="boardTopBar">
 									<div>
 										<select id="searchType" name="searchType">
@@ -61,7 +62,7 @@
 										</select> <input type="text" id="searchKeyword" placeholder="제목" name="searchKeyword"/>
 										<button type="submit">검색</button>
 									</div>
-									<a href="/goto.do?page=post/write&type=${boardType}">글 작성</a>
+									<a href="/goto.do?page=post/write&type=${boardType}&category=${category}">글 작성</a>
 								</div>
 							</form>
 						</div>

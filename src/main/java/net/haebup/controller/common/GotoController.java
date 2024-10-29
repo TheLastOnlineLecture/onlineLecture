@@ -30,6 +30,8 @@ public class GotoController extends HttpServlet {
 
 		String pageName = req.getParameter("page");
 		String type = req.getParameter("type");  
+		String category = req.getParameter("category");  
+		String teacherId = req.getParameter("teacherId");  
 		System.out.println("goto"+pageName);
 		MemberDTO memberDto = (MemberDTO) req.getSession().getAttribute("user");
 		
@@ -61,11 +63,26 @@ public class GotoController extends HttpServlet {
 				req.getRequestDispatcher("/WEB-INF/common/myPage/myPage.jsp").forward(req, res);
 				break;
 			case "user/qna/write":
-				req.setAttribute("qnaType", type);
-				req.getRequestDispatcher("/WEB-INF/common/inquiy/write.jsp").forward(req, res);
-				break;
+				    req.setAttribute("qnaType", type);
+				    req.setAttribute("category", category);
+				    req.setAttribute("teacherId", teacherId);
+
+					if(teacherId != null) {
+						req.getRequestDispatcher("/WEB-INF/common/inquiy/write.jsp?teacherId="+teacherId).forward(req, res);
+					}
+					if(category != null) {
+						req.getRequestDispatcher("/WEB-INF/common/inquiy/write.jsp?category="+category).forward(req, res);
+					} else {
+					req.getRequestDispatcher("/WEB-INF/common/inquiy/write.jsp").forward(req, res);
+					}
+					break;
+
 				// 작성권한체크
 			case "post/write":
+				  	req.setAttribute("qnaType", type);
+				    req.setAttribute("category", category);
+				    System.out.println("카ㅔ확인"+category);
+				    req.setAttribute("teacherId", teacherId);
 		        if (type.equals("N")) {
 		            if (memberDto != null) {
 		                String userType = memberDto.getUserType();
@@ -131,6 +148,7 @@ public class GotoController extends HttpServlet {
 			                req.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp").forward(req, res);
 			            }
 		        else {
+		            req.setAttribute("category", category);
 		            req.setAttribute("boardType", type);
 		            req.getRequestDispatcher("/WEB-INF/common/post/write.jsp").forward(req, res);
 		        }

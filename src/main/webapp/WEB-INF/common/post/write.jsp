@@ -26,12 +26,12 @@
 		<!-- // navbar 영역 -->
 		<jsp:include page="../commonArea/header.jsp" />
 		<!-- navbar 영역 // -->
-
 		<!-- // 메인 콘텐츠 영역 -->
 		<main>
 			<div class="postWriteContainer">
           		<h2 class="postTitle">글 작성</h2>
 				<form action="postWrite.do?type=${boardType}" enctype="multipart/form-data" method="post" onsubmit="return validateForm()">
+					<input type="hidden" name="category" value="${category}"/>
 					<div class="formGroup">
 					
 					<input type="hidden" name="type" class="postForm" value="${boardType}"/>
@@ -42,7 +42,6 @@
 					<input type="text" id="postTitle" class="postInput" name="boardTitle" oninput="updateCharCount('title')" placeholder="제목을 입력하세요" required>
 					<span id="titleCharCount" class="charCount">0/30</span>
 					</div>
-					
 					<div class="formGroup">
 					<label for="postContent" class="postLabel">내용</label>
 					<textarea id="postContent" name="boardContent" class="postTextarea" placeholder="내용을 입력하세요" oninput="updateCharCount('content')" required></textarea>
