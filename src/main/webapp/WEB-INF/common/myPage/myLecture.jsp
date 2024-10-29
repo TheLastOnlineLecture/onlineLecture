@@ -70,6 +70,7 @@
 <body>
     <div class="boxContainer">
         <jsp:include page="../commonArea/pageTopImageArea.jsp" />
+ 
         <jsp:include page="../commonArea/header.jsp" />
 
         <main>
@@ -82,8 +83,6 @@
                         <tr>
                             <th>강의 코드</th>
                             <th>강의명</th>
-                            <th>가격</th>
-                            <th>제한 날짜</th>
                             <th>선생님</th>
                             <th>관리</th>
                         </tr>
@@ -96,8 +95,6 @@
                                     <a href="/mypage/common/gotoLectureDetailList.do?lectureCode=${lecture.lectureCode}" 
                                        class="lecture-name-link">${lecture.lectureName}</a>
                                 </td>
-                                <td>${lecture.lecturePrice}원</td>
-                                <td>${lecture.lectureLimitDate}</td>
                                 <td>${lecture.teacherName}</td>
                                 <td>
                                     <a href="/mypage/common/gotoLectureDetailList.do?lectureCode=${lecture.lectureCode}" 

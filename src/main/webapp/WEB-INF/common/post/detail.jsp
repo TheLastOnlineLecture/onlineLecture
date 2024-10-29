@@ -54,7 +54,9 @@
                   </div>
                   <div style="margin-right: 30px">
                     <img src="/public/comment.png" class="boardCommentImg" />
+                    	<c:if test="${boardDTO.boardType == 'P'">
                     <span style="font-weight: bold">댓글 (${commentCount})</span>
+                    </c:if>
                     <span style="position: relative">
                       <img
                         src="/public/menuBar.png"

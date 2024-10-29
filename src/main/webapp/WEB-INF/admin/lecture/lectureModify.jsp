@@ -64,12 +64,6 @@
             <label for="lectureName">강의명</label>
             <input type="text" id="lectureName" name="lectureName" value="${lecture.lectureName}" required>
             
-            <label for="lecturePrice">가격</label>
-            <input type="number" id="lecturePrice" name="lecturePrice" value="${lecture.lecturePrice}" required>
-            
-            <label for="lectureLimitDate">제한 날짜</label>
-            <input type="date" id="lectureLimitDate" name="lectureLimitDate" value="${lecture.lectureLimitDate}" required>
-            
             <label for="teacherId">선생님 ID</label>
             <input type="text" id="teacherId" name="teacherId" value="${lecture.teacherId}" required>
             

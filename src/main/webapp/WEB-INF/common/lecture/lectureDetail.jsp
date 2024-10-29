@@ -15,11 +15,30 @@
 	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
 <link rel="stylesheet" href="/stylegroup/lecture/lecture.css" />
-
+<link rel="stylesheet" href="/stylegroup/teacher/teacherDetail.css" />
 <!-- link 태그 // -->
 
 </head>
 <body>
+<script>
+    function addToCart(lectureCode) {
+        fetch('${pageContext.request.contextPath}/lecture/user/insertCart.do', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/x-www-form-urlencoded',
+            },
+            body: 'lectureCode=' + encodeURIComponent(lectureCode)
+        })
+        .then(response => response.json())
+        .then(result => {
+            alert(result.message);
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('서버와의 통신 중 오류가 발생했습니다.');
+            });
+        }
+    </script>
 	<div class="boxContainer">
 		<!-- // 상단 이미지 -->
 		<jsp:include page="../../common/commonArea/pageTopImageArea.jsp" />
@@ -42,31 +61,31 @@
 				<img src="/public/teacher_kor/kor_kwon.jpg" id="imgT" />
 			</div>
 			</div>
+			</div>
+		
+		    <a href="/lecture/common/lectureList.do" class="back-btn">강의 목록으로 돌아가기</a>
+		    
+		    
+		    </div>
+		</main>
+		<!-- 메인 콘텐츠 영역 // -->
+		<div class="ccenter" style="width:1000px; display:flex; justify-content:center;">
 		    <div class="lecture-content">
 		    	<div>
 			        <c:if test="${not empty lectureDetails}">
 			            <c:forEach var="detail" items="${lectureDetails}">
 			                <div class="lecture-detail">
 			                    <p>강의 설명 : ${detail.lectureDetailContent}</p>
-			                    <c:if test="${not empty detail.lectureDetailFileName}">
-			                        <div class="file-download">
-			                            <a href="/lecture/common/watchLecture.do?lectureCode=${detail.lectureCode}&detailIdx=${detail.lectureDetailIdx}" 
-	                                   class="watch-btn">강의 시청하기</a>
-			                        </div>
-			                    </c:if>
+			                    <a href="/gotoPostList.do?type=R&category=${detail.lectureCode}" style="margin-bottom: 30px;">수강후기</a>
+			                    <button class="lecturePayBtn" type="button"
+												onclick="addToCart('${detail.lectureCode}')">
+												장바구니</button>
 			                </div>
 			            </c:forEach>
 			        </c:if>
 		    	</div>
 		    </div>
-			</div>
-		
-		    <a href="/lecture/common/lectureList.do" class="back-btn">강의 목록으로 돌아가기</a>
-		    
-		    </div>
-		</main>
-		<!-- 메인 콘텐츠 영역 // -->
-
+		</div>
 		<!-- // 푸터 영역 -->
 		<jsp:include page="../../common/commonArea/footer.jsp" />
 		<!-- 푸터 영역 // -->

@@ -32,7 +32,7 @@
 		<!-- // 메인 콘텐츠 영역 -->
 		
 		<main>
-			<h1 class="textCenter boardBoxTitle" data-board-type="${boardType}">${boardType}</h1>
+			<h1 class="textCenter boardBoxTitle" data-board-type="${qnaType}">${qnaType}</h1>
 			<div class="areaDeployment"></div>
 			<div class="ccenter">
 				<div class="boardBoxMain">
@@ -61,7 +61,7 @@
 										</select> <input type="text" id="searchKeyword" placeholder="제목" name="searchKeyword"/>
 										<button type="submit">검색</button>
 									</div>
-									<a href="/goto.do?page=user/qna/write&type=${qnaType}&category=${category}">글 작성</a>
+									<a href="/goto.do?page=user/qna/write&type=${qnaType}">글 작성</a>
 								</div>
 							</form>
 						</div>
@@ -82,7 +82,7 @@
 											<tr>
 												<td>2024</td>
 												<td><span class="label notice">공지사항</span></td>
-												<td><a href="gotoPostDetail.do?idx=${qna.qnaIdx}">${qna.qnaTitle}</a></td>
+												<td><a href="gotoQnaDetail.do?idx=${qna.qnaIdx}">${qna.qnaTitle}</a></td>
 												<td>${qna.qnaRegdate}</td>
 												<td>${qna.qnaWriter}</td>
 											</tr>
@@ -112,7 +112,7 @@
 					                    begin="${pagination.blockStartPage}"
 					                    end="${pagination.blockEndPage}"
 					                  >
-					                    <a href="?pageNo=${i}&type=${boardType}">${i}</a>
+					                    <a href="?pageNo=${i}&type=${qnaType}">${i}</a>
 					                  </c:forEach>
 					
 					                  <c:if test="${pagination.hasNextBlock()}">

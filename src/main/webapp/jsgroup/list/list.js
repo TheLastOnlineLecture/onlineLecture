@@ -71,14 +71,14 @@ document.addEventListener("DOMContentLoaded", () => {
 			});
 			break;
 		case "G":
-			titleElement.textContent = "1대1QnA";
+			titleElement.textContent = "1대1 QnA";
 			labelElements.forEach(label => {
 				label.textContent = "1대1QnA";
 				label.className = "label review";
 			});
 			break;
 		case "T":
-			titleElement.textContent = "선생님QnA";
+			titleElement.textContent = "선생님 QnA";
 			labelElements.forEach(label => {
 				label.textContent = "선생님QnA";
 				label.className = "label review";
