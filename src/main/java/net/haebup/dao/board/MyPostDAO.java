@@ -16,7 +16,7 @@ public class MyPostDAO {
 	
 	public List<MyPostDTO> getPostsByWriter(int limit, int offset, String qnaWriter, String boardWriter) {
 	    List<MyPostDTO> postList = new ArrayList<>();
-	    
+//	    System.out.println("내가쓴글리스트조회 메서드 시작");
 	    String sql = "SELECT * FROM (" +
 	                 "SELECT board_type AS post_type, board_idx AS post_idx, board_writer AS post_writer, " +
 	                 "board_title AS post_title, board_regdate AS post_regdate, board_content AS post_content, " +
@@ -48,11 +48,13 @@ public class MyPostDAO {
 	            postDTO.setPostCategory(rs.getString("post_category"));
 	            postList.add(postDTO);
 	        }
+//	        System.out.println("글 확인 리스트: "+postList);
 	        return postList;
 	        
 	    } catch (SQLException e) {
 	        e.printStackTrace();
 	        throw new RuntimeException("내가 쓴 글 조회 중 오류가 발생하였습니다." + e);
+	        
 	    }
 	}
  

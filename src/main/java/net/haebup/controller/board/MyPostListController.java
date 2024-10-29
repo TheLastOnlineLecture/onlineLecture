@@ -28,6 +28,7 @@ public class MyPostListController extends HttpServlet {
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+    	System.out.println("내가쓴글 댓글 확인 서블릿 시작");
         MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
         String writer = user.getUserId();
 
@@ -51,6 +52,9 @@ public class MyPostListController extends HttpServlet {
             int totalPostCount = postDAO.getTotalPost(writer, writer);
             List<MyPostDTO> postList = postDAO.getPostsByWriter(postPageSize, (postPageNo - 1) * postPageSize, writer,
                     writer);
+//            for(MyPostDTO postDTO : postList) {
+//            	System.out.println("게시글 제목확인 : "+ postDTO.getPostTitle());
+//            }
             Pagination postPagination = new Pagination(postPageNo, postPageSize, totalPostCount, 10);
 
             // 댓글 페이징 처리
