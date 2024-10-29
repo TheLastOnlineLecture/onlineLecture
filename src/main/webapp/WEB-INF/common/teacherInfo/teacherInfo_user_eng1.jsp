@@ -118,8 +118,8 @@
 												<div id="lectureCode">강의 코드 : ${lecture.lectureCode}</div>
 												<div>
 													<span class="best">BEST</span> <span
-														class="lectureTitleBold"><a
-														href="${pageContext.request.contextPath}/lecture/common/lectureDetail.do?code=${lecture.lectureCode}">${lecture.lectureName}</a></span>
+														class="lectureTitleBold">
+													<a href="${pageContext.request.contextPath}/lecture/common/lectureDetail.do?code=${lecture.lectureCode}">${lecture.lectureName}</a></span>
 												</div>
 												<div>
 													<a href="#">강의 수강평</a>

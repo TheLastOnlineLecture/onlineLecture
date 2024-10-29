@@ -138,7 +138,7 @@
 															class="lectureCheckbox" value="${lecture.lectureCode}"
 															data-price="${lecture.lecturePrice}"></td>
 														<td>${lecture.lectureCode}</td>
-														<td><a href="${pageContext.request.contextPath}/lecture/common/lectureDetail.do?code=${lecture.lectureCode}">${lecture.lectureName}</a></td>
+														<td><a href="${pageContext.request.contextPath}/lecture/common/lectureDetail.do?lectureCode=${lecture.lectureCode}">${lecture.lectureName}</a></td>
 														<td><span class="payValue">${lecture.lecturePrice}</span>원</td>
 														<td>${lecture.lectureRegdate}</td>
 														<td><a

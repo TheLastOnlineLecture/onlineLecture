@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<c:url value='/stylegroup/main/styles.css' />" />
     <style>
         .lecture-container {
-            max-width: 1200px;
+            width: 1200px;
             margin: 0 auto;
             padding: 20px;
         }
@@ -66,11 +66,18 @@
                     <div class="video-container">
                         <!-- 실제 비디오 플레이어나 컨텐츠가 들어갈 자리 -->
                         <c:if test="${not empty detail.lectureDetailFilePath}">
-                            <video controls width="100%">
-                                <source src="${detail.lectureDetailFilePath}" type="video/mp4">
-                                브라우저가 비디오 재생을 지원하지 않습니다.
-                            </video>
-                        </c:if>
+						    <div class="video-container">
+						        <iframe 
+								    width="100%" 
+								    height="315" 
+								    src="https://www.youtube.com/embed/RqyCiGRvwns" 
+								    frameborder="0" 
+								    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+								    allowfullscreen>
+								</iframe>
+
+						    </div>
+						</c:if>
                     </div>
                     
                     <div class="content-description">
@@ -78,11 +85,6 @@
                     </div>
                     
                     <c:if test="${not empty detail.lectureDetailFileName}">
-                        <div class="file-download">
-                            <a href="${detail.lectureDetailFilePath}" download>
-                                ${detail.lectureDetailFileName} 다운로드
-                            </a>
-                        </div>
                     </c:if>
                 </div>
                 

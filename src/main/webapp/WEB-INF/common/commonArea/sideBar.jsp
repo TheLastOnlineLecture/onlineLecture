@@ -39,6 +39,7 @@ Date now = new Date();
   transition: transform 0.3s ease, background-color 0.3s ease, opacity 0.5s ease;
   opacity: 0;
   overflow: hidden; /* 이미지가 영역에 맞게 */
+  z-index:90;
 }
 
 .sidebar.visible {
@@ -72,7 +73,7 @@ Date now = new Date();
 
 .toggleButton {
   position: fixed;
-  bottom: 50px;
+  bottom: 0px;
   left: 50px;
   width: 60px;
   height: 60px;
@@ -87,7 +88,7 @@ Date now = new Date();
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
   transition: background-color 0.3s ease;
   overflow: hidden;
-  z-index: 30;
+  z-index: 500;
 }
 
 .toggleButton:hover {

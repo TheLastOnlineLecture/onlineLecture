@@ -274,11 +274,11 @@
 			                      ${payList.lectureCode}
 			                      </span></td>
 			                      <td class="titleSummary">
-			                        <a href="/lecture/common/lectureDetail.do?code=${payList.lectureCode}">${payList.lectureName}</a>
+			                        <a href="/lecture/common/lectureDetail.do?lectureCode=${payList.lectureCode}">${payList.lectureName}</a>
 			                      </td>
 			                      <td>${payList.lectureCode}</td>
 			                      <td>${payList.paymentDate}</td>
-			                      <td>${payList.paymentStatus}원</td>
+			                      <td>${payList.lecturePrice}원</td>
 			                    </tr>
 			                </c:forEach>
 		                  </tbody>
