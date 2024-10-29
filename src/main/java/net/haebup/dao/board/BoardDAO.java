@@ -360,7 +360,7 @@ public class BoardDAO implements IFBoardDAO{
         }
 
         // 정렬 및 페이징 조건 추가
-        sql.append(" ORDER BY board_regdate DESC LIMIT ? OFFSET ?");
+        sql.append(" ORDER BY board_idx DESC LIMIT ? OFFSET ?");
         params.add(limit);
         params.add(offset);
 

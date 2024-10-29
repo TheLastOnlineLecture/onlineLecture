@@ -71,7 +71,7 @@ document.querySelectorAll('.deleteBtn').forEach(button => {
         .then(data => {
             if (data.success) {
                 row.remove();
-                updateTotal(); // 총액 다시 계산
+                calculateTotalPrice();
                 alert(data.message);
             } else {
                 alert(data.message);

@@ -15,26 +15,19 @@ public class DeleteCartItem extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) 
             throws ServletException, IOException {
-        response.setContentType("application/json");
-        StringBuilder jsonResponse = new StringBuilder();
+        response.setContentType("application/json;charset=UTF-8");
         
         try {
             int paymentIdx = Integer.parseInt(request.getParameter("paymentIdx"));
             PaymentDAO paymentDAO = new PaymentDAO();
             int result = paymentDAO.deleteCartItem(paymentIdx);
             
-            jsonResponse.append("{");
-            jsonResponse.append("\"success\":").append(result > 0).append(",");
-            jsonResponse.append("\"message\":\"").append(result > 0 ? "삭제되었습니다." : "삭제에 실패했습니다.").append("\"");
-            jsonResponse.append("}");
+            String jsonResponse = "{\"success\":true,\"message\":\"삭제되었습니다.\"}";
+            response.getWriter().write(jsonResponse);
             
         } catch (Exception e) {
-            jsonResponse.append("{");
-            jsonResponse.append("\"success\":false,");
-            jsonResponse.append("\"message\":\"오류가 발생했습니다: ").append(e.getMessage()).append("\"");
-            jsonResponse.append("}");
+            String jsonResponse = "{\"success\":false,\"message\":\"삭제 중 오류가 발생했습니다.\"}";
+            response.getWriter().write(jsonResponse);
         }
-        
-        response.getWriter().write(jsonResponse.toString());
     }
 }

@@ -94,11 +94,7 @@
     </style>
 </head>
 <body>
-    <div class="navbar">
-        <a href="#">회원 관리</a>
-        <a href="${pageContext.request.contextPath}/admin/lecture/manage?action=list">강의 관리</a>
-        <a href="#">게시판 관리</a>
-    </div>
+    <jsp:include page="../common/header.jsp" />
 
     <div class="container">
         <h1>공지사항 수정</h1>

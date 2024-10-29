@@ -54,7 +54,7 @@
                   </div>
                   <div style="margin-right: 30px">
                     <img src="/public/comment.png" class="boardCommentImg" />
-                    	<c:if test="${boardDTO.boardType == 'P'">
+                    	<c:if test="${boardDTO.boardType == 'P'}">
                     <span style="font-weight: bold">댓글 (${commentCount})</span>
                     </c:if>
                     <span style="position: relative">
@@ -94,8 +94,8 @@
 					        <li>
 					            <c:choose>
 					                <c:when test="${file.fileName.endsWith('.jpg') || file.fileName.endsWith('.jpeg') || file.fileName.endsWith('.png') || file.fileName.endsWith('.gif')}">
-					                    <img src="/uploads/${file.filePath}" alt="${file.fileName}" width="100%" height="auto">
-					                	 <a href="downloadFile.do?filePath=${file.filePath}&fileName=${file.fileName}">
+					                    <img src="${pageContext.request.contextPath}/resources/${file.filePath}" alt="${file.fileName}" width="100%" height="auto">
+					                	 <a href="${pageContext.request.contextPath}/downloadFile.do?filePath=${file.filePath}&fileName=${file.fileName}">
 										    ${file.fileName}
 										</a>
 					                </c:when>

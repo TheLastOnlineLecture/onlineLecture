@@ -87,7 +87,7 @@
                         </div>
                     </div>
                     <div>
-                    	<a href="#">성적표 보기</a>
+                    	<a href="/student/lecture/viewReportCard.do?lectureCode=${lecture.lectureCode}">성적표 보기</a>
 	                    <a href="/gotoPostList.do?type=D&category=${lecture.lectureCode}">강의실의 자료실</a>
 						<a href="/gotoQnaList.do?type=T&category=${lecture.lectureCode}">강의실의 qna</a>
                     </div>

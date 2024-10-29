@@ -37,6 +37,8 @@ public class WatchLecture extends HttpServlet {
                 return;
             }
 
+            paymentDAO.updateLectureStartDate(memberDTO.getUserId(), lectureCode);
+
             LectureDTO lecture = lectureDAO.getLectureDetail(lectureCode);
             LectureDetailDTO detail = lectureDAO.getLectureDetailByIdx(lectureCode, Integer.parseInt(detailIdx));
 

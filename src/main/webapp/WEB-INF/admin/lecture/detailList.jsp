@@ -34,6 +34,7 @@
     </style>
 </head>
 <body>
+    <jsp:include page="../common/header.jsp" />
     <h2>강의 상세 내용 관리</h2>
     <button onclick="toggleAddForm()">새 내용 추가</button>
     
