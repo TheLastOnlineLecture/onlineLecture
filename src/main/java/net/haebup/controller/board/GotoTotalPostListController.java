@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
 
-@WebServlet("/gotoTotalPostList.do")
+@WebServlet("/admin/gotoTotalPostList.do")
 public class GotoTotalPostListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
