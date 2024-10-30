@@ -10,94 +10,69 @@
 <title>스마트 해법</title>
 
 <!-- // link태그 -->
-<link rel="stylesheet" href="<%= request.getContextPath() %>/stylegroup/main/styles.css" />
+<link rel="stylesheet" href="<c:url value="/stylegroup/main/styles.css" />" />
 <link rel="stylesheet"
 	href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
 <link rel="icon" href="/public/channels4_profile.jpg" type="image/png" />
 <!-- link 태그 // -->
 </head>
-<body>
-	<div class="boxContainer">
-		<jsp:include page="common/commonArea/pageTopImageArea.jsp" />
+<style>
+.slider {
+  position: relative;
+  width: 100%;
+  height: 395px;
+  overflow: hidden;
+  background-color:#008CD6;
+  border-radius:15px
+}
 
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  color: white;
+  display:flex;
+  justify-content: center;
+  align-items: center
+}
+
+.nav {
+  margin-top: 20px;
+  display:flex;
+  justify-content: center;
+  position:relative;
+  bottom:100px;
+}
+
+.nav-btn {
+  background-color: #00c3d7;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  margin: 5px;
+  cursor: pointer;
+}
+
+</style>
+
+<body>
+	<c:if test="${not empty msg}">
+    	<script>
+    		alert('${msg}');
+    	</script>
+    </c:if>
+	<div class="boxContainer">
+		<!-- // 상단 이미지 -->
+		<jsp:include page="common/commonArea/pageTopImageArea.jsp" />
+		<!-- 상단 이미지 // -->
+		
 		<!-- // navbar 영역 -->
-		<div class="center">
-			<div class="navTop">
-				<div class="navTopContent">
-					<a href="https://www.chunjae.co.kr/#/main" target="_blank">천재교육</a><span>|</span>
-					<a href="https://www.milkt.co.kr/HME/sellpa" target="_blank">T셀파</a>
-					<span>|</span> <a href="https://mall.chunjae.co.kr/#/main/main"
-						target="_blank">천재교육 쇼핑몰</a> <span>|</span> <a
-						href="https://www.genia.academy/" target="_blank">천재IT교육센터</a>
-				</div>
-				<div class="navTopContent">
-					<span class="dDay">2025학년도 수능 <strong
-						id="dDayCount">수능날짜가 동적으로 바뀜</strong></span> <span>|</span> <a href="#">협업기업</a><span>|</span>
-					<a href="/inquiy/user/gotoInquiy.do
-            ">고객센터</a>
-				</div>
-			</div>
-		</div>
-		<div class="navMainBoundary"></div>
-		<div class="menuArea">
-			<div class="center">
-				<div>
-					<nav class="navbarContainer">
-						<div class="navbarMain">
-							<div>
-								<img src="public/logo.png" alt="logo" class="logoImg" />
-							</div>
-							<div style="width: 200px"></div>
-							<ul class="navbarGroup">
-								<li>브랜드 소개</li>
-								<li>강의 목록</li>
-								<li>프로그래밍</li>
-								<li>게시판</li>
-								<li>선생님</li>
-								<li>자료실</li>
-							</ul>
-							<div class="submenu">
-								<ul>
-									<li class="submenuContentGroup1"><a href="#">브랜드 소개</a><a
-										href="#">오시는 길</a></li>
-									<li class="submenuContentGroup2"><a href="#">국어</a> <a
-										href="#">수학</a> <a href="#">영어</a> <a href="#">한국사</a> <a
-										href="#">사회</a> <a href="#">과학</a> <a href="#">제2외국어</a></li>
-									<li class="submenuContentGroup3"><a href="#">FrontEnd</a>
-										<a href="#">BackEnd</a> <a href="#">Cloud</a></li>
-									<li class="submenuContentGroup4"><a
-										href="/inquiy/user/gotoInquiy.do
-                          ">1대1
-											QnA 게시판</a> <a
-										href="/post/user/gotoPostList.do
-                          ">자유게시판</a>
-									</li>
-									<li class="submenuContentGroup5"><a href="#">국어</a> <a
-										href="#">수학</a> <a href="#">영어</a> <a href="#">한국사</a> <a
-										href="#">사회</a> <a href="#">과학</a> <a href="#">제2외국어</a></li>
-									<li class="submenuContentGroup6">
-										<!-- 근데 여기가 사이트 자료실인가 선생님 자료실인가? --> <a href="#">사이트 자료실</a>
-									</li>
-								</ul>
-							</div>
-							<div class="userButton">
-								<button class="loginBtn">
-									<img src="/public/loginBtn.png" alt="" />
-								</button>
-								<div class="dropdown-content">
-									<p class="userName" style="padding-bottom: 30px">Login</p>
-									<!-- 로그인하면 여기 유저 이름 들어올 예정 -->
-									<button onclick="// 나의 학습방 가는 컨트롤러 이건 jsp에 옮기고 jstl로 넣자">
-										나의 학습방</button>
-									<a href="#">마이페이지</a> <a href="#">성적관리</a> <a href="#">결제내역</a>
-									<a href="#">장바구니 목록</a>
-								</div>
-							</div>
-						</div>
-					</nav>
-				</div>
-			</div>
-		</div>
+		<jsp:include page="common/commonArea/header.jsp" />
 		<!-- navbar 영역 // -->
 
 		<!-- // 메인 콘텐츠 영역 -->
@@ -106,10 +81,10 @@
 				<div class="swiper2 mySwiper underSlide">
 					<div class="swiper-wrapper">
 						<div class="swiper-slide">
-							<a href="#"><img src="public/mainSlider_1.png" alt="" /></a>
+							<a href="#"><img src="/public/mainSlider_1.png" alt="" /></a>
 						</div>
 						<div class="swiper-slide">
-							<a href="#"><img src="public/mainSlider_2.png" alt="" /></a>
+							<a href="#"><img src="/public/mainSlider_2.png" alt="" /></a>
 						</div>
 					</div>
 				</div>
@@ -152,7 +127,37 @@
 						</div>
 						<div class="swiper-pagination"></div>
 					</div>
-					<div>두 번째 슬라이드 들어갈 영역</div>
+				</div>
+					<div class="sliderContainer">
+					<div>
+						<div class="slider">
+					      <div class="slides">
+					        <div class="slide">
+					        <div>
+					          <h2>수능 전 과목 강좌</h2>
+					          <p>스마트 천재에만 있습니다.</p>
+					        </div>
+					        </div>
+					        <div class="slide">
+					        <div>
+					          <h2>파이널 의대 국어 수학</h2>
+					          <p>전문적인 파이널 강의</p>
+					        </div>
+					        </div>
+					        <div class="slide">
+					        <div>
+					          <h2>국수영사과</h2>
+					          <p>최고의 강사진과 함께하세요</p>
+					        </div>
+					        </div>
+					      </div>
+					    </div>
+					    <div class="nav">
+					      <button class="nav-btn" onclick="showSlide(0)">스마트 천재</button>
+					      <button class="nav-btn" onclick="showSlide(1)">파이널 강의</button>
+					      <button class="nav-btn" onclick="showSlide(2)">최고의 강사진</button>
+					    </div>
+					</div>
 				</div>
 			</div>
 			<div class="boardGroup">
@@ -168,7 +173,7 @@
 							</div>
 						</div>
 						<p>저는 프론트엔드 개발자가 되고 싶었습니다. 그런데 사실 ui 작업도 그리 싫어하는 편이 아니긴 합니다.
-							아니, 나름 좋아합니다. 그런데 짧은 시간 안에 이 사이트 디자인을 다 짜려니 좀 벅차네요 시발. 지금 새벽
+							아니, 나름 좋아합니다. 그런데 짧은 시간 안에 이 사이트 디자인을 다 짜려니 좀 벅차네요. 지금 새벽
 							세시입니다. 살려주세요.</p>
 					</div>
 
@@ -189,19 +194,8 @@
 					</div>
 
 					<!-- 고객센터 섹션 -->
-					<div class="box notice">
-						<h2>공지사항</h2>
-						<ul>
-							<li><a href="#">[강좌] 2028 수능
-									통합사회... <span>24.10.22</span>
-							</a></li>
-							<li><a href="#">[일반] AI 트레이닝 앰스트롱
-									2학... <span>24.10.15</span>
-							</a></li>
-							<li><a href="#">[이벤트] AI 트레이닝 앰스트롱
-									2학... <span>24.10.11</span>
-							</a></li>
-						</ul>
+					<div class="box notice" style="display:flex; justify-content: center">
+						<img src="/public/userProblemCenter.png">
 					</div>
 				</div>
 			</div>
@@ -209,28 +203,11 @@
 		<!-- 메인 콘텐츠 영역 // -->
 
 		<!-- // 푸터 영역 -->
-		<footer class="footerContainer">
-			<div class="footerContent">
-				<img src="/public/logo.png" alt="로고" id="footerLogo" />
-				<div>
-					<p class="footerLink">
-						<a href="#" style="padding-left: 0px">회사소개</a> | <a href="#">이용약관</a>
-						| <a href="#">개인정보처리방침</a> | <a href="#">스마트해법수학 학습관</a>
-					</p>
-					<p>(주)천재교과서 대표자 : 박정과, 임형진 사업자등록번호 : 119-81-70643 부가통신사업 신고 번호
-						: 016590</p>
-					<p>통신판매신고서 : 제2016-서울금천-1306호 주소 : 서울 금천구 가산로9길 54 (가산동) 대표번호 :
-						1661-0901</p>
-					<p style="color: rgb(153, 153, 153)">Copyright ©
-						CHUNJAETEXTBOOK Corp. All Rights Reserved</p>
-				</div>
-				<img src="/public/footerRight.png" alt="가맹문의" />
-			</div>
-		</footer>
+		<jsp:include page="common/commonArea/footer.jsp" />
+		<!-- 푸터 영역 // -->
 	</div>
-	<!-- 푸터 영역 // -->
 
-	<script src="jsgroup/main/script.js"></script>
+	<script src="/jsgroup/main/script.js"></script>
 
 	<!-- Swiper JS -->
 	<script

@@ -51,6 +51,7 @@ public class DbQueryUtil implements AutoCloseable {
     //파일 업로드 시 파일 사이즈 받아오기 위해 Long 타입 추가
     //null 처리 추가를 위해 다른파라미터들을 setObject로 변경후 setNull 추가 :(
     //null 이 들어올수도 있으면 이거쓰면됨 
+    // ["강경민" , "제목" , "내용"] 
     public DbQueryUtil(Connection conn, String sql, Object[] parameters) throws SQLException {
         this.pstmt = conn.prepareStatement(sql);
         if (parameters != null) {

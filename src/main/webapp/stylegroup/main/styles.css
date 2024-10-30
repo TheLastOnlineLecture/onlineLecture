@@ -7,6 +7,15 @@ body {
   color: #333;
 }
 
+.textCenter {
+  text-align: center;
+}
+
+.hoverAction:hover {
+  color: #666;
+  cursor: pointer;
+}
+
 .upBarGroup {
   display: flex;
   width: 100%;
@@ -84,7 +93,7 @@ li {
   font-weight: bold;
   cursor: pointer;
   display: inline-block;
-  transition: color 0.4s ease;
+  transition: color 0.05s ease;
   position: relative;
 }
 
@@ -94,7 +103,7 @@ li {
   width: 0;
   height: 2px;
   background: #008cd6;
-  transition: width 0.4s ease;
+  transition: width 0.05s ease;
 }
 
 .navbarGroup li:hover::after {
@@ -114,7 +123,7 @@ li {
   visibility: hidden;
   opacity: 0;
   transform: translateY(100px);
-  transition: transform 0.5s ease, opacity 0.5s ease, visibility 0.5s;
+  transition: transform 0.1s ease, opacity 0.1s ease, visibility 0.1s;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
   z-index: 10;
 }
@@ -340,6 +349,16 @@ a {
   margin: 0;
 }
 
+.mainContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.mainContent {
+  width: 1500px;
+}
+
 .mainContainer1 {
   display: flex;
   justify-content: center;
@@ -481,3 +500,8 @@ a {
   height: 33px;
 }
 /* 발바닥 끝 */
+
+.plusBtnArea {
+  display: flex;
+  justify-content: space-between;
+}

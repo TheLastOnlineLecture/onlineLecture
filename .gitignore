@@ -1,0 +1,9 @@
+/build/
+.git
+.idea
+.metadata
+.settings
+.vscode
+.classpath
+.DS_store
+.project

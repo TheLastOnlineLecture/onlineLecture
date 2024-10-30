@@ -1,0 +1,17 @@
+{
+    // "java.project.referencedLibraries": [
+    //   "lib/**/*.jar",
+    //   "/Users/gyeongmingang/project/apache-tomcat-10.1.31/lib/servlet-api.jar"
+    // ],
+
+    "java.project.referencedLibraries": [
+      "lib/**/*.jar",
+      "/Users/gyeongmingang/project/apache-tomcat-10.1.31/lib/servlet-api.jar"
+  ],
+  "java.problems.exclude": {
+      "**/*.java": ["all"]
+  },
+  "java.completion.enabled": false,
+  "java.debug.settings.enableRunDebugCodeLens": false,
+  "java.configuration.updateBuildConfiguration": "disabled"
+}
