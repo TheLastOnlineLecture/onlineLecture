@@ -10,7 +10,7 @@ import java.sql.SQLException;
 import net.haebup.dto.member.MemberDTO;
 import net.haebup.dao.member.MemberDAO;
 
-@WebServlet("/member/admin/memberModify.do")
+@WebServlet("/admin/member/memberModify.do")
 public class MemberModify extends HttpServlet {
 
     @Override

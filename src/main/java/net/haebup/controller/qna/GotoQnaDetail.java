@@ -42,16 +42,16 @@ public class GotoQnaDetail extends HttpServlet {
 		 QnaCommentDAO qnacommentDAO = new QnaCommentDAO();
 	        try {
 	            List<QnaCommentDTO> commentQnaList = qnacommentDAO.selectQnaCommentList(qnaIdx);
-	            // 출력 값 확인
-//	            for (BoardCommentDTO comment : commentList) {
-//	            	System.out.println("-----GotoDetail-----"); 
-//	                System.out.println("Comment Index: " + comment.getCommentIdx());
-//	                System.out.println("Board Index: " + comment.getPostIdx());
-//	                System.out.println("Comment Content: " + comment.getCommentContent());
-//	                System.out.println("Comment Registration Date: " + comment.getCommentRegdate());
-//	                System.out.println("User ID: " + comment.getUserId());
-//	                System.out.println("-----GotoDetail E-----"); 
-//	            }
+	             //출력 값 확인
+	            for (QnaCommentDTO comment : commentQnaList) {
+	            	System.out.println("-----GotoDetail-----"); 
+	                System.out.println("Comment Index: " + comment.getQnaCommentIdx());
+	                System.out.println("Board Index: " + comment.getQnaIdx());
+	                System.out.println("Comment Content: " + comment.getQnaCommentContent());
+	                System.out.println("Comment Registration Date: " + comment.getQnaCommentRegdate());
+	                System.out.println("User ID: " + comment.getQnaCommentWriter());
+	                System.out.println("-----GotoDetail E-----"); 
+	            }
 	            
 	            request.setAttribute("commentQnaList", commentQnaList);
 	        } catch (SQLException e) {

@@ -6,6 +6,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const valMsg5 = document.querySelector(".valMsg5");
   const valMsg6 = document.querySelector(".valMsg6");
   const valMsg8 = document.querySelector(".valMsg8");
+  const idDuplicateCheckBtn = document.querySelector(".idDuplicateCheck");
+  let isIdChecked = false;
+  let isIdAvailable = false;
 
   function setMessage(msgElement, message) {
     msgElement.textContent = message;
@@ -127,6 +130,64 @@ document.addEventListener("DOMContentLoaded", () => {
     return true;
   }
 
+  // 아이디 중복 체크 버튼 클릭 이벤트
+  idDuplicateCheckBtn.addEventListener("click", async (e) => {
+    e.preventDefault();
+    const userId = document.getElementById("userId").value;
+    const valMsg = document.querySelector(".valMsg1");
+
+    if (!userId) {
+      valMsg.textContent = "아이디를 입력해주세요.";
+      return;
+    }
+
+    try {
+      const response = await fetch("/member/checkDuplicateId.do", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        body: `userId=${encodeURIComponent(userId)}`,
+      });
+
+      const data = await response.json();
+      isIdChecked = true;
+
+      if (data.isDuplicate) {
+        valMsg.textContent = "이미 사용중인 아이디입니다.";
+        isIdAvailable = false;
+      } else {
+        valMsg.textContent = "사용 가능한 아이디입니다.";
+        isIdAvailable = true;
+      }
+    } catch (error) {
+      valMsg.textContent = "서버 오류가 발생했습니다.";
+      console.error("Error:", error);
+    }
+  });
+
+  // 아이디 입력 필드 변경 시 중복체크 초기화
+  document.getElementById("userId").addEventListener("input", () => {
+    isIdChecked = false;
+    isIdAvailable = false;
+    document.querySelector(".valMsg1").textContent = "";
+  });
+
+  // 폼 제출 시 중복체크 여부 확인
+  document.querySelector("form").addEventListener("submit", (e) => {
+    if (!isIdChecked) {
+      e.preventDefault();
+      alert("아이디 중복체크를 해주세요.");
+      return;
+    }
+
+    if (!isIdAvailable) {
+      e.preventDefault();
+      alert("사용할 수 없는 아이디입니다.");
+      return;
+    }
+  });
+
   document.getElementById("userId").oninput = validateUserId;
   document.getElementById("userPwd").oninput = validateUserPwd;
   document.getElementById("userPwdCheck").oninput = validateUserPwdCheck;
@@ -134,18 +195,4 @@ document.addEventListener("DOMContentLoaded", () => {
   document.getElementById("userEmail").oninput = validateUserEmail;
   document.getElementById("userPhone").oninput = validateUserPhone;
   document.getElementById("userNickname").oninput = validateUserNickname;
-
-  document.querySelector("form").addEventListener("submit", (e) => {
-    if (
-      !validateUserId() ||
-      !validateUserPwd() ||
-      !validateUserPwdCheck() ||
-      !validateUserName() ||
-      !validateUserEmail() ||
-      !validateUserPhone() ||
-      !validateUserNickname()
-    ) {
-      e.preventDefault();
-    }
-  });
 });

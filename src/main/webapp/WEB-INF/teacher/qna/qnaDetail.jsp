@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="jakarta.tags.core" prefix="c"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -22,7 +23,7 @@
 <c:if test="${not empty commentList}">
 	<h3>댓글 목록</h3>
 	<ul>
-	    <c:forEach var="qnaComment" items="${commenQnatList}">
+	    <c:forEach var="qnaComment" items="${commentQnaList}">
 	        <li>${comment.commentContent} - <strong>${comment.userId}</strong> ${comment.commentRegdate}</li>
 	    </c:forEach>
 	</ul>

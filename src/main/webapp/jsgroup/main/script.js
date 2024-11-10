@@ -57,7 +57,7 @@ document.addEventListener("DOMContentLoaded", () => {
         `;
 
     const studentRadio = document.getElementById("studentRadio");
-    const parentRadio = document.getElementById("teacherRadio");
+    const teacherRadio = document.getElementById("teacherRadio");
     const loginForm = document.getElementById("loginForm");
 
     loginForm.action = "/member/common/login.do";
@@ -66,7 +66,7 @@ document.addEventListener("DOMContentLoaded", () => {
       loginForm.action = "/member/common/login.do";
     });
 
-    parentRadio.addEventListener("click", () => {
+    teacherRadio.addEventListener("click", () => {
       loginForm.action = "/member/teacher/login.do";
     });
 
@@ -86,3 +86,6 @@ function goToRegister() {
 }
 
 // 로그인 팝업 ---
+
+
+

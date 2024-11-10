@@ -19,8 +19,9 @@ import java.sql.SQLException;
 
 @WebServlet("/postWrite.do")
 @MultipartConfig(
-	    maxFileSize = 1024 * 1024 * 1,  // 1MB
-	    maxRequestSize = 1024 * 1024 * 10) // 10MB
+    fileSizeThreshold = 1024 * 1024,      // 1MB
+    maxFileSize = 1024 * 1024 * 10,       // 10MB
+    maxRequestSize = 1024 * 1024 * 100)    // 100MB
 public class PostWriteController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
@@ -36,70 +37,72 @@ public class PostWriteController extends HttpServlet {
         response.setContentType("text/html; charset=UTF-8");
         response.setCharacterEncoding("UTF-8");
 		
-//		MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
-//		String userType = user.getUserType();
-
-		String userType = "A";
-		
+		MemberDTO user = (MemberDTO) request.getSession().getAttribute("user");
+		String userType = user.getUserType();
 		String boardType = request.getParameter("type");
-//		System.out.println("타입확인 : "+boardType);
+		String category = request.getParameter("category");
 		
-        BoardDTO boardDTO = new BoardDTO();
-        boardDTO.setBoardType(boardType);  
-        boardDTO.setBoardTitle(request.getParameter("boardTitle"));
-        boardDTO.setBoardContent(request.getParameter("boardContent"));
-        boardDTO.setBoardWriter(request.getParameter("boardWriter"));
+		BoardDTO boardDTO = new BoardDTO();
+		boardDTO.setBoardType(boardType);
+		boardDTO.setBoardTitle(request.getParameter("boardTitle"));
+		boardDTO.setBoardContent(request.getParameter("boardContent"));
+		boardDTO.setBoardWriter(request.getParameter("boardWriter"));
+		
+		// 강의 관련 게시글일 때만 카테고리 설정
+		if ("C".equals(boardType) || "R".equals(boardType)) {
+			boardDTO.setBoardCategory(category);
+		} else {
+			boardDTO.setBoardCategory(null);
+		}
 
-        // 게시글 작성 권한 확인
-        if (!checkUser(userType, boardType)) {
-            response.getWriter().print("<script>alert('해당 게시판에 작성 권한이 없습니다.'); location.href='javascript:history.back();';</script>");
-            return;
-        }
+		BoardDAO boardDAO = new BoardDAO();
+		int boardIdx = 0;
 
-        BoardDAO boardDAO = new BoardDAO();
-        int boardIdx = 0;
+		try {
+			boardIdx = boardDAO.insertBoard(boardDTO);
+			
+			if (boardIdx > 0) {
+				Part filePart = request.getPart("file");
+				if (filePart != null && filePart.getSize() > 0) {
+					try {
+						String filePath = FileIOUtil.uploadBoardAttachment(request, "file");
+						if (filePath != null) {
+							FileDTO fileDTO = new FileDTO();
+							fileDTO.setBoardIdx(boardIdx);
+							fileDTO.setFileName(filePart.getSubmittedFileName());
+							fileDTO.setFilePath(filePath);
+							fileDTO.setFileSize((int) filePart.getSize());
 
-        try {
-            boardIdx = boardDAO.insertBoard(boardDTO);
-            
-            if (boardIdx > 0) { 
-                Part filePart = request.getPart("attachedFile"); 
-                if (filePart != null && filePart.getSize() > 0) {
-                    String filePath = FileIOUtil.uploadBoardAttachment(request, "attachedFile");
-
-                    FileDTO fileDTO = new FileDTO();
-                    fileDTO.setBoardIdx(boardIdx); 
-                    fileDTO.setFileName(filePart.getSubmittedFileName());
-                    fileDTO.setFilePath(filePath);
-                    fileDTO.setFileSize((int) filePart.getSize());
-
-                    FileDAO fileDAO = new FileDAO();
-                    fileDAO.insertFile(fileDTO);
-                }
-                
-                request.setAttribute("type", boardType);
-                request.getRequestDispatcher("/gotoPostList.do").forward(request, response);
-            } else {
-                response.getWriter().print("<script>alert('게시글 등록 실패'); location.href='javascript:history.back();';</script>");
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            response.getWriter().print("<script>alert('오류 발생: " + e.getMessage() + "'); location.href='javascript:history.back();';</script>");
-        }
-	}
-	
-	private boolean checkUser(String userType, String boardType) {
-	    // 관리자 A: N 공지사항, D 자료실, C 강의공지, P 자유게시판
-	    if ("A".equals(userType)) {
-	        return "N".equals(boardType) || "D".equals(boardType) || "C".equals(boardType) || "P".equals(boardType);
-	    } 
-	    // 선생님 T: D 자료실, C 강의공지, P 자유게시판
-	    else if ("T".equals(userType)) {
-	        return "D".equals(boardType) || "C".equals(boardType) || "P".equals(boardType);
-	    }
-	    // 일반 학생: P 자유게시판, R 수강후기
-	    else {
-	        return "P".equals(boardType) || "R".equals(boardType);
-	    }
+							FileDAO fileDAO = new FileDAO();
+							int fileResult = fileDAO.insertFile(fileDTO);
+							
+							if (fileResult <= 0) {
+								System.out.println("파일 정보 DB 저장 실패");
+							}
+						}
+					} catch (Exception e) {
+						System.out.println("파일 업로드 실패: " + e.getMessage());
+						e.printStackTrace();
+					}
+				}
+				
+				request.setAttribute("msg", "게시글 작성 성공했습니다.");
+				String url = "/gotoPostList.do?type=" + boardType;
+				if (category != null && !category.isEmpty()) {
+					url += "&category=" + category;
+				}
+				request.setAttribute("url", url);
+				request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp")
+					   .forward(request, response);
+			} else {
+				request.setAttribute("msg", "게시글이 작성되지 않았습니다.");
+				request.setAttribute("url", "javascript:history.back();");
+				request.getRequestDispatcher("/WEB-INF/common/commonArea/successAlert.jsp")
+					   .forward(request, response);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+			response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "데이터베이스 오류가 발생했습니다.");
+		}
 	}
 }

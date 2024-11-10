@@ -3,6 +3,7 @@ import java.util.List;
 import net.haebup.utils.DatabaseUtil.*;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import net.haebup.dto.qna.qnaComment.QnaCommentDTO;
@@ -29,7 +30,9 @@ public class QnaCommentDAO {
                     qnaCommentDTO.setQnaCommentIdx(rs.getInt("qna_comment_idx"));
                     qnaCommentDTO.setQnaIdx(rs.getInt("qna_idx"));
                     qnaCommentDTO.setQnaCommentContent(rs.getString("qna_comment_content"));
-                    qnaCommentDTO.setQnaCommentRegdate(rs.getString("qna_comment_regdate"));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = dateFormat.format(rs.getTimestamp("qna_comment_regdate"));
+                    qnaCommentDTO.setQnaCommentRegdate(formattedDate);
                     qnaCommentDTO.setQnaCommentWriter(rs.getString("qna_comment_writer"));
                     qnaCommentList.add(qnaCommentDTO);
                 }

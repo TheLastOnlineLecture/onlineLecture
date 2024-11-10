@@ -64,7 +64,7 @@
                     placeholder="아이디"
                     class="inputField"
                     required
-                    value=""
+                    value="${sessionScope.user.userId}"
                     disabled
                   /><br />
                 </div>
@@ -82,7 +82,7 @@
                     oninput="validateUserPwd()"
                   /><br />
                 </div>
-                <span class="valMsg2 valArea"></span>
+                <span class="valMsg2 valArea" style="font-size:14px"></span>
 
                 <div>
                   <label for="userPwdCheck" class="inputLabel"
@@ -98,7 +98,7 @@
                     oninput="validateUserPwdCheck()"
                   /><br />
                 </div>
-                <span class="valMsg3 valArea"></span>
+                <span class="valMsg3 valArea" style="font-size:14px"></span>
 
                 <div>
                   <label for="userName" class="inputLabel">이름:</label>
@@ -109,11 +109,11 @@
                     placeholder="이름"
                     class="inputField"
                     required
-                    value=""
+                    value="${sessionScope.user.userNickname}"
                     disabled
                   /><br />
                 </div>
-                <span class="valMsg4 valArea"></span>
+                <span class="valMsg4 valArea" style="font-size:14px"></span>
 
                 <div>
                   <label for="userEmail" class="inputLabel">이메일:</label>
@@ -127,7 +127,7 @@
                     oninput="validateUserEmail()"
                   /><br />
                 </div>
-                <span class="valMsg5 valArea"></span>
+                <span class="valMsg5 valArea" style="font-size:14px"></span>
 
                 <div>
                   <label for="userPhone" class="inputLabel">전화번호:</label>
@@ -141,22 +141,7 @@
                     oninput="validateUserPhone()"
                   /><br />
                 </div>
-                <span class="valMsg6 valArea"></span>
-
-                <div>
-                  <label for="userBirth" class="inputLabel">생년월일:</label>
-                  <input
-                    type="date"
-                    name="userBirth"
-                    id="userBirth"
-                    placeholder="생년월일"
-                    class="inputField"
-                    required
-                    value=""
-                    disabled
-                  /><br />
-                </div>
-                <span class="valMsg7 valArea"></span>
+                <span class="valMsg6 valArea" style="font-size:14px"></span>
 
                 <div>
                   <label for="userNickname" class="inputLabel">닉네임:</label>
@@ -170,7 +155,7 @@
                     oninput="validateUserNickname()"
                   /><br />
                 </div>
-                <span class="valMsg8 valArea"></span>
+                <span class="valMsg8 valArea" style="font-size:14px"></span>
 
                 <div class="center">
                   <button type="submit" class="submitButton">

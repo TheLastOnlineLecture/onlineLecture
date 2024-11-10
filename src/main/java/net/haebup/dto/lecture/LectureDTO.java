@@ -1,5 +1,9 @@
 package net.haebup.dto.lecture;
 
+import java.util.List;
+
+import net.haebup.dto.lecture.lectureDetail.LectureDetailDTO;
+
 public class LectureDTO {
 	private String lectureCode;			// 강의 코드
 	private String lectureName;			// 강의 이름
@@ -9,7 +13,14 @@ public class LectureDTO {
 	private String teacherId;			// 강의 선생님 아이디
 	private String teacherName;			// 강의 선생님 이름
 	private String lectureStartDate;	// 강의 시작일
+	private List<LectureDetailDTO> lectureDetails; // 강의 상세 정보 리스트
 
+	public List<LectureDetailDTO> getLectureDetails() {
+		return lectureDetails;
+	}
+	public void setLectureDetails(List<LectureDetailDTO> lectureDetails) {
+		this.lectureDetails = lectureDetails;
+	}
 	public String getLectureStartDate() {
 		return lectureStartDate;
 	}

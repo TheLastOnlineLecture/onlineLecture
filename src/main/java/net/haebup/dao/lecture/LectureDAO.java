@@ -9,6 +9,8 @@ import net.haebup.utils.DatabaseUtil.DBConnPool;
 import net.haebup.utils.DatabaseUtil.DbQueryUtil;
 import java.util.ArrayList;
 import java.sql.ResultSet;
+// import net.haebup.dto.lecture.lectureDetail.LectureDetailDTO;
+import net.haebup.dto.lecture.lectureDetail.LectureDetailDTO;
 
 // LectureDAO: 강의 관련 데이터베이스 작업을 처리하는 클래스
 public class LectureDAO {
@@ -147,12 +149,11 @@ public class LectureDAO {
         String sql = "SELECT l.*, m.user_name AS teacher_name FROM TBL_LECTURE l " +
                 "JOIN TBL_MEMBER m ON l.teacher_id = m.user_id " +
                 "WHERE l.lecture_code = ?";
-
+        
         try (Connection conn = DBConnPool.getConnection();
-                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode })) {
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode })) {
             ResultSet rs = dbUtil.executeQuery();
             if (rs.next()) {
-                // 결과셋에서 데이터를 추출하여 LectureDTO 객체 생성
                 LectureDTO lectureDTO = new LectureDTO();
                 lectureDTO.setLectureCode(rs.getString("lecture_code"));
                 lectureDTO.setLectureName(rs.getString("lecture_name"));
@@ -163,11 +164,28 @@ public class LectureDAO {
                 lectureDTO.setTeacherName(rs.getString("teacher_name"));
                 return lectureDTO;
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-            throw new SQLException("강의 상세 정보 조회 중 오류가 발생했습니다: " + e.getMessage());
+            return null;
         }
-        return null;
+    }
+    //강의 상세정보 조회
+    public LectureDetailDTO getLectureDetailByIdx(String lectureCode, int detailIdx) throws SQLException {
+        String sql = "SELECT * FROM TBL_LECTURE_DETAIL WHERE lecture_code = ? AND lecture_detail_idx = ?";
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode, detailIdx })) {
+            ResultSet rs = dbUtil.executeQuery();
+            if (rs.next()) {
+                LectureDetailDTO detail = new LectureDetailDTO();
+                detail.setLectureDetailIdx(rs.getInt("lecture_detail_idx"));
+                detail.setLectureCode(rs.getString("lecture_code"));
+                detail.setLectureDetailContent(rs.getString("lecture_detail_content"));
+                detail.setLectureDetailFilePath(rs.getString("lecture_detail_file_path"));
+                detail.setLectureDetailFileName(rs.getString("lecture_detail_file_name"));
+                detail.setLectureDetailFileSize(rs.getLong("lecture_detail_file_size"));
+                return detail;
+            }
+            return null;
+        }
     }
 
     // 새로운 강의를 등록하는 메소드
@@ -190,6 +208,24 @@ public class LectureDAO {
             throw new SQLException("새 강의 등록 중 오류가 발생했습니다: " + e.getMessage());
         }
     }
+    // //강의 상세정보 등록
+    // public int insertLectureDetail(LectureDetailDTO lectureDetailDTO) throws SQLException {
+    //     String sql = "INSERT INTO TBL_LECTURE_DETAIL (lecture_code, lecture_detail_content, lecture_detail_file_path, lecture_detail_file_name, lecture_detail_file_size) VALUES (?, ?, ?, ?, ?)";
+        
+    //     try (Connection conn = DBConnPool.getConnection();
+    //          DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] {
+    //              lectureDetailDTO.getLectureCode(),
+    //              lectureDetailDTO.getLectureDetailContent(),
+    //              lectureDetailDTO.getLectureDetailFilePath(),
+    //              lectureDetailDTO.getLectureDetailFileName(),
+    //              lectureDetailDTO.getLectureDetailFileSize()
+    //          })) {
+    //         return dbUtil.executeUpdate();
+    //     } catch (SQLException e) {
+    //         e.printStackTrace();
+    //         throw new SQLException("강의 상세정보 등록 중 오류가 발생했습니다: " + e.getMessage());
+    //     }
+    // }
 
     // 강의 정보를 수정하는 메소드
     public int updateLecture(LectureDTO lectureDTO) throws SQLException {
@@ -226,7 +262,7 @@ public class LectureDAO {
     // 선생님 아이디로 강의 목록 조회
 
     public List<LectureDTO> getLectureListByTeacherId(String teacherId) throws SQLException {
-        String sql = "SELECT lecture_code, lecture_name FROM TBL_LECTURE WHERE teacher_id = ?";
+        String sql = "SELECT lecture_code, lecture_name, lecture_price ,lecture_regdate FROM TBL_LECTURE WHERE teacher_id = ?";
         List<LectureDTO> lectureList = new ArrayList<>();
         try (Connection conn = DBConnPool.getConnection();
 
@@ -236,6 +272,8 @@ public class LectureDAO {
                 LectureDTO lectureDTO = new LectureDTO();
                 lectureDTO.setLectureCode(rs.getString("lecture_code"));
                 lectureDTO.setLectureName(rs.getString("lecture_name"));
+                lectureDTO.setLecturePrice(rs.getInt("lecture_price"));
+                lectureDTO.setLectureRegdate(rs.getString("lecture_regdate"));
                 lectureList.add(lectureDTO);
             }
         }
@@ -282,5 +320,56 @@ public class LectureDAO {
             }
             return 0; // 결과가 없을 경우 0 반환
         }
+    }
+
+    public List<LectureDetailDTO> getLectureDetails(String lectureCode) throws SQLException {
+        String sql = "SELECT * FROM TBL_LECTURE_DETAIL WHERE lecture_code = ? ORDER BY lecture_detail_idx";
+        List<LectureDetailDTO> details = new ArrayList<>();
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{lectureCode})) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                LectureDetailDTO detail = new LectureDetailDTO();
+                detail.setLectureDetailIdx(rs.getInt("lecture_detail_idx"));
+                detail.setLectureCode(rs.getString("lecture_code"));
+                detail.setLectureDetailContent(rs.getString("lecture_detail_content"));
+                detail.setLectureDetailFilePath(rs.getString("lecture_detail_file_path"));
+                detail.setLectureDetailFileName(rs.getString("lecture_detail_file_name"));
+                detail.setLectureDetailFileSize(rs.getLong("lecture_detail_file_size"));
+                details.add(detail);
+            }
+        }
+        return details;
+    }
+
+    public List<LectureDTO> getLecturesByTeacherId(String teacherId) throws SQLException {
+        String sql = "SELECT l.*, m.user_name AS teacher_name " +
+                    "FROM TBL_LECTURE l " +
+                    "JOIN TBL_MEMBER m ON l.teacher_id = m.user_id " +
+                    "WHERE l.teacher_id = ? " +
+                    "ORDER BY l.lecture_regdate DESC";
+
+        List<LectureDTO> lectureList = new ArrayList<>();
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { teacherId })) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                LectureDTO lectureDTO = new LectureDTO();
+                lectureDTO.setLectureCode(rs.getString("lecture_code"));
+                lectureDTO.setLectureName(rs.getString("lecture_name"));
+                lectureDTO.setLecturePrice(rs.getInt("lecture_price"));
+                lectureDTO.setLectureRegdate(rs.getString("lecture_regdate"));
+                lectureDTO.setLectureLimitDate(rs.getString("lecture_limit_date"));
+                lectureDTO.setTeacherId(rs.getString("teacher_id"));
+                lectureDTO.setTeacherName(rs.getString("teacher_name"));
+                lectureList.add(lectureDTO);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new SQLException("선생님의 강의 목록 조회 중 오류가 발생했습니다: " + e.getMessage());
+        }
+        return lectureList;
     }
 }

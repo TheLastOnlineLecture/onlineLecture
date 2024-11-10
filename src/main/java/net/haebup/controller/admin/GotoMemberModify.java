@@ -12,7 +12,7 @@ import net.haebup.dao.member.MemberDAO;
 import java.util.List;
 import net.haebup.dto.member.MemberTypeDTO;
 
-@WebServlet("/member/admin/gotoMemberModify.do")
+@WebServlet("/admin/member/gotoMemberModify.do")
 public class GotoMemberModify extends HttpServlet {
     
     @Override
@@ -34,7 +34,7 @@ public class GotoMemberModify extends HttpServlet {
                 response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, "데이터베이스 오류가 발생했습니다.");
             }
         } else {
-            response.sendRedirect(request.getContextPath() + "/goto.do?page=admin/adminLogin");
+            response.sendRedirect(request.getContextPath() + "/goto.do?page=admin/login");
         }
     }
 }

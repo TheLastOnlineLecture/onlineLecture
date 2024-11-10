@@ -36,7 +36,9 @@ public class PaymentDAO {
     }
     //결제내역 전부 조회
     public List<PaymentDTO> getPaymentListAll(String userId) throws SQLException {
-        String sql = "SELECT * FROM tbl_payment WHERE user_id = ?";
+        String sql = "SELECT p.*, l.lecture_name, l.lecture_price FROM tbl_payment p " +
+                    "INNER JOIN tbl_lecture l ON p.lecture_code = l.lecture_code " +
+                    "WHERE p.user_id = ? AND p.payment_status != 'I'";
         List<PaymentDTO> paymentList = new ArrayList<PaymentDTO>();
         try (Connection conn = DBConnPool.getConnection();
                 DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId })) {
@@ -44,10 +46,12 @@ public class PaymentDAO {
             while (rs.next()) {
                 PaymentDTO paymentDTO = new PaymentDTO();
                 paymentDTO.setPaymentIdx(rs.getInt("payment_idx"));
-                paymentDTO.setUserId(rs.getString("user_id"));
+                paymentDTO.setUserId(rs.getString("user_id")); 
                 paymentDTO.setLectureCode(rs.getString("lecture_code"));
                 paymentDTO.setPaymentDate(rs.getString("payment_date"));
                 paymentDTO.setPaymentStatus(rs.getString("payment_status"));
+                paymentDTO.setLectureName(rs.getString("lecture_name"));
+                paymentDTO.setLecturePrice(rs.getInt("lecture_price"));
                 paymentList.add(paymentDTO);
             }
         }
@@ -204,11 +208,14 @@ public class PaymentDAO {
     }
     //구매여부 조회
     public boolean isPaid(String userId, String lectureCode) throws SQLException {
-        String sql = "SELECT COUNT(*) FROM tbl_payment WHERE user_id = ? AND lecture_code = ? AND payment_status = 'P'";
+        String sql = "SELECT COUNT(*) as count FROM tbl_payment WHERE user_id = ? AND lecture_code = ? AND payment_status = 'P'";
         try (Connection conn = DBConnPool.getConnection();
                 DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId, lectureCode })) {
             ResultSet rs = dbUtil.executeQuery();
-            return rs.getInt(1) > 0;
+            if (rs.next()) {
+                return rs.getInt("count") > 0;
+            }
+            return false;
         }
     }
     //강의 시작일 업데이트
@@ -224,6 +231,49 @@ public class PaymentDAO {
         String sql = "UPDATE tbl_payment SET payment_status = 'R' WHERE user_id = ? AND lecture_code = ? AND lecture_start_date IS NULL";
         try (Connection conn = DBConnPool.getConnection();
                 DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { userId, lectureCode })) {
+            return dbUtil.executeUpdate();
+        }
+    }
+
+    // PaymentDAO에 새로운 메서드 추가
+    public List<PaymentDTO> getStudentsByLectureCode(String lectureCode) throws SQLException {
+        String sql = "SELECT p.*, m.user_name, m.user_nickname, m.user_email " +
+                "FROM TBL_PAYMENT p " +
+                "JOIN TBL_MEMBER m ON p.user_id = m.user_id " +
+                "WHERE p.lecture_code = ? " +
+                "AND p.payment_status = 'P' " +
+                "ORDER BY p.payment_date DESC";
+                
+        List<PaymentDTO> enrollments = new ArrayList<>();
+        
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { lectureCode })) {
+            ResultSet rs = dbUtil.executeQuery();
+            while (rs.next()) {
+                PaymentDTO payment = new PaymentDTO();
+                payment.setPaymentIdx(rs.getInt("payment_idx"));
+                payment.setUserId(rs.getString("user_id"));
+                payment.setLectureCode(rs.getString("lecture_code"));
+                payment.setPaymentDate(rs.getString("payment_date"));
+                payment.setPaymentStatus(rs.getString("payment_status"));
+                payment.setLectureStartDate(rs.getString("lecture_start_date"));
+                
+                // MemberDTO 정보도 추가
+                payment.setUserName(rs.getString("user_name"));
+                payment.setUserNickname(rs.getString("user_nickname"));
+                payment.setUserEmail(rs.getString("user_email"));
+                
+                enrollments.add(payment);
+            }
+        }
+        return enrollments;
+    }
+
+    // 장바구니 항목 삭제
+    public int deleteCartItem(int paymentIdx) throws SQLException {
+        String sql = "DELETE FROM tbl_payment WHERE payment_idx = ? AND payment_status = 'I'";
+        try (Connection conn = DBConnPool.getConnection();
+                DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[] { paymentIdx })) {
             return dbUtil.executeUpdate();
         }
     }

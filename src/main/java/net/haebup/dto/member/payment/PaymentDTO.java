@@ -7,6 +7,27 @@ public class PaymentDTO {
     private String paymentDate;
     private String paymentStatus;
     private String lectureStartDate;
+    private String lectureName;
+    private String userName;
+    private String userNickname;
+    private String userEmail;
+    private int lecturePrice;
+
+    public int getLecturePrice() {
+        return lecturePrice;
+    }
+
+    public void setLecturePrice(int lecturePrice) {
+        this.lecturePrice = lecturePrice;
+    }
+
+    public String getLectureName() {
+        return lectureName;
+    }
+
+    public void setLectureName(String lectureName) {
+        this.lectureName = lectureName;
+    }
 
     public int getPaymentIdx() {
         return paymentIdx;
@@ -53,6 +74,30 @@ public class PaymentDTO {
 
     public void setLectureStartDate(String lectureStartDate) {
         this.lectureStartDate = lectureStartDate;
+    }
+
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
+
+    public String getUserNickname() {
+        return userNickname;
+    }
+
+    public void setUserNickname(String userNickname) {
+        this.userNickname = userNickname;
+    }
+
+    public String getUserEmail() {
+        return userEmail;
+    }
+
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
 }

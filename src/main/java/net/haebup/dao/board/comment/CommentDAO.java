@@ -1,5 +1,6 @@
 package net.haebup.dao.board.comment;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import net.haebup.dto.board.comment.BoardCommentDTO;
 import java.sql.Connection;
@@ -21,7 +22,10 @@ public class CommentDAO {
                     commentDTO.setCommentIdx(rs.getInt("comment_idx"));
                     commentDTO.setPostIdx(rs.getInt("post_idx"));
                     commentDTO.setCommentContent(rs.getString("comment_content"));
-                    commentDTO.setCommentRegdate(rs.getString("comment_regdate"));
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                    String formattedDate = dateFormat.format(rs.getTimestamp("comment_regdate"));
+                    commentDTO.setCommentRegdate(formattedDate);
+                    
                     commentDTO.setUserId(rs.getString("user_id"));
                     commentList.add(commentDTO);
                 }
@@ -32,6 +36,31 @@ public class CommentDAO {
         return commentList;
     }
     
+    //댓글조회
+    public BoardCommentDTO selectCommentIdx(int commentIdx) throws SQLException {
+        String sql = "SELECT * FROM tbl_comment WHERE comment_idx = ?";
+        try (Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{commentIdx})) {
+            ResultSet rs = dbUtil.executeQuery();
+            if (rs.next()) {
+                BoardCommentDTO commentDTO = new BoardCommentDTO();
+                commentDTO.setCommentIdx(rs.getInt("comment_idx"));
+                commentDTO.setPostIdx(rs.getInt("post_idx"));
+                commentDTO.setUserId(rs.getString("user_id"));
+                commentDTO.setCommentContent(rs.getString("comment_content"));
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+                String formattedDate = dateFormat.format(rs.getTimestamp("comment_regdate"));
+                commentDTO.setCommentRegdate(formattedDate);
+                return commentDTO;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+            throw new RuntimeException("댓글 조회 중 오류가 발생하였습니다." + e);
+        }
+        return null;
+    }
+    
+    //전체 댓글 갯수
     public int getCount(int boardIdx) throws SQLException{
         String sql = "SELECT COUNT(*) FROM tbl_comment WHERE post_idx = ?";
         try(Connection conn = DBConnPool.getConnection();
@@ -60,20 +89,22 @@ public class CommentDAO {
         }
         return result;
     }
-
-    // public int updateComment(BoardCommentDTO commentDTO) throws SQLException{
-    //     String sql = "UPDATE comment SET comment_content = ? WHERE comment_idx = ?";
-    //     int result = 0;
-    //     try(Connection conn = DBConnPool.getConnection();
-    //         DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{commentDTO.getCommentContent(), commentDTO.getCommentIdx()})){
-    //             result = dbUtil.executeUpdate();
-    //     }catch(SQLException e){
-    //         e.printStackTrace();
-    //         throw new RuntimeException("댓글 수정 중 오류가 발생하였습니다."+e);
-    //     }
-    //     return result;
-    // }
-
+    
+    //수정
+     public int updateComment(BoardCommentDTO commentDTO) throws SQLException{
+         String sql = "UPDATE tbl_comment SET comment_content = ? WHERE comment_idx = ?";
+         int result = 0;
+         try(Connection conn = DBConnPool.getConnection();
+             DbQueryUtil dbUtil = new DbQueryUtil(conn, sql, new Object[]{commentDTO.getCommentContent(), commentDTO.getCommentIdx()})){
+                 result = dbUtil.executeUpdate();
+         }catch(SQLException e){
+             e.printStackTrace();
+             throw new RuntimeException("댓글 수정 중 오류가 발생하였습니다."+e);
+         }
+         return result;
+     }
+     
+     //삭제
     public int deleteComment(int commentIdx) throws SQLException{
         String sql = "DELETE FROM tbl_comment WHERE comment_idx = ?";
         int result = 0;

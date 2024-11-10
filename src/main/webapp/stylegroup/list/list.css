@@ -49,6 +49,16 @@
   color: white;
 }
 
+.label.lecNotice {
+  background-color: #a17eac;
+  color: white;
+}
+
+.label.review {
+  background-color: #5bffc0;
+  color: white;
+}
+
 .label.qna {
   background-color: #2ca0a8;
   color: white;
@@ -365,4 +375,14 @@
 
 .overLimit {
   color: red;
+}
+
+.commentBtn{
+	border:none;
+	background-color:white;
+	cursor:pointer;
+}
+
+.commentBtn:hover {
+	text-decoration:underline;
 }
